@@ -2,3 +2,4 @@
 
 ## Contributors
 Alex Simpson
+Ryan Gallagher
