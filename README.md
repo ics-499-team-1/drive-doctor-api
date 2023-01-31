@@ -1,4 +1,8 @@
 # Drive Doctor API
 
 ## Contributors
-Alex Simpson
+Alex Simpson\
+Parker Talley\
+Ryan Gallagher\
+Jim Sawicki\
+Vontha Chan
