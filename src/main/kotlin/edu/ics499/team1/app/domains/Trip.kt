@@ -1,6 +1,6 @@
 package edu.ics499.team1.app.domains
 
-data class Trip (
+data class Trip(
     val mileage: Int,
     val type: String,
     val vehicleId: Long,
