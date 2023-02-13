@@ -14,6 +14,6 @@ class MockUpcomingMaintenanceDataSource : MaintenanceDataSource {
         UpcomingMaintenance("Battery replacement", "Replace the battery every 2 years or 24,000 miles", "battery_replacement.jpg", 24000, "Months", true, false),
         UpcomingMaintenance("Spark plug replacement", "Replace the spark plugs every 3 years or 36,000 miles", "spark_plug_replacement.jpg", 36000, "Months", true, false),
     )
-    override fun retrieveMaintenance(): Collection<UpcomingMaintenance> = upcomingMaintenance
+    override fun retrieveUpcomingMaintenance(): Collection<UpcomingMaintenance> = upcomingMaintenance
 
 }

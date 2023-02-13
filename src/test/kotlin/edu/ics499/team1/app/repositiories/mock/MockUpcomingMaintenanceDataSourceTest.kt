@@ -8,7 +8,7 @@ internal class MockUpcomingMaintenanceDataSourceTest {
     @Test
     fun `should retrieve a collection of maintenance items`() {
         // when
-        val maintenance = mockDataSource.retrieveMaintenance()
+        val maintenance = mockDataSource.retrieveUpcomingMaintenance()
 
         // then
         assertThat(maintenance).isNotEmpty
@@ -20,7 +20,7 @@ internal class MockUpcomingMaintenanceDataSourceTest {
 
 
         // when
-        val maintenance = mockDataSource.retrieveMaintenance()
+        val maintenance = mockDataSource.retrieveUpcomingMaintenance()
 
         // then
         assertThat(maintenance).allMatch {it.name.isNotEmpty()}
