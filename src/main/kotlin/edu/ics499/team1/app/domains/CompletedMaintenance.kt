@@ -9,4 +9,5 @@ data class CompletedMaintenance(
     val serviceCenter: String,
     val mechanics: String,
     val totalCost: Int,
+    override val id: Long
 ) : Maintenance
