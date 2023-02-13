@@ -17,7 +17,15 @@
 		<java.version>17</java.version>
 		<kotlin.version>1.7.22</kotlin.version>
 	</properties>
+
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/io.mockk/mockk -->
+		<dependency>
+			<groupId>io.mockk</groupId>
+			<artifactId>mockk</artifactId>
+			<version>1.13.4</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
