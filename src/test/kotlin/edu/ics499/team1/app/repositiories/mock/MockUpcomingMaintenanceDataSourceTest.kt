@@ -15,7 +15,7 @@ internal class MockUpcomingMaintenanceDataSourceTest {
     }
 
     @Test
-    fun `should provide a collection with mock data`() {
+    fun `should provide a collection with mock maintenance data`() {
         // given
 
 

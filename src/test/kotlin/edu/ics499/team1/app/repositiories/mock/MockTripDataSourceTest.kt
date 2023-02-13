@@ -17,25 +17,26 @@ internal class MockTripDataSourceTest {
     }
     
     @Test
-    fun `should provide some mock data`() {
+    fun `should provide some mock trip data`() {
         // when
         val trips = mockDataSource.retrieveTrips()
         
         // then
-        assertThat(trips) {it.mileage >= 0}
-        assertThat(trips) {it.type.isNotEmpty()}
-        assertThat(trips) {it.vehicleId >= 0}
+        assertThat(trips).allMatch {it.mileage >= 0}
+        assertThat(trips).allMatch {it.type.isNotEmpty()}
+        assertThat(trips).allMatch {it.vehicleId >= 0}
     }
 
     @Test
     fun `should have unique ids for all trips`() {
         // when
         val trips = mockDataSource.retrieveTrips()
-        val uniqueIds = trips.map {it.vehicleId}.toSet()
+        val vehicleIds = trips.map { it.vehicleId }
+        val uniqueVehicleIds = vehicleIds.toSet()
 
         // then
         // If the sizes are equal, then no duplicates in the list of vehicles and test will pass.
         // If sizes aren't equal, then there are duplicates and the test will fail.
-        Assertions.assertTrue(trips.size == uniqueIds.size, "All trips should have unique ids")
+        Assertions.assertTrue(trips.size == uniqueVehicleIds.size, "All trips should have unique ids")
     }
 }

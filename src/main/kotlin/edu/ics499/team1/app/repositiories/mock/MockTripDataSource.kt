@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class MockTripDataSource : TripDataSource {
     private val trips = mutableListOf(
-        Trip(0, "", 0, "", "", "", ""),
+        Trip(0, "Business", 0, "Stuffs", "Eagan", "St. Paul", "Muy importante"),
         Trip(100, "Business", 1, "Meeting with client", "New York", "Boston", "Important meeting"),
         Trip(200, "Personal", 2, "Visit friends", "Los Angeles", "San Francisco", null),
         Trip(300, "Business", 3, "Conference", "Chicago", "Las Vegas", null),
