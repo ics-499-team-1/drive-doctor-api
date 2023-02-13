@@ -27,6 +27,8 @@ internal class MockVehicleDataSourceTest {
 
     }
 
+    // If the sizes are equal, then no duplicates in the list of vehicles and test will pass.
+    // If sizes aren't equal, then there are duplicates and the test will fail.
     @Test
     fun `should have unique ids for all vehicles`() {
 
@@ -34,10 +36,6 @@ internal class MockVehicleDataSourceTest {
         val vehicles = mockDataSource.retrieveVehicles()
         val uniqueIds = vehicles.map {it.id}.toSet()
 
-        /*
-         If the sizes are equal, then no duplicates in the list of vehicles and test will pass.
-         If sizes aren't equal, then there are duplicates and the test will fail.
-         */
         // then
         assertTrue(vehicles.size == uniqueIds.size, "All vehicles should have unique ids")
     }

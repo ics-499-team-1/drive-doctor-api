@@ -1,5 +1,10 @@
 package edu.ics499.team1.app.services
 
-import org.junit.jupiter.api.Assertions.*
+import edu.ics499.team1.app.repositiories.VehicleDataSource
+import io.mockk.mockk
 
-class UserServiceTest
+internal class UserServiceTest {
+    private val dataSource: VehicleDataSource = mockk(relaxed = true)
+
+    private val vehicleService = VehicleService(dataSource)
+}
