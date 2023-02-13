@@ -29,14 +29,4 @@ internal class MockUpcomingMaintenanceDataSourceTest {
         assertThat(maintenance).allMatch {it.mileageInterval >= 0}
         assertThat(maintenance).allMatch {it.timeInterval.isNotEmpty()}
     }
-
-    /*
-     override val name: String,
-    override val notes: String,
-    override val pictures: String,
-    private val mileageInterval: Int,
-    private val timeInterval: String,
-    private val mileageReminder: Boolean,
-    private val timeReminder: Boolean,
-     */
 }
