@@ -6,6 +6,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class VehicleService(private val dataSource: VehicleDataSource) {
-
     fun getVehicles(): Collection<Vehicle> = dataSource.retrieveVehicles()
 }

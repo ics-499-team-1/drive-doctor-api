@@ -16,13 +16,5 @@ class MockUserDataSource : UserDataSource {
         User(5, "Michael Johnson", "michael.johnson@email.com", "777-888-9999", emptyList(), emptyList()),
         )
 
-    /*
-    val userId: Int,
-    val name: String,
-    val email: String,
-    val phoneNumber: String,
-    val vehicles: List<Vehicle>,
-    val trips: List<Trip>
-     */
     override fun retrieveUsers(): Collection<User> = users
 }

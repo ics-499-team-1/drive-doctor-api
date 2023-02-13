@@ -7,5 +7,4 @@ import org.springframework.stereotype.Service
 @Service
 class TripService(private val dataSource: TripDataSource) {
     fun getTrips(): Collection<Trip> = dataSource.retrieveTrips()
-
 }
