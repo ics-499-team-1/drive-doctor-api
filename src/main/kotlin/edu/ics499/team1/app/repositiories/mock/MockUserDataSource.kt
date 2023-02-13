@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class MockUserDataSource : UserDataSource {
 
-    val users = listOf(
+    val users = mutableListOf(
         User(0, "Ryan", "rg@email.com", "123-456-7777", emptyList(), emptyList()),
         User(1, "John Doe", "john.doe@email.com", "123-456-7890", emptyList(), emptyList()),
         User(2, "Jane Doe", "jane.doe@email.com", "098-765-4321", emptyList(), emptyList()),

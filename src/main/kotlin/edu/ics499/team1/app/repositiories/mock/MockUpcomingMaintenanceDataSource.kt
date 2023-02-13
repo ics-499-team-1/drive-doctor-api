@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class MockUpcomingMaintenanceDataSource : MaintenanceDataSource {
-    private val upcomingMaintenance = listOf(
+    private val upcomingMaintenance = mutableListOf(
         UpcomingMaintenance("Oil change", "Change oil", "oil.jpg", 3500, "Months", false, false),
         UpcomingMaintenance("Oil change", "Change the oil every 3 months or 3,000 miles", "oil_change.jpg", 3000, "Months", true, false),
         UpcomingMaintenance("Tire rotation", "Rotate the tires every 6 months or 6,000 miles", "tire_rotation.jpg", 6000, "Months", true, false),

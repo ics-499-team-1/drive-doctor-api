@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class MockVehicleDataSource : VehicleDataSource {
-    val vehicles = listOf(
+    val vehicles = mutableListOf(
         Vehicle(0, "Vehicle0", 2020, "", "", 0, "", "", emptyList(), emptyList(), true),
         Vehicle(1, "Vehicle1", 2019, "Toyota", "Camry SE", 15000, "ABC123", "1NXBR32E79Z", emptyList(), emptyList(), false),
         Vehicle(2, "Vehicle2", 2021, "Honda", "Civic LX", 5000, "DEF456", "SHHFK7H41LU", emptyList(), emptyList(), false),
