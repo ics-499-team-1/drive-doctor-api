@@ -6,15 +6,15 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "vehicle")
 data class Vehicle(
-    private val id: Long,
-    private val name: String,
-    private val year: Int,
-    private val make: String,
-    private val trim: String,
-    private val odometer: Int,
-    private val licensePlateNumber: String?,
-    private val vin: String?,
-    private val maintenance: List<UpcomingMaintenance>,
-    private val maintenanceHistory: List<CompletedMaintenance>,
-    private val deactivated: Boolean,
+     val id: Long,
+     val name: String,
+     val year: Int,
+     val make: String,
+     val trim: String,
+     val odometer: Int,
+     val licensePlateNumber: String?,
+     val vin: String?,
+     val maintenance: List<UpcomingMaintenance>,
+     val maintenanceHistory: List<CompletedMaintenance>,
+     val deactivated: Boolean,
 )
