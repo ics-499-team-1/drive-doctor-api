@@ -21,8 +21,8 @@ class MaintenanceController {
          * Gets all maintenance records for a specific vehicle.
          */
         @GetMapping
-        fun getMaintenance(@PathVariable vehicleID : String) : Collection<Maintenance> =
-            service.getMaintenance(vehicleID)
+        fun getMaintenance() : Collection<Maintenance> =
+            service.getMaintenance()
 
         /**
          * Creates a new maintenance record for a specific vehicle
