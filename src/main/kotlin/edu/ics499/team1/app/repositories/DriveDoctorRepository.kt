@@ -1,9 +1,10 @@
 package edu.ics499.team1.app.repositories
 
-import edu.ics499.team1.app.domains.Maintenance
 import org.springframework.data.jpa.repository.JpaRepository
-
-interface MaintenanceRepository : JpaRepository<Maintenance, Long>
-=======
 import org.springframework.stereotype.Repository
+import java.io.Serializable
 
+@Repository
+interface DriveDoctorRepository <T, ID : Serializable> : JpaRepository<T, ID>{
+
+}
