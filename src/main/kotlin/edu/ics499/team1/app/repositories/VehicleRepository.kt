@@ -8,4 +8,10 @@ interface VehicleRepository : DriveDoctorRepository<Vehicle, Long>{
    fun findByVehicleId(id: Long): Vehicle?
 
    fun findByVin(vin: String): Vehicle?
+
+   fun findByMakeModel(make: String, model: String): Vehicle?
+
+   fun findByMakeModelTrim(make: String, model: String, trim: String): Vehicle?
+
+   fun findByLicensePlate(licensePlate: String): Vehicle?
 }

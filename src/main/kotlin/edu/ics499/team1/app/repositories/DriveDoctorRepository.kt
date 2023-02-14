@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository
 import java.io.Serializable
 
 @Repository
-interface DriveDoctorRepository <T, ID : Serializable> : JpaRepository<T, ID>
+interface DriveDoctorRepository <T, ID : Serializable> : JpaRepository<T, ID>{
+
+}
