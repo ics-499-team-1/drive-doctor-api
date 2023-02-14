@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import java.sql.Driver
 
 @Repository
-interface UserRepository : DriveDoctorRepository<User, Int>{
+interface UserRepository : JpaRepository<User, Int>{
     fun findByUserId(id: Integer): User?
     fun findByName(name: String): List<User>
     fun findByEmail(email: String): User?
