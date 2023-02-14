@@ -1,11 +1,8 @@
-package edu.ics499.team1.app.repositiories.mock
+package edu.ics499.team1.app.repositories.mock
 
 import edu.ics499.team1.app.domains.UpcomingMaintenance
-import edu.ics499.team1.app.repositiories.MaintenanceDataSource
-import org.springframework.stereotype.Repository
 
-@Repository
-class MockUpcomingMaintenanceDataSource : MaintenanceDataSource {
+class UpcomingMaintenanceDataSource {
     private val upcomingMaintenance = mutableListOf(
         UpcomingMaintenance("Oil change", "Change oil", "oil.jpg", 3500, "Months", false, false),
         UpcomingMaintenance("Oil change", "Change the oil every 3 months or 3,000 miles", "oil_change.jpg", 3000, "Months", true, false),
@@ -14,5 +11,5 @@ class MockUpcomingMaintenanceDataSource : MaintenanceDataSource {
         UpcomingMaintenance("Battery replacement", "Replace the battery every 2 years or 24,000 miles", "battery_replacement.jpg", 24000, "Months", true, false),
         UpcomingMaintenance("Spark plug replacement", "Replace the spark plugs every 3 years or 36,000 miles", "spark_plug_replacement.jpg", 36000, "Months", true, false),
     )
-    override fun retrieveUpcomingMaintenance(): Collection<UpcomingMaintenance> = upcomingMaintenance
+    fun retrieveUpcomingMaintenance(): Collection<UpcomingMaintenance> = upcomingMaintenance
 }

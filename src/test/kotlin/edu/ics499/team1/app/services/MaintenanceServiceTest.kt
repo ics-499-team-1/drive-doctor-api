@@ -1,12 +1,12 @@
 package edu.ics499.team1.app.services
 
-import edu.ics499.team1.app.repositiories.MaintenanceDataSource
+import edu.ics499.team1.app.repositories.MaintenanceRepository
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
 internal class MaintenanceServiceTest {
-    private val dataSource : MaintenanceDataSource = mockk(relaxed = true)
+    private val dataSource : MaintenanceRepository = mockk(relaxed = true)
     private val maintenanceService = MaintenanceService(dataSource)
 
     @Test
@@ -15,6 +15,6 @@ internal class MaintenanceServiceTest {
         maintenanceService.getUpcomingMaintenance()
 
         // then
-        verify (exactly = 1) { dataSource.retrieveUpcomingMaintenance() }
+        verify (exactly = 1) { dataSource.findAll() }
     }
 }

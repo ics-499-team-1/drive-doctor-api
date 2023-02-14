@@ -1,11 +1,8 @@
-package edu.ics499.team1.app.repositiories.mock
+package edu.ics499.team1.app.repositories.mock
 
 import edu.ics499.team1.app.domains.User
-import edu.ics499.team1.app.repositiories.UserDataSource
-import org.springframework.stereotype.Repository
 
-@Repository
-class MockUserDataSource : UserDataSource {
+class MockUserDataSource {
 
     val users = mutableListOf(
         User(0, "Ryan", "rg@email.com", "123-456-7777", emptyList(), emptyList()),
@@ -16,5 +13,5 @@ class MockUserDataSource : UserDataSource {
         User(5, "Michael Johnson", "michael.johnson@email.com", "777-888-9999", emptyList(), emptyList()),
         )
 
-    override fun retrieveUsers(): Collection<User> = users
+    fun retrieveUsers(): Collection<User> = users
 }
