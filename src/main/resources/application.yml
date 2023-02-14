@@ -3,9 +3,11 @@ server:
     context-path: /drive-doctor
 
 spring:
-  jpa:
+  datasource:
     username: postgres
     password: password
+    url: jdbc:postgresql://localhost:5432/postgres
+  jpa:
     hibernate:
       ddl-auto: update
     show-sql: true

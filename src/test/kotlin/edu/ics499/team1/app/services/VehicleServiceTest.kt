@@ -1,6 +1,6 @@
 package edu.ics499.team1.app.services
 
-import edu.ics499.team1.app.repositiories.VehicleDataSource
+import edu.ics499.team1.app.repositories.VehicleRepository
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class VehicleServiceTest {
 
     // relaxed set to true means that whenever a method is called on it, it will return some default value
-    private val dataSource: VehicleDataSource = mockk(relaxed = true)
+    private val dataSource: VehicleRepository = mockk(relaxed = true)
 
     private val vehicleService = VehicleService(dataSource)
 
@@ -18,6 +18,6 @@ internal class VehicleServiceTest {
         vehicleService.getVehicles()
 
         // then
-        verify(exactly = 1) { dataSource.retrieveVehicles() }
+        verify(exactly = 1) { dataSource.findAll() }
     }
 }

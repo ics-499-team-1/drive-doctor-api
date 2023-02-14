@@ -1,9 +1,7 @@
-package edu.ics499.team1.app.repositiories.mock
+package edu.ics499.team1.app.repositories.mock
 
 import edu.ics499.team1.app.domains.User
-import org.springframework.stereotype.Repository
 
-@Repository
 class MockUserDataSource {
 
     val users = mutableListOf(

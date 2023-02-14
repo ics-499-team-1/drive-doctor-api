@@ -1,8 +1,7 @@
-package edu.ics499.team1.app.repositiories.mock
+package edu.ics499.team1.app.repositories.mock
 
 import edu.ics499.team1.app.domains.Trip
 import edu.ics499.team1.app.repositories.TripRepository
-import org.springframework.stereotype.Repository
 
 /*
  val mileage: Int,
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Repository
     val end: String?,
     val notes: String?
  */
-@Repository
 class TripRepository {
     private val trips = mutableListOf(
         Trip(0, "Business", 0, "Stuffs", "Eagan", "St. Paul", "Muy importante"),

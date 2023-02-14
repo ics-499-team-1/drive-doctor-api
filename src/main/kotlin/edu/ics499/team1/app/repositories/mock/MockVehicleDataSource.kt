@@ -1,9 +1,7 @@
-package edu.ics499.team1.app.repositiories.mock
+package edu.ics499.team1.app.repositories.mock
 
 import edu.ics499.team1.app.domains.Vehicle
-import org.springframework.stereotype.Repository
 
-@Repository
 class MockVehicleDataSource {
     val vehicles = mutableListOf(
         Vehicle(0, "Vehicle0", 2020, "", "", 0, "", "", emptyList(), emptyList(), true),

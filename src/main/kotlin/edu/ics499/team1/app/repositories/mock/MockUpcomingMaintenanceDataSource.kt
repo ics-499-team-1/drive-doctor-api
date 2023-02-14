@@ -1,9 +1,7 @@
-package edu.ics499.team1.app.repositiories.mock
+package edu.ics499.team1.app.repositories.mock
 
 import edu.ics499.team1.app.domains.UpcomingMaintenance
-import org.springframework.stereotype.Repository
 
-@Repository
 class UpcomingMaintenanceDataSource {
     private val upcomingMaintenance = mutableListOf(
         UpcomingMaintenance("Oil change", "Change oil", "oil.jpg", 3500, "Months", false, false),
