@@ -1,11 +1,10 @@
 package edu.ics499.team1.app.repositiories.mock
 
 import edu.ics499.team1.app.domains.Vehicle
-import edu.ics499.team1.app.repositiories.VehicleDataSource
 import org.springframework.stereotype.Repository
 
 @Repository
-class MockVehicleDataSource : VehicleDataSource {
+class MockVehicleDataSource {
     val vehicles = mutableListOf(
         Vehicle(0, "Vehicle0", 2020, "", "", 0, "", "", emptyList(), emptyList(), true),
         Vehicle(1, "Vehicle1", 2019, "Toyota", "Camry SE", 15000, "ABC123", "1NXBR32E79Z", emptyList(), emptyList(), false),
@@ -14,5 +13,5 @@ class MockVehicleDataSource : VehicleDataSource {
         Vehicle(4, "Vehicle4", 2018, "Chevrolet", "Silverado 1500", 20000, "JKL101", "3GCUKREC2JG176855", emptyList(), emptyList(), false),
         Vehicle(5, "Vehicle5", 2017, "Jeep", "Wrangler Rubicon", 12000, "MNO202", "1C4BJWFG6HL743501", emptyList(), emptyList(), false),
         )
-    override fun retrieveVehicles(): Collection<Vehicle> = vehicles
+    fun retrieveVehicles(): Collection<Vehicle> = vehicles
 }

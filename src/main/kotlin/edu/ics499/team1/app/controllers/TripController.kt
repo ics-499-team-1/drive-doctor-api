@@ -1,5 +1,7 @@
 package edu.ics499.team1.app.controllers
 
+import edu.ics499.team1.app.domains.Trip
+import edu.ics499.team1.app.services.TripService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -29,12 +31,18 @@ class TripController (private val service : TripService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addTrip(@RequestBody trip : Trip): Trip = service.addTrip(trip)
+    fun addTrip(@RequestBody trip : Trip) {
+        // service.addTrip(trip)
+    }
 
     @PatchMapping
-    fun setMileage(@RequestBody trip : Trip) : Trip = service.setMileage(trip)
+    fun setMileage(@RequestBody trip : Trip) {
+        // service.setMileage(trip)
+    }
 
     @GetMapping
-    fun getTotalMileage() : Int = service.getTotalMileage()
+    fun getTotalMileage() {
+        // service.getTotalMileage()
+    }
 
 }

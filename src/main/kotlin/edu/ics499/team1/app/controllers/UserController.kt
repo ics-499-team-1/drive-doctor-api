@@ -1,5 +1,7 @@
 package edu.ics499.team1.app.controllers
 
+import edu.ics499.team1.app.domains.User
+import edu.ics499.team1.app.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,20 +24,24 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 @RequestMapping("api/users")
-class UserController (private val service: UserService ) {
+class UserController (private val service: UserService) {
 
     @GetMapping("/{userID}")
-    fun getUser(@PathVariable userID : String) : User = service.getUser(userID)
+    fun getUser(@PathVariable userID : String) {
+        //service.getUser(userID)
+    }
 
     @GetMapping
-    fun getUsers() : Collection<User> = service.getUsers()
+    fun getUsers() {
+        service.getUsers()
+    }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    fun addUser(@RequestBody user : User) = service.addUser(user)
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    fun addUser(@RequestBody user : User) = service.addUser(user)
 
-    @DeleteMapping("/{userID}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteUser(@PathVariable userID : String) = service.deleteUser(userID)
+//    @DeleteMapping("/{userID}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    fun deleteUser(@PathVariable userID : String) = service.deleteUser(userID)
 
 }

@@ -1,7 +1,7 @@
 package edu.ics499.team1.app.repositiories.mock
 
 import edu.ics499.team1.app.domains.Trip
-import edu.ics499.team1.app.repositiories.TripDataSource
+import edu.ics499.team1.app.repositories.TripRepository
 import org.springframework.stereotype.Repository
 
 /*
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository
     val notes: String?
  */
 @Repository
-class MockTripDataSource : TripDataSource {
+class TripRepository {
     private val trips = mutableListOf(
         Trip(0, "Business", 0, "Stuffs", "Eagan", "St. Paul", "Muy importante"),
         Trip(100, "Business", 1, "Meeting with client", "New York", "Boston", "Important meeting"),
@@ -23,5 +23,5 @@ class MockTripDataSource : TripDataSource {
         Trip(400, "Personal", 4, "Road trip", "Miami", "New Orleans", "Fun adventure"),
         Trip(500, "Business", 5, "Sales meeting", "Seattle", "Portland", "Closing the deal")
     )
-    override fun retrieveTrips(): List<Trip> = trips
+    fun retrieveTrips(): List<Trip> = trips
 }
