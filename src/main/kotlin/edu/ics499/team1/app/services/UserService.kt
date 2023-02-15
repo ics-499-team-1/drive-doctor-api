@@ -6,5 +6,12 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserService(private val dataSource: UserRepository) {
-    fun getUsers(): Collection<User> = dataSource.findAll()
+    fun getUsers(): Collection<User> = listOf(User(
+        1,
+        "alex",
+        "alex@mail.com",
+        null,
+        emptyList(),
+        emptyList()
+    ))
 }
