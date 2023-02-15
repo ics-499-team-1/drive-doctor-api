@@ -1,9 +1,6 @@
 package edu.ics499.team1.app.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "users")
@@ -13,5 +10,7 @@ data class UserEntity(
     val userId: Int,
     val name: String,
     val email: String,
-    val phoneNumber: String?
+    val phoneNumber: String?,
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
+    val vehicles: List<VehicleEntity>
 )
