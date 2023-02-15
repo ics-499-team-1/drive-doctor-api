@@ -1,7 +1,6 @@
 package edu.ics499.team1.app.repositories.mock
 
 import edu.ics499.team1.app.domains.Trip
-import edu.ics499.team1.app.repositories.TripRepository
 
 /*
  val mileage: Int,
@@ -21,5 +20,6 @@ class TripRepository {
         Trip(400, "Personal", 4, "Road trip", "Miami", "New Orleans", "Fun adventure"),
         Trip(500, "Business", 5, "Sales meeting", "Seattle", "Portland", "Closing the deal")
     )
+
     fun retrieveTrips(): List<Trip> = trips
 }

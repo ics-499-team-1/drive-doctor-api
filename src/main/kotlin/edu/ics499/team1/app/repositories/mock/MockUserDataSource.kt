@@ -11,7 +11,7 @@ class MockUserDataSource {
         User(3, "Bob Smith", "bob.smith@email.com", "111-222-3333", emptyList(), emptyList()),
         User(4, "Emma Wilson", "emma.wilson@email.com", "444-555-6666", emptyList(), emptyList()),
         User(5, "Michael Johnson", "michael.johnson@email.com", "777-888-9999", emptyList(), emptyList()),
-        )
+    )
 
     fun retrieveUsers(): Collection<User> = users
 }

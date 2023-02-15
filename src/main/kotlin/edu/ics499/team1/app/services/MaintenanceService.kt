@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class MaintenanceService(private val dataSource: MaintenanceRepository) {
-    fun getUpcomingMaintenance() : MutableList<Maintenance> = dataSource.findAll()
+    fun getUpcomingMaintenance(): MutableList<Maintenance> = dataSource.findAll()
 }

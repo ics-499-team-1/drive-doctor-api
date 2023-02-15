@@ -1,7 +1,6 @@
 package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.Maintenance
-import edu.ics499.team1.app.repositories.CompletedMaintenanceRepository
 import edu.ics499.team1.app.services.MaintenanceService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -26,7 +25,7 @@ class MaintenanceController {
          * Gets all maintenance records for a specific vehicle.
          */
         @GetMapping
-        fun getMaintenance()  {
+        fun getMaintenance() {
             //service.getMaintenance()
         }
 
@@ -35,20 +34,20 @@ class MaintenanceController {
          */
         @PostMapping("/{vehicleId}")
         @ResponseStatus(HttpStatus.CREATED)
-        fun addMaintenance(@PathVariable vehicleId: String, @RequestBody maintenance : Maintenance) {
+        fun addMaintenance(@PathVariable vehicleId: String, @RequestBody maintenance: Maintenance) {
             // service.addMaintenance(vehicleId, maintenance)
         }
 
         @DeleteMapping("/{vehicleId}/{maintenanceId}")
         @ResponseStatus(HttpStatus.NO_CONTENT)
-        fun removeMaintenance(@PathVariable vehicleId : String, @PathVariable maintenanceId : String) {
+        fun removeMaintenance(@PathVariable vehicleId: String, @PathVariable maintenanceId: String) {
             // service.removeMaintenace(vehicleId, maintenanceId)
         }
 
 
         @PostMapping // TODO: not sure how to map this yet. Needs own request mapping?
         @ResponseStatus(HttpStatus.CREATED) // TODO: Could be patch mapped instead?
-        fun completeMaintenance(@PathVariable id : String) {
+        fun completeMaintenance(@PathVariable id: String) {
             // service.completedMaintenanceRepository(id)
         }
     }
