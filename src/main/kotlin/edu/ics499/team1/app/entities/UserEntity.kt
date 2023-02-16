@@ -8,7 +8,8 @@ data class UserEntity(
     @Id
     @GeneratedValue
     val userId: Int,
-    val name: String,
+    val firstName: String,
+    val lastName: String,
     val email: String,
     val phoneNumber: String?,
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])

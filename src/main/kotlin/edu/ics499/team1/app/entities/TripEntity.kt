@@ -11,6 +11,7 @@ data class TripEntity(
     val mileage: Int,
     val type: String,
     @ManyToOne
+    @JoinColumn(name = "vehicle_id")
     val vehicle: VehicleEntity,
     val name: String?,
     val startLocation: String?,
