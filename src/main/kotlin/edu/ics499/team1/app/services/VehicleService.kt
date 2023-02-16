@@ -1,6 +1,6 @@
 //package edu.ics499.team1.app.services
 //
-//import edu.ics499.team1.app.domains.Vehicle
+//import edu.ics499.team1.app.domains.requests.Vehicle
 //import edu.ics499.team1.app.repositories.VehicleRepository
 //import org.springframework.stereotype.Service
 //

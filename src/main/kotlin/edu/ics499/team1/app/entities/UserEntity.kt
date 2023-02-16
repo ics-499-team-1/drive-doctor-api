@@ -7,7 +7,7 @@ import jakarta.persistence.*
 data class UserEntity(
     @Id
     @GeneratedValue
-    val userId: Int,
+    val userId: Int = 0,
     val firstName: String,
     val lastName: String,
     val email: String,

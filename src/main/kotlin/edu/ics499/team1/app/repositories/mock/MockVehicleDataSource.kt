@@ -1,6 +1,6 @@
 package edu.ics499.team1.app.repositories.mock
 
-import edu.ics499.team1.app.domains.Vehicle
+import edu.ics499.team1.app.domains.requests.Vehicle
 
 class MockVehicleDataSource {
     val vehicles = mutableListOf(

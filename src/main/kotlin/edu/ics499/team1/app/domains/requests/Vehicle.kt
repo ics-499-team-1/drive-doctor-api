@@ -1,4 +1,4 @@
-package edu.ics499.team1.app.domains
+package edu.ics499.team1.app.domains.requests
 
 data class Vehicle(
     val id: Long,
@@ -10,6 +10,6 @@ data class Vehicle(
     val licensePlateNumber: String?,
     val vin: String?,
     val maintenance: List<UpcomingMaintenance>,
-    val maintenanceHistory: List<CompletedMaintenance>,
+    val maintenanceRequestHistory: List<CompletedMaintenanceRequest>,
     val deactivated: Boolean
 )

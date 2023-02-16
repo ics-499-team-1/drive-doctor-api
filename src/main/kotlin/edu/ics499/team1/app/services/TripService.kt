@@ -1,6 +1,6 @@
 //package edu.ics499.team1.app.services
 //
-//import edu.ics499.team1.app.domains.Trip
+//import edu.ics499.team1.app.domains.requests.Trip
 //import edu.ics499.team1.app.repositories.TripRepository
 //
 //import org.springframework.stereotype.Service

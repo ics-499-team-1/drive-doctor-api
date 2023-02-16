@@ -1,6 +1,6 @@
 package edu.ics499.team1.app.repositories.mock
 
-import edu.ics499.team1.app.domains.Trip
+import edu.ics499.team1.app.domains.requests.Trip
 
 /*
  val mileage: Int,

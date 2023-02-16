@@ -1,6 +1,6 @@
 //package edu.ics499.team1.app.controllers
 //
-//import edu.ics499.team1.app.domains.Vehicle
+//import edu.ics499.team1.app.domains.requests.Vehicle
 //import edu.ics499.team1.app.services.VehicleService
 //import org.springframework.web.bind.annotation.GetMapping
 //import org.springframework.web.bind.annotation.RequestMapping

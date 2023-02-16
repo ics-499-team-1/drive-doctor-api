@@ -1,13 +1,9 @@
 package edu.ics499.team1.app.controllers
 
+import edu.ics499.team1.app.domains.requests.User
 import edu.ics499.team1.app.services.UserService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-
-// TODO: Exception Handlers
-// TODO: update user? (PatchMapping)
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 /**
  * Controller for user functions.
@@ -17,22 +13,18 @@ import org.springframework.web.bind.annotation.RestController
  * [deleteUser] Removes a user
  */
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/v1/users")
 class UserController(private val service: UserService) {
 
-    @GetMapping("/{userID}")
-    fun getUser(@PathVariable userID: String) {
-        //service.getUser(userID)
-    }
+    @GetMapping("/{userId}")
+    fun getUser(@PathVariable userId: Int) = service.getUser(userId)
 
     @GetMapping
-    fun getUsers() {
-        service.getUsers()
-    }
+    fun getUsers() = service.getUsers()
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    fun addUser(@RequestBody user : User) = service.addUser(user)
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addUser(@RequestBody user : User) = service.createUser(user)
 
 //    @DeleteMapping("/{userID}")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)

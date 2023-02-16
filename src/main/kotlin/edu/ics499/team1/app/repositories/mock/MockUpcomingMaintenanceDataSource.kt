@@ -1,6 +1,6 @@
 package edu.ics499.team1.app.repositories.mock
 
-import edu.ics499.team1.app.domains.UpcomingMaintenance
+import edu.ics499.team1.app.domains.requests.UpcomingMaintenance
 
 class UpcomingMaintenanceDataSource {
     private val upcomingMaintenance = mutableListOf(

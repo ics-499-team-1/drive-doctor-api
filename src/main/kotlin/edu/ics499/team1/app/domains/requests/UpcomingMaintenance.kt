@@ -1,4 +1,6 @@
-package edu.ics499.team1.app.domains
+package edu.ics499.team1.app.domains.requests
+
+import edu.ics499.team1.app.domains.Maintenance
 
 data class UpcomingMaintenance(
     override val name: String,
