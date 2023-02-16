@@ -1,6 +1,6 @@
 //package edu.ics499.team1.app.controllers
 //
-//import edu.ics499.team1.app.domains.requests.Trip
+//import edu.ics499.team1.app.domains.Trip
 //import edu.ics499.team1.app.services.TripService
 //import org.springframework.http.HttpStatus
 //import org.springframework.web.bind.annotation.*

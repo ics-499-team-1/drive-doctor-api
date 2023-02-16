@@ -1,4 +1,4 @@
-package edu.ics499.team1.app.domains.requests
+package edu.ics499.team1.app.domains
 
 import edu.ics499.team1.app.entities.UserEntity
 
@@ -9,10 +9,10 @@ data class User(
     val phoneNumber: String?
 ) {
     fun toUserEntity() = UserEntity(
+        userId = 102,
         firstName = this.firstName,
         lastName = this.lastName,
         email = this.email,
-        phoneNumber = this.phoneNumber,
-        vehicles = emptyList()
+        phoneNumber = this.phoneNumber
     )
 }

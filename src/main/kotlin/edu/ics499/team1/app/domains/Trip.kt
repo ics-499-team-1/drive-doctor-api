@@ -1,4 +1,4 @@
-package edu.ics499.team1.app.domains.requests
+package edu.ics499.team1.app.domains
 
 data class Trip(
     val mileage: Int,

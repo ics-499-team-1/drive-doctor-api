@@ -1,5 +1,6 @@
 package edu.ics499.team1.app.entities
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 
 @Entity
@@ -13,5 +14,6 @@ data class UserEntity(
     val email: String,
     val phoneNumber: String?,
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
-    val vehicles: List<VehicleEntity>
+    @JsonManagedReference
+    val vehicles: List<VehicleEntity> = emptyList()
 )
