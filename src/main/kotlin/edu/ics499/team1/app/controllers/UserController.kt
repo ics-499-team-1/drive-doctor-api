@@ -26,8 +26,8 @@ class UserController(private val service: UserService) {
     @ResponseStatus(HttpStatus.CREATED)
     fun addUser(@RequestBody user : User) = service.createUser(user)
 
-//    @DeleteMapping("/{userID}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    fun deleteUser(@PathVariable userID : String) = service.deleteUser(userID)
+    @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteUser(@PathVariable userId : Int) = service.deleteUser(userId)
 
 }

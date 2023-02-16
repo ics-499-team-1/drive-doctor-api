@@ -13,4 +13,6 @@ class UserService(private val userRepository: UserRepository) {
     fun getUser(userId: Int) = userRepository.findById(userId)
 
     fun getUsers(): List<UserEntity> = userRepository.findAll()
+
+    fun deleteUser(userId: Int) = userRepository.deleteById(userId)
 }
