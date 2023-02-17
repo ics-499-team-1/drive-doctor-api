@@ -32,5 +32,4 @@ data class VehicleEntity(
     @OneToMany(mappedBy = "vehicle", cascade = [CascadeType.ALL])
     @JsonManagedReference
     val completedMaintenance: List<CompletedMaintenanceEntity> = emptyList(),
-
-    )
+)
