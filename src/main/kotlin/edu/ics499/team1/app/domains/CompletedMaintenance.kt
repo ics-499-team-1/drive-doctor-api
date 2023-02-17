@@ -1,6 +1,6 @@
 package edu.ics499.team1.app.domains
 
-data class CompletedMaintenanceRequest(
+data class CompletedMaintenance(
     override val name: String,
     override val notes: String?,
     override val pictures: String?,
