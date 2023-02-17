@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 /**
-* [getVehicles] Returns a collection of all vehicles
-* [addVehicle] Adds a vehicle to the collection
-* [removeVehicle] Removes a vehicle from the collection
-*/
+ * [getVehicles] Returns a collection of all vehicles
+ * [addVehicle] Adds a vehicle to the collection
+ * [removeVehicle] Removes a vehicle from the collection
+ */
 @RestController
 @RequestMapping("/v1/vehicles")  // TODO Is this a logical mapping?
 class VehicleController(private val service: VehicleService) {

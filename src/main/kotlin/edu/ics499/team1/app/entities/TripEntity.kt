@@ -8,7 +8,7 @@ import jakarta.persistence.*
 data class TripEntity(
     @Id
     @GeneratedValue
-    val tripId: Int,
+    val tripId: Int = 0,
     val mileage: Int,
     val type: String,
     @ManyToOne

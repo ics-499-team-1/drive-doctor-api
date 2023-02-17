@@ -33,4 +33,4 @@ data class VehicleEntity(
     @JsonManagedReference
     val completedMaintenance: List<CompletedMaintenanceEntity> = emptyList(),
 
-)
+    )

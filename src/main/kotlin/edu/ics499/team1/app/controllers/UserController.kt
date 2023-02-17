@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/v1/users")
-class UserController(private val service: UserService) {
+class UserController(private val userService: UserService) {
 
     @GetMapping("/{userId}")
-    fun getUser(@PathVariable userId: Int) = service.getUser(userId)
+    fun getUser(@PathVariable userId: Int) = userService.getUser(userId)
 
     @GetMapping
-    fun getUsers() = service.getUsers()
+    fun getUsers() = userService.getUsers()
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addUser(@RequestBody user : User) = service.createUser(user)
+    fun addUser(@RequestBody user: User) = userService.createUser(user)
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteUser(@PathVariable userId : Int) = service.deleteUser(userId)
+    fun deleteUser(@PathVariable userId: Int) = userService.deleteUser(userId)
 
 }
