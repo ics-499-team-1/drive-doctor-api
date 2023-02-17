@@ -9,7 +9,6 @@ data class User(
     val phoneNumber: String?
 ) {
     fun toUserEntity() = UserEntity(
-        userId = 102,
         firstName = this.firstName,
         lastName = this.lastName,
         email = this.email,

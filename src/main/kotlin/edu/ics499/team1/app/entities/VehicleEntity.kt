@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.entities
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 
 @Entity
@@ -23,10 +24,13 @@ data class VehicleEntity(
     @JsonBackReference
     val user: UserEntity,
     @OneToMany(mappedBy = "vehicle", cascade = [CascadeType.ALL])
+    @JsonManagedReference
     val trips: List<TripEntity> = emptyList(),
     @OneToMany(mappedBy = "vehicle", cascade = [CascadeType.ALL])
+    @JsonManagedReference
     val upcomingMaintenance: List<UpcomingMaintenanceEntity> = emptyList(),
     @OneToMany(mappedBy = "vehicle", cascade = [CascadeType.ALL])
+    @JsonManagedReference
     val completedMaintenance: List<CompletedMaintenanceEntity> = emptyList(),
 
 )

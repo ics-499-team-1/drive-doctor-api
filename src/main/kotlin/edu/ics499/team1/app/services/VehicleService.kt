@@ -5,7 +5,6 @@ import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class VehicleService(
@@ -15,7 +14,6 @@ class VehicleService(
 
     fun getVehicles(): List<VehicleEntity> = vehicleRepository.findAll()
 
-    @Transactional
     fun createVehicle(vehicle: Vehicle): VehicleEntity {
         val user = userRepository.getReferenceById(vehicle.userId)
         return vehicleRepository.save(vehicle.toVehicleEntity(user))

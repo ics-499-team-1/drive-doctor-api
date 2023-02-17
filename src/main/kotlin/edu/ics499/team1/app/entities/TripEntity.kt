@@ -1,5 +1,6 @@
 package edu.ics499.team1.app.entities
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 
 @Entity
@@ -12,6 +13,7 @@ data class TripEntity(
     val type: String,
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
+    @JsonBackReference
     val vehicle: VehicleEntity,
     val name: String?,
     val startLocation: String?,
