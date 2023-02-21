@@ -3,15 +3,7 @@ package edu.ics499.team1.app.controllers
 import edu.ics499.team1.app.domains.Trip
 import edu.ics499.team1.app.services.TripService
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 // TODO: Exception Handlers
 // TODO: Should getTotalMileage have specific start/end dates?
@@ -23,26 +15,22 @@ import org.springframework.web.bind.annotation.RestController
  * [getTotalMileage] gets the totalMileage driven by a specific user
  */
 @RestController
-@RequestMapping("api/{userId}/trips") // TODO: is this a logical mapping? or is api/trips better?
-class TripController (private val service : TripService) {
+@RequestMapping("/v1/trips")
+class TripController(private val tripService: TripService) {
 
     @GetMapping
-    fun getTrips() : Collection<Trip> = service.getTrips()
+    fun getTrips() = tripService.getTrips()
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addTrip(@RequestBody trip : Trip) {
-        // service.addTrip(trip)
+    fun addTrip(@RequestBody trip: Trip) = tripService.addTrip(trip)
+
+    // todo: Should this be in the vehicle controller?
+    @PatchMapping("/{tripId}/mileage/{mileage}")
+    fun setMileage(@PathVariable tripId: Int, @PathVariable mileage: Int) {
+        tripService.setMileage(tripId, mileage)
     }
 
-    @PatchMapping
-    fun setMileage(@RequestBody trip : Trip) {
-        // service.setMileage(trip)
-    }
-
-    @GetMapping
-    fun getTotalMileage() {
-        // service.getTotalMileage()
-    }
-
+    @GetMapping("/{vehicleId}/mileage")
+    fun getTotalMileage(@PathVariable vehicleId: Int) = tripService.getTotalMileage(vehicleId)
 }

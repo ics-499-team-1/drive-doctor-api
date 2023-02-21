@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 
 internal class TripServiceTest {
-    private val dataSource : TripRepository = mockk(relaxed = true)
+    private val dataSource: TripRepository = mockk(relaxed = true)
     private val tripService = TripService(dataSource)
 
     @Test

@@ -1,20 +1,30 @@
 package edu.ics499.team1.app.domains
 
-import jakarta.persistence.Entity
-import jakarta.persistence.Table
+import edu.ics499.team1.app.entities.UserEntity
+import edu.ics499.team1.app.entities.VehicleEntity
 
-@Entity
-@Table(name = "vehicle")
 data class Vehicle(
-     val id: Long,
-     val name: String,
-     val year: Int,
-     val make: String,
-     val trim: String,
-     val odometer: Int,
-     val licensePlateNumber: String?,
-     val vin: String?,
-     val maintenance: List<UpcomingMaintenance>,
-     val maintenanceHistory: List<CompletedMaintenance>,
-     val deactivated: Boolean,
-)
+    val name: String,
+    val year: Int,
+    val make: String,
+    val model: String,
+    val trim: String,
+    val odometer: Int,
+    val licensePlateNumber: String?,
+    val vin: String?,
+    val deactivated: Boolean = false,
+    val userId: Int
+) {
+    fun toVehicleEntity(userReference: UserEntity) = VehicleEntity(
+        name = this.name,
+        year = this.year,
+        make = this.make,
+        model = this.model,
+        trim = this.trim,
+        odometer = this.odometer,
+        licensePlateNumber = this.licensePlateNumber,
+        vin = this.vin,
+        deactivated = this.deactivated,
+        user = userReference
+    )
+}
