@@ -7,9 +7,9 @@ import jakarta.persistence.*
 data class CompletedMaintenanceEntity(
     @Id
     val maintenanceId: Int,
-    val name: String,
-    val notes: String?,
-    val pictures: String?,
+    override val name: String,
+    override val notes: String?,
+    override val pictures: String?,
     val date: String,
     val mileage: Int,
     val serviceCenter: String?,
@@ -18,4 +18,4 @@ data class CompletedMaintenanceEntity(
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     val vehicle: VehicleEntity
-)
+) : MaintenanceEntity

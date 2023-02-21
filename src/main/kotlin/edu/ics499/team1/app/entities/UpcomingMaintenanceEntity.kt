@@ -8,9 +8,9 @@ data class UpcomingMaintenanceEntity(
     @Id
     @GeneratedValue
     val maintenanceId: Int,
-    val name: String,
-    val notes: String?,
-    val pictures: String?,
+    override val name: String,
+    override val notes: String?,
+    override val pictures: String?,
     val mileageInterval: Int?,
     val timeInterval: String?,
     val mileageReminder: Boolean,
@@ -18,4 +18,4 @@ data class UpcomingMaintenanceEntity(
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     val vehicle: VehicleEntity
-)
+) : MaintenanceEntity

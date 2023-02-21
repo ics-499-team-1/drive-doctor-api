@@ -2,7 +2,10 @@ package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.User
 import edu.ics499.team1.app.services.UserService
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -15,6 +18,16 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/v1/users")
 class UserController(private val userService: UserService) {
+
+    @ExceptionHandler(NoSuchElementException::class)
+    fun handleNotFound(e: NoSuchElementException) : ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.NOT_FOUND)
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgument (e: IllegalArgumentException) : ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+
+
 
     @GetMapping("/{userId}")
     fun getUser(@PathVariable userId: Int) = userService.getUser(userId)
@@ -29,5 +42,9 @@ class UserController(private val userService: UserService) {
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteUser(@PathVariable userId: Int) = userService.deleteUser(userId)
+
+    @GetMapping("/{userId}/vehicles")
+    fun getUserVehicles(@PathVariable userId: Int) = userService.getUserVehicles(userId)
+
 
 }
