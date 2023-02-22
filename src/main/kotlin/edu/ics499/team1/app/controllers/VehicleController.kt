@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.Vehicle
+import edu.ics499.team1.app.services.CustomExceptions
 import edu.ics499.team1.app.services.VehicleService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -22,6 +23,14 @@ class VehicleController(private val service: VehicleService) {
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgument (e: IllegalArgumentException) : ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
+
+    @ExceptionHandler(CustomExceptions.VinAlreadyExistsException::class)
+    fun handleVinAlreadyExists(e: CustomExceptions.VinAlreadyExistsException) : ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.CONFLICT)
+
+    @ExceptionHandler(CustomExceptions.LicensePlateAlreadyExistsException::class)
+    fun handleLicensePlateAlreadyExists(e : CustomExceptions.LicensePlateAlreadyExistsException) : ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.CONFLICT)
 
     @GetMapping
     fun getVehicles() = service.getVehicles()

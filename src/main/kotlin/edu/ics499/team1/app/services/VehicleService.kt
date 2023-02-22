@@ -19,6 +19,14 @@ class VehicleService(
     fun getVehicles(): List<VehicleEntity> = vehicleRepository.findAll()
 
     fun createVehicle(vehicle: Vehicle): VehicleEntity {
+        if ((vehicle.licensePlateNumber != null &&
+                    vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber)))
+            throw CustomExceptions.LicensePlateAlreadyExistsException("Vehicle with license plate number " +
+                    "${vehicle.licensePlateNumber} already exists")
+        if (vehicle.vin != null && vehicleRepository.existsByVin(vehicle.vin))
+            throw CustomExceptions.VinAlreadyExistsException("Vehicle with vin ${vehicle.vin} already exists")
+
+
         val user = userRepository.getReferenceById(vehicle.userId)
         return vehicleRepository.save(vehicle.toVehicleEntity(user))
     }

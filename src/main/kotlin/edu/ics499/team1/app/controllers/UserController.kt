@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.User
+import edu.ics499.team1.app.services.CustomExceptions
 import edu.ics499.team1.app.services.UserService
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
@@ -27,7 +28,9 @@ class UserController(private val userService: UserService) {
     fun handleIllegalArgument (e: IllegalArgumentException) : ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
 
-
+    @ExceptionHandler(CustomExceptions.UserAlreadyExistsException::class)
+    fun handleUserAlreadyExists (e: CustomExceptions.UserAlreadyExistsException) : ResponseEntity<String> =
+        ResponseEntity(e.message, HttpStatus.CONFLICT)
 
     @GetMapping("/{userId}")
     fun getUser(@PathVariable userId: Int) = userService.getUser(userId)
