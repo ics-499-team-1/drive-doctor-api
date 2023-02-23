@@ -1,5 +1,6 @@
 package edu.ics499.team1.app.controllers
 
+import edu.ics499.team1.app.domains.CompletedMaintenance
 import edu.ics499.team1.app.domains.UpcomingMaintenance
 import edu.ics499.team1.app.services.UpcomingMaintenanceService
 import org.springframework.http.HttpStatus
@@ -9,42 +10,60 @@ import org.springframework.web.bind.annotation.*
     // TODO: Update a maintenance item?
     // TODO: Exception Handlers
     /**
-     * [getMaintenance] Returns all maintenance record
+     * [getUpcomingMaintenancesByVehicleId] Returns all of a vehicle's maintenance records
      * [addMaintenance] Adds a maintenance record
-     * [removeMaintenance] Removes a maintenance record
+     * [deleteUpcomingMaintenance] Removes a maintenance record
      */
 @RestController
-@RequestMapping("/v1/vehicles/maintenance")
+@RequestMapping("/v1/maintenance/upcoming_maintenance")
 class UpcomingMaintenanceController(
-    private val service: UpcomingMaintenanceService,
-
+        private val service: UpcomingMaintenanceService,
 ) {
 
     /**
      * Gets all maintenance records for a specific vehicle.
+     * @param vehicleId
+     * @return The List<UpcomingMaintenanceEntity> for the specified vehicle.
      */
-    @GetMapping("/{vehicleId}/upcomingMaintenance")
-    fun getUpcomingMaintenancesByVehicleId(@PathVariable vehicleId: String) = service.getUpcomingMaintenance(vehicleId)
+    @GetMapping("/by_vehicle/{vehicleId}")
+    fun getUpcomingMaintenancesByVehicleId(@PathVariable vehicleId: String) = service.getUpcomingMaintenanceByVehicleId(vehicleId)
 
     /**
-     * Creates a new maintenance record for a specific vehicle
+     * Creates a new upcoming maintenance record for a specific vehicle.
+     * @param vehicleId
+     * @param upcomingMaintenance
+     * @return Unit
      */
-    @PostMapping("/{vehicleId}")
+    @PostMapping("/by_vehicle/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
     fun addMaintenance(@PathVariable vehicleId: String, @RequestBody upcomingMaintenance: UpcomingMaintenance) {
-        service.addUpcomingMaintenance(vehicleId, upcomingMaintenance)
+        service.createUpcomingMaintenance(vehicleId, upcomingMaintenance)
     }
 
-    @DeleteMapping("/{vehicleId}/upcomingMaintenance/{maintenanceId}")
+    /**
+     * Deletes a vehicle with the specified vehicleId
+     * @param vehicleId
+     */
+    @DeleteMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun removeMaintenance(@PathVariable vehicleId: String, @PathVariable maintenanceId: String) {
-        service.removeUpcomingMaintenance(vehicleId, maintenanceId)
+    fun deleteUpcomingMaintenance(@PathVariable maintenanceId: String) {
+        service.removeUpcomingMaintenance(maintenanceId)
     }
 
+        // todo There is probably a more robust way to do this, if we want to adapt it for all fields
+        /**
+         * Updates the name field of the upcoming maintenance item.
+         */
+        @PatchMapping("/{maintenanceId}")
+        @ResponseStatus(HttpStatus.OK)
+        fun updateUpcomingMaintenanceName(@PathVariable maintenanceId: String,
+                                      @RequestBody upcomingMaintenance: UpcomingMaintenance) =
+            service.updateUpcomingMaintenanceName(maintenanceId, upcomingMaintenance.name)
 
-//    @PostMapping // TODO: not sure how to map this yet. Needs own request mapping?
-//    @ResponseStatus(HttpStatus.CREATED) // TODO: Could be patch mapped instead?
-//    fun completeMaintenance(@PathVariable id: String) {
-//        // service.completedMaintenanceRepository(id)
-//    }
+
+    @PostMapping("/convert/{maintenanceId}")
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    fun convertUpcomingToCompletedMaintenance(@PathVariable maintenanceId: String,
+                                              @RequestBody completedMaintenance: CompletedMaintenance) =
+        service.convertUpcomingToCompleted(maintenanceId, completedMaintenance)
 }

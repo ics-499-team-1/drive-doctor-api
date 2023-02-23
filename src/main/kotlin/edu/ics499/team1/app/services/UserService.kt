@@ -16,6 +16,13 @@ import kotlin.NoSuchElementException
 @Service
 class UserService(private val userRepository: UserRepository) {
 
+    /**
+     * Creates a new Vehicle in the database.
+     * @param user: a domain of type User
+     * @exception CustomExceptions.UserAlreadyExistsException Throws if the combination of firstName, lastName, and
+     * email are already in the database.
+     * @return A UserEntity of the created user.
+     */
     fun createUser(user: User): UserEntity {
         if ( userRepository.existsByFirstNameAndLastNameAndEmail
                 (user.firstName, user.lastName, user.email)) {
@@ -25,6 +32,12 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.save(user.toUserEntity())
     }
 
+    /**
+     * Returns a single UserEntity
+     * @param userId An int for the database user_id number
+     * @return An Optional<userEntity> matching the userId, or null if no match is found
+     * @exception NoSuchElementException Throws if no user with the given userId is matched.
+     */
     fun getUser(userId: Int): Optional<UserEntity> {
         val userRep = userRepository.findById(userId)
         if (userRep.isEmpty) {
@@ -34,16 +47,28 @@ class UserService(private val userRepository: UserRepository) {
         }
     }
 
-
+    /**
+     * Returns a List of all user entities in the db
+     * @return List<UserEntity>
+     */
     fun getUsers(): List<UserEntity> = userRepository.findAll()
 
+    /**
+     * Deletes a user from the database.
+     * @param userId An int designating the database user_id number
+     * @exception NoSuchElementException Throws if the provided userId is not found in the database.
+     */
     fun deleteUser(userId: Int): Unit =
         try {
             userRepository.deleteById(userId)
         } catch (e: EmptyResultDataAccessException) {
             throw NoSuchElementException("No such user with userId $userId exists")
         }
-
+    /**
+     * Returns a list of the vehicles associated with the given userId
+     * @param userId An int for the database user_id number
+     * @return A List<VehicleEntity> associated with the userId
+     */
     fun getUserVehicles(userId: Int) : List<VehicleEntity> = userRepository.findById(userId).get().vehicles
 
 }

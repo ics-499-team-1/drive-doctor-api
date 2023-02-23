@@ -15,9 +15,21 @@ class VehicleService(
     private val vehicleRepository: VehicleRepository,
     private val userRepository: UserRepository
 ) {
-
+    /**
+     * Returns a List of all vehicle entities in the db
+     * @return List<VehicleEntity>
+     */
     fun getVehicles(): List<VehicleEntity> = vehicleRepository.findAll()
 
+    /**
+     * Creates a new Vehicle in the database.
+     * @param vehicle: a domain of type Vehicle
+     * @exception CustomExceptions.LicensePlateAlreadyExistsException Throws if the license plate number is already
+     * in the database.
+     * @exception CustomExceptions.VinAlreadyExistsException Throws is the vin number of the vehicle is already
+     * found in the database.
+     * @return A VehicleEntity of the created vehicle.
+     */
     fun createVehicle(vehicle: Vehicle): VehicleEntity {
         if ((vehicle.licensePlateNumber != null &&
                     vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber)))
@@ -31,6 +43,11 @@ class VehicleService(
         return vehicleRepository.save(vehicle.toVehicleEntity(user))
     }
 
+    /**
+     * Deletes a vehicle from the database.
+     * @param vehicleId An int designating the database vehicle_id number
+     * @exception NoSuchElementException Throws if the provided vehicle ID is not found in the database.
+     */
     fun deleteVehicle(vehicleId: Int)  =
     try {
         vehicleRepository.deleteById(vehicleId)
@@ -38,10 +55,16 @@ class VehicleService(
         throw NoSuchElementException("No such vehicle with vehicleId $vehicleId exists")
     }
 
+    /**
+     * Returns a single VehicleEntity
+     * @param vehicleId An int for the database vehicle ID number
+     * @return A VehicleEntity containing the vehicle ID
+     * @exception NoSuchElementException Throws if no vehicle with the given vehicleId can be found.
+     */
     fun getVehicle(vehicleId: Int): Optional<VehicleEntity> {
         val vehicleRep = vehicleRepository.findById(vehicleId)
         if (vehicleRep.isEmpty) {
-            throw NoSuchElementException("Could not find a user with userID $vehicleId")
+            throw NoSuchElementException("Could not find a vehicle with vehicleID $vehicleId")
         } else {
             return vehicleRep
         }

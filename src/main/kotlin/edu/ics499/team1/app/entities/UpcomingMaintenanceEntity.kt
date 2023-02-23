@@ -1,9 +1,7 @@
 package edu.ics499.team1.app.entities
 
 import com.fasterxml.jackson.annotation.JsonBackReference
-import com.fasterxml.jackson.annotation.JsonCreator
 import jakarta.persistence.*
-import java.util.*
 
 @Entity
 @Table(name = "upcoming_maintenance")
