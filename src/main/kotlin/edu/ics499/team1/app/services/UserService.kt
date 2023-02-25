@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.User
+import edu.ics499.team1.app.entities.TripEntity
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import org.springframework.stereotype.Service
