@@ -31,7 +31,7 @@ internal class VehicleServiceTest {
     }
 
     @Test
-    fun `should create a new vehicle`() {
+    fun `should create a new vehicle by calling VehicleService's createVehicle()`() {
         // given
         val user = UserEntity(
             userId = 123,
@@ -106,7 +106,7 @@ internal class VehicleServiceTest {
             email = "ryangalalgher@email.com",
             phoneNumber = "651-555-1234"
         )
-        every { userRepository.getReferenceById(any()) } returns user
+        every { userRepository.getReferenceById(321) } returns user
 
         val vehicle = Vehicle(
             name = "Test Vehicle",
