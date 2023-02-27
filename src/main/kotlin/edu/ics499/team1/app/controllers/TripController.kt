@@ -1,10 +1,6 @@
 package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.Trip
-import edu.ics499.team1.app.domains.Vehicle
-import edu.ics499.team1.app.entities.TripEntity
-import edu.ics499.team1.app.entities.UserEntity
-import edu.ics499.team1.app.repositories.VehicleRepository
 import edu.ics499.team1.app.services.TripService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -37,9 +33,4 @@ class TripController(private val tripService: TripService) {
 
     @GetMapping("/{vehicleId}/mileage")
     fun getTotalMileage(@PathVariable vehicleId: Int) = tripService.getTotalMileage(vehicleId)
-
-    @GetMapping("/user/user-trips")
-    fun getUserTrips(user: UserEntity):List<TripEntity>{
-        return tripService.getUserTrips(user)
-    }
 }

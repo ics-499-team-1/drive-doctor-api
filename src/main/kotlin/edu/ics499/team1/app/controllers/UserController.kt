@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.User
+import edu.ics499.team1.app.entities.TripEntity
 import edu.ics499.team1.app.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -30,4 +31,8 @@ class UserController(private val userService: UserService) {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteUser(@PathVariable userId: Int) = userService.deleteUser(userId)
 
+    @GetMapping("/{userId}/trips")
+    fun getUserTrips(@PathVariable userId: Int): List<TripEntity> {
+        return userService.getUserTrips(userId)
+    }
 }

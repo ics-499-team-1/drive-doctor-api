@@ -3,9 +3,7 @@ package edu.ics499.team1.app.services
 import edu.ics499.team1.app.domains.Trip
 import edu.ics499.team1.app.domains.VehicleTripMileage
 import edu.ics499.team1.app.entities.TripEntity
-import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.repositories.TripRepository
-import edu.ics499.team1.app.repositories.UserRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
 
 import org.springframework.stereotype.Service
@@ -38,21 +36,5 @@ class TripService(
             totalMiles = trips.sumOf { it.mileage },
             trips = trips
         )
-    }
-
-    fun getUserTrips(user: UserEntity): List<TripEntity> {
-        // Find vehicles of user
-        val vehicles = vehicleRepository.findByUser(user)
-
-        // Initialize list to store trips
-        val trips = mutableListOf<TripEntity>()
-
-        // Loop through vehicles and find trips of each vehicle
-        for(vehicle in vehicles){
-            val vehicleTrips = tripRepository.findAllByVehicle(vehicle)
-            trips.addAll(vehicleTrips)
-        }
-
-        return trips
     }
 }

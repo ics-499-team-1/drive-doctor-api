@@ -16,4 +16,13 @@ class UserService(private val userRepository: UserRepository) {
     fun getUsers(): List<UserEntity> = userRepository.findAll()
 
     fun deleteUser(userId: Int) = userRepository.deleteById(userId)
+
+    fun getUserTrips(userId: Int): List<TripEntity> {
+        val trips = mutableListOf<TripEntity>()
+        val vehicles = userRepository.getReferenceById(userId).vehicles
+        for (vehicle in vehicles) {
+            trips.addAll(vehicle.trips)
+        }
+        return trips
+    }
 }
