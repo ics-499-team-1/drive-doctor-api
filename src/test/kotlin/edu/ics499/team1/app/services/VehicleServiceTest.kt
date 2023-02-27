@@ -9,7 +9,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.util.*
 
 internal class VehicleServiceTest {
 
@@ -94,15 +96,51 @@ internal class VehicleServiceTest {
         verify(exactly = 1) { vehicleRepository.deleteById(vehicleId)}
     }
     
-//    @Test
-//    fun `should delete a vehicle by calling deleteVehicle() on the vehicle repo`() {
-//        // given
-//        val vehicle = Vehicle()
-//
-//        // when
-//
-//
-//        // then
-//
-//    }
+    @Test
+    fun `should delete a vehicle by calling deleteVehicle() on the vehicle repo`() {
+        // given
+        val user = UserEntity(
+            userId = 321,
+            firstName = "Ryan",
+            lastName = "Gallagher",
+            email = "ryangalalgher@email.com",
+            phoneNumber = "651-555-1234"
+        )
+        every { userRepository.getReferenceById(any()) } returns user
+
+        val vehicle = Vehicle(
+            name = "Test Vehicle",
+            year = 2020,
+            make = "TestMake",
+            model = "TestModel",
+            trim = "TestTrim",
+            odometer = 123_000,
+            licensePlateNumber = "ABC-XYZ",
+            vin = "12345678900004567",
+            userId = user.userId
+        )
+        every { vehicleRepository.save(any<VehicleEntity>()) } returns VehicleEntity(
+            name = vehicle.name,
+            year = vehicle.year,
+            make = vehicle.make,
+            model = vehicle.model,
+            trim = vehicle.trim,
+            odometer = vehicle.odometer,
+            licensePlateNumber = vehicle.licensePlateNumber,
+            vin = vehicle.vin,
+            deactivated = false,
+            user = user
+        )
+
+        val savedVehicle = vehicleService.createVehicle(vehicle)
+
+        // when
+        vehicleService.deleteVehicle(savedVehicle.vehicleId)
+
+        // then
+        verify(exactly = 1) { vehicleRepository.deleteById(savedVehicle.vehicleId) }
+        every { vehicleRepository.findById(savedVehicle.vehicleId) } returns Optional.empty()
+        val deletedVehicle = vehicleRepository.findById(savedVehicle.vehicleId)
+        assertEquals(/* expected = */ Optional.empty<VehicleEntity>(), /* actual = */ deletedVehicle)
+    }
 }
