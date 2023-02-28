@@ -1,15 +1,18 @@
 package edu.ics499.team1.app.entities
 
+import com.fasterxml.jackson.annotation.JsonBackReference
+import edu.ics499.team1.app.domains.Vehicle
 import jakarta.persistence.*
 
 @Entity
 @Table(name = "completed_maintenance")
 data class CompletedMaintenanceEntity(
     @Id
-    val maintenanceId: Int,
-    val name: String,
-    val notes: String?,
-    val pictures: String?,
+    @GeneratedValue
+    val maintenanceId: Int = 0,
+    override val name: String,
+    override val notes: String?,
+    override val pictures: String?,
     val date: String,
     val mileage: Int,
     val serviceCenter: String?,
@@ -17,5 +20,6 @@ data class CompletedMaintenanceEntity(
     val totalCost: Double?,
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
+    @JsonBackReference
     val vehicle: VehicleEntity
-)
+) : MaintenanceEntity
