@@ -62,8 +62,8 @@ class UpcomingMaintenanceService(
      * @param maintenanceId The id of the upcoming maintenance to be converted
      * @param completedMaintenance The post body to update the item with
      */
-    fun convertUpcomingToCompleted(maintenanceId: String, completedMaintenance: CompletedMaintenance) {
-        val upcoming = upcomingMaintenanceRepository.getReferenceById(maintenanceId.toInt())
+    fun convertUpcomingToCompleted(maintenanceId: Int, completedMaintenance: CompletedMaintenance) {
+        val upcoming = upcomingMaintenanceRepository.getReferenceById(maintenanceId)
         val completed = CompletedMaintenanceEntity (
             name = upcoming.name,
             notes = upcoming.notes,
