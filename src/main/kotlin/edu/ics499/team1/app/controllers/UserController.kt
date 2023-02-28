@@ -1,11 +1,8 @@
 package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.User
-<<<<<<< HEAD
 import edu.ics499.team1.app.services.CustomExceptions
-=======
 import edu.ics499.team1.app.entities.TripEntity
->>>>>>> main
 import edu.ics499.team1.app.services.UserService
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
@@ -50,15 +47,12 @@ class UserController(private val userService: UserService) {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteUser(@PathVariable userId: Int) = userService.deleteUser(userId)
 
-<<<<<<< HEAD
     @GetMapping("/{userId}/vehicles")
     fun getUserVehicles(@PathVariable userId: Int) = userService.getUserVehicles(userId)
 
 
-=======
     @GetMapping("/{userId}/trips")
     fun getUserTrips(@PathVariable userId: Int): List<TripEntity> {
         return userService.getUserTrips(userId)
     }
->>>>>>> main
 }
