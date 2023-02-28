@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
  * [deleteUpcomingMaintenance] Removes a maintenance record
  */
 @RestController
-@RequestMapping("/v1/maintenance/completed_maintenance")
+@RequestMapping("/v1/maintenance/completed-maintenance")
 class CompletedMaintenanceController(
     private val service: CompletedMaintenanceService,
 ) {
