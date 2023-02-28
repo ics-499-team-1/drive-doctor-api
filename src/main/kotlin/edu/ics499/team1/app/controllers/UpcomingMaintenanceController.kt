@@ -66,4 +66,8 @@ class UpcomingMaintenanceController(
     fun convertUpcomingToCompletedMaintenance(@PathVariable maintenanceId: String,
                                               @RequestBody completedMaintenance: CompletedMaintenance) =
         service.convertUpcomingToCompleted(maintenanceId, completedMaintenance)
+
+    @GetMapping("/credits")  //todo: logical end point. Should the service be called in create vehicle?"
+    @ResponseStatus(HttpStatus.CREATED)
+    fun loadUpcomingMaintenance() = service.callUpcomingMaintenanceAPI() // todo: @PathVariable maintenanceId: String
 }

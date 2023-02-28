@@ -7,7 +7,10 @@ import edu.ics499.team1.app.entities.UpcomingMaintenanceEntity
 import edu.ics499.team1.app.repositories.CompletedMaintenanceRepository
 import edu.ics499.team1.app.repositories.UpcomingMaintenanceRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.client.WebClient
 
 @Service
 class UpcomingMaintenanceService(
@@ -74,6 +77,23 @@ class UpcomingMaintenanceService(
         )
         completedMaintenanceRepository.save(completed)
         upcomingMaintenanceRepository.deleteById(upcoming.maintenanceId)
+    }
+
+    fun callUpcomingMaintenanceAPI(): String { // todo: where do I go?
+        val client : WebClient = WebClient.builder()
+            .baseUrl("http://api.carmd.com/v3.0")
+            .defaultHeader("authorization", "Basic MjBlY2EyMjItMjc3Ny00MTQxLWJhOGEtNDdlMjhiNGYyNzBl")
+            .defaultHeader("partner-token", "24e07ee005cc4294b928ccdc4a4db54c")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build()
+        val response = client.get()
+            .uri("/credits")
+            .retrieve()
+            .bodyToMono(String::class.java)
+            .block()
+
+        return response ?: ""
+
     }
 
 
