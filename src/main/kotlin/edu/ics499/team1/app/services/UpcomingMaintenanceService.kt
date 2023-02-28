@@ -22,16 +22,16 @@ class UpcomingMaintenanceService(
      * @param vehicleId
      * @return List<UpcomingMaintenanceEntity>
      */
-    fun getUpcomingMaintenanceByVehicleId(vehicleId: String): List<UpcomingMaintenanceEntity> =
-        vehicleRepository.getReferenceById(vehicleId.toInt()).upcomingMaintenance
+    fun getUpcomingMaintenanceByVehicleId(vehicleId: Int): List<UpcomingMaintenanceEntity> =
+        vehicleRepository.getReferenceById(vehicleId).upcomingMaintenance
     /**
      * Service for creating upcoming maintenance items associated with a specific vehicle id.
      * @param vehicleId
      * @param maintenance Of domain type UpcomingMaintenance
      * @return Unit
      */
-    fun createUpcomingMaintenance(vehicleId: String, maintenance: UpcomingMaintenance) {
-        val vehicle = vehicleRepository.getReferenceById(vehicleId.toInt())
+    fun createUpcomingMaintenance(vehicleId: Int, maintenance: UpcomingMaintenance) {
+        val vehicle = vehicleRepository.getReferenceById(vehicleId)
         upcomingMaintenanceRepository.save(maintenance.toUpcomingMaintenanceEntity(vehicle))
     }
 

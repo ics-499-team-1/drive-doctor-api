@@ -11,14 +11,16 @@ import org.springframework.stereotype.Service
 @Service
 class CompletedMaintenanceService(
     private val completedMaintenance: CompletedMaintenanceRepository,
-    private val vehicleRepository: VehicleRepository) {
+    private val vehicleRepository: VehicleRepository
+) {
+
     /**
      * Service for returning completed maintenance items associated with a specific vehicle id.
      * @param vehicleId
      * @return List<CompletedMaintenanceEntity>
      */
-    fun getCompletedMaintenanceByVehicleId(vehicleId: String): List<CompletedMaintenanceEntity> =
-        vehicleRepository.getReferenceById(vehicleId.toInt()).completedMaintenance
+    fun getCompletedMaintenanceByVehicleId(vehicleId: Int): List<CompletedMaintenanceEntity> =
+        vehicleRepository.getReferenceById(vehicleId).completedMaintenance
 
     /**
      * Service for creating completed maintenance items associated with a specific vehicle id.

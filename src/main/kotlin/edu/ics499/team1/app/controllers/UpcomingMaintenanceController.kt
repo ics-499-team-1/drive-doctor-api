@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*
      * [deleteUpcomingMaintenance] Removes a maintenance record
      */
 @RestController
-@RequestMapping("/v1/maintenance/upcoming_maintenance")
+@RequestMapping("/v1/maintenance/upcoming-maintenance")
 class UpcomingMaintenanceController(
         private val service: UpcomingMaintenanceService,
 ) {
@@ -25,7 +25,7 @@ class UpcomingMaintenanceController(
      * @param vehicleId
      * @return The List<UpcomingMaintenanceEntity> for the specified vehicle.
      */
-    @GetMapping("/by_vehicle/{vehicleId}")
+    @GetMapping("/vehicles/{vehicleId}")
     fun getUpcomingMaintenancesByVehicleId(@PathVariable vehicleId: String) = service.getUpcomingMaintenanceByVehicleId(vehicleId)
 
     /**
@@ -34,7 +34,7 @@ class UpcomingMaintenanceController(
      * @param upcomingMaintenance
      * @return Unit
      */
-    @PostMapping("/by_vehicle/{vehicleId}")
+    @PostMapping("/vehicles/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
     fun addMaintenance(@PathVariable vehicleId: String, @RequestBody upcomingMaintenance: UpcomingMaintenance) {
         service.createUpcomingMaintenance(vehicleId, upcomingMaintenance)
