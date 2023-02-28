@@ -40,8 +40,8 @@ class UpcomingMaintenanceService(
      * @param maintenanceId
      * @return Unit
      */
-    fun removeUpcomingMaintenance(maintenanceId: String) =
-        upcomingMaintenanceRepository.deleteById(maintenanceId.toInt())
+    fun removeUpcomingMaintenance(maintenanceId: Int) =
+        upcomingMaintenanceRepository.deleteById(maintenanceId)
 
     /**
      * Updates the name field in an existing maintenance item.
