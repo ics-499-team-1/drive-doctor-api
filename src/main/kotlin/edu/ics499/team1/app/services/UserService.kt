@@ -1,7 +1,11 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.User
+<<<<<<< HEAD
 import edu.ics499.team1.app.domains.Vehicle
+=======
+import edu.ics499.team1.app.entities.TripEntity
+>>>>>>> main
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
@@ -53,6 +57,7 @@ class UserService(private val userRepository: UserRepository) {
      */
     fun getUsers(): List<UserEntity> = userRepository.findAll()
 
+<<<<<<< HEAD
     /**
      * Deletes a user from the database.
      * @param userId An int designating the database user_id number
@@ -71,4 +76,16 @@ class UserService(private val userRepository: UserRepository) {
      */
     fun getUserVehicles(userId: Int) : List<VehicleEntity> = userRepository.findById(userId).get().vehicles
 
+=======
+    fun deleteUser(userId: Int) = userRepository.deleteById(userId)
+
+    fun getUserTrips(userId: Int): List<TripEntity> {
+        val trips = mutableListOf<TripEntity>()
+        val vehicles = userRepository.getReferenceById(userId).vehicles
+        for (vehicle in vehicles) {
+            trips.addAll(vehicle.trips)
+        }
+        return trips
+    }
+>>>>>>> main
 }

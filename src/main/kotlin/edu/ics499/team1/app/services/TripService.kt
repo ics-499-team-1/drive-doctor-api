@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class TripService(
     private val tripRepository: TripRepository,
-    private val vehicleRepository: VehicleRepository
+    private val vehicleRepository: VehicleRepository,
 ) {
 
     fun getTrips(): List<TripEntity> = tripRepository.findAll()
