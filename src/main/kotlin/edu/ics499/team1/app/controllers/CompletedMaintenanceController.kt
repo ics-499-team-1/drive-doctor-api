@@ -24,7 +24,7 @@ class CompletedMaintenanceController(
      * @param vehicleId
      * @return The List<CompletedMaintenanceEntity> for the specified vehicle.
      */
-    @GetMapping("/by_vehicle/{vehicleId}")
+    @GetMapping("/vehicles/{vehicleId}")
     fun getCompletedMaintenancesByVehicleId(@PathVariable vehicleId: String) = service.getCompletedMaintenanceByVehicleId(vehicleId)
 
     /**
