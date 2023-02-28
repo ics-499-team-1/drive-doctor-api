@@ -49,8 +49,8 @@ class UpcomingMaintenanceService(
      * @param name
      * @return Unit
      */
-    fun updateUpcomingMaintenanceName(maintenanceId: String, name: String) {
-        upcomingMaintenanceRepository.modifyUpcomingMaintenanceName(maintenanceId.toInt(), name)
+    fun updateUpcomingMaintenanceName(maintenanceId: Int, name: String) {
+        upcomingMaintenanceRepository.modifyUpcomingMaintenanceName(maintenanceId, name)
 
     }
 
