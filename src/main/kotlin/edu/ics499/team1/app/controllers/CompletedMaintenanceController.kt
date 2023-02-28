@@ -33,7 +33,7 @@ class CompletedMaintenanceController(
      * @param completedMaintenance
      * @return Unit
      */
-    @PostMapping("/by_vehicle/{vehicleId}")
+    @PostMapping("/vehicles/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
     fun addMaintenance(@PathVariable vehicleId: String, @RequestBody completedMaintenance: CompletedMaintenance) {
         service.createCompletedMaintenance(vehicleId, completedMaintenance)
