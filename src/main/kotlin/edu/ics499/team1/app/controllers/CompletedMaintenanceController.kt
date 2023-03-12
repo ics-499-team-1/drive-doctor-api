@@ -35,7 +35,7 @@ class CompletedMaintenanceController(
      */
     @PostMapping("/vehicles/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun addMaintenance(@PathVariable vehicleId: String, @RequestBody completedMaintenance: CompletedMaintenance) {
+    fun addMaintenance(@PathVariable vehicleId: Int, @RequestBody completedMaintenance: CompletedMaintenance) {
         service.createCompletedMaintenance(vehicleId, completedMaintenance)
     }
 
@@ -45,7 +45,7 @@ class CompletedMaintenanceController(
      */
     @DeleteMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCompletedMaintenance(@PathVariable maintenanceId: String) {
+    fun deleteCompletedMaintenance(@PathVariable maintenanceId: Int) {
         service.removeCompletedMaintenance(maintenanceId)
     }
 
