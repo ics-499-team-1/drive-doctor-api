@@ -12,7 +12,7 @@ data class UpcomingMaintenance(
     val mileageReminder: Boolean,
     val timeReminder: Boolean
 ) : Maintenance {
-    fun toUpcomingMaintenanceEntity(vehicleReference: VehicleEntity) = UpcomingMaintenanceEntity (
+    fun toUpcomingMaintenanceEntity(vehicleReference: VehicleEntity) = UpcomingMaintenanceEntity(
         name = this.name,
         notes = this.notes,
         pictures = this.pictures,

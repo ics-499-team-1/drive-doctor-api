@@ -1,7 +1,6 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.Vehicle
-import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
@@ -32,9 +31,12 @@ class VehicleService(
      */
     fun createVehicle(vehicle: Vehicle): VehicleEntity {
         if ((vehicle.licensePlateNumber != null &&
-                    vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber)))
-            throw CustomExceptions.LicensePlateAlreadyExistsException("Vehicle with license plate number " +
-                    "${vehicle.licensePlateNumber} already exists")
+                    vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber))
+        )
+            throw CustomExceptions.LicensePlateAlreadyExistsException(
+                "Vehicle with license plate number " +
+                        "${vehicle.licensePlateNumber} already exists"
+            )
         if (vehicle.vin != null && vehicleRepository.existsByVin(vehicle.vin))
             throw CustomExceptions.VinAlreadyExistsException("Vehicle with vin ${vehicle.vin} already exists")
 
@@ -48,12 +50,12 @@ class VehicleService(
      * @param vehicleId An int designating the database vehicle_id number
      * @exception NoSuchElementException Throws if the provided vehicle ID is not found in the database.
      */
-    fun deleteVehicle(vehicleId: Int)  =
-    try {
-        vehicleRepository.deleteById(vehicleId)
-    } catch (e: EmptyResultDataAccessException) {
-        throw NoSuchElementException("No such vehicle with vehicleId $vehicleId exists")
-    }
+    fun deleteVehicle(vehicleId: Int) =
+        try {
+            vehicleRepository.deleteById(vehicleId)
+        } catch (e: EmptyResultDataAccessException) {
+            throw NoSuchElementException("No such vehicle with vehicleId $vehicleId exists")
+        }
 
     /**
      * Returns a single VehicleEntity

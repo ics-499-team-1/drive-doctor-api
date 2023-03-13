@@ -1,8 +1,8 @@
 package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.User
-import edu.ics499.team1.app.services.CustomExceptions
 import edu.ics499.team1.app.entities.TripEntity
+import edu.ics499.team1.app.services.CustomExceptions
 import edu.ics499.team1.app.services.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.*
 class UserController(private val userService: UserService) {
 
     @ExceptionHandler(NoSuchElementException::class)
-    fun handleNotFound(e: NoSuchElementException) : ResponseEntity<String> =
+    fun handleNotFound(e: NoSuchElementException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.NOT_FOUND)
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun handleIllegalArgument (e: IllegalArgumentException) : ResponseEntity<String> =
+    fun handleIllegalArgument(e: IllegalArgumentException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
 
     @ExceptionHandler(CustomExceptions.UserAlreadyExistsException::class)
-    fun handleUserAlreadyExists (e: CustomExceptions.UserAlreadyExistsException) : ResponseEntity<String> =
+    fun handleUserAlreadyExists(e: CustomExceptions.UserAlreadyExistsException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.CONFLICT)
 
     @GetMapping("/{userId}")
