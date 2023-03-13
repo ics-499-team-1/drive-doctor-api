@@ -20,5 +20,4 @@ internal class TripServiceTest {
         verify(exactly = 1) { tripDataSource.findAll() }
         verify(exactly = 1) { vehicleDataSource.findAll() }
     }
-
 }

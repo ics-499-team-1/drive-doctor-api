@@ -26,7 +26,7 @@ class UpcomingMaintenanceController(
      * @return The List<UpcomingMaintenanceEntity> for the specified vehicle.
      */
     @GetMapping("/vehicles/{vehicleId}")
-    fun getUpcomingMaintenancesByVehicleId(@PathVariable vehicleId: String) = service.getUpcomingMaintenanceByVehicleId(vehicleId)
+    fun getUpcomingMaintenancesByVehicleId(@PathVariable vehicleId: Int) = service.getUpcomingMaintenanceByVehicleId(vehicleId)
 
     /**
      * Creates a new upcoming maintenance record for a specific vehicle.
@@ -36,17 +36,17 @@ class UpcomingMaintenanceController(
      */
     @PostMapping("/vehicles/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun addMaintenance(@PathVariable vehicleId: String, @RequestBody upcomingMaintenance: UpcomingMaintenance) {
+    fun addMaintenance(@PathVariable vehicleId: Int, @RequestBody upcomingMaintenance: UpcomingMaintenance) {
         service.createUpcomingMaintenance(vehicleId, upcomingMaintenance)
     }
 
     /**
      * Deletes a vehicle with the specified vehicleId
-     * @param vehicleId
+     * @param maintenanceId
      */
     @DeleteMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteUpcomingMaintenance(@PathVariable maintenanceId: String) {
+    fun deleteUpcomingMaintenance(@PathVariable maintenanceId: Int) {
         service.removeUpcomingMaintenance(maintenanceId)
     }
 
@@ -56,14 +56,14 @@ class UpcomingMaintenanceController(
          */
         @PatchMapping("/{maintenanceId}")
         @ResponseStatus(HttpStatus.OK)
-        fun updateUpcomingMaintenanceName(@PathVariable maintenanceId: String,
+        fun updateUpcomingMaintenanceName(@PathVariable maintenanceId: Int,
                                       @RequestBody upcomingMaintenance: UpcomingMaintenance) =
             service.updateUpcomingMaintenanceName(maintenanceId, upcomingMaintenance.name)
 
 
     @PostMapping("/convert/{maintenanceId}")
     @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    fun convertUpcomingToCompletedMaintenance(@PathVariable maintenanceId: String,
+    fun convertUpcomingToCompletedMaintenance(@PathVariable maintenanceId: Int,
                                               @RequestBody completedMaintenance: CompletedMaintenance) =
         service.convertUpcomingToCompleted(maintenanceId, completedMaintenance)
 
