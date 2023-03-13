@@ -47,8 +47,8 @@ class CompletedMaintenanceService(
      * @param name
      * @return Unit
      */
-    fun updateCompletedMaintenanceName(maintenanceId: String, name: String) {
-        completedMaintenance.modifyCompletedMaintenanceName(maintenanceId.toInt(), name)
+    fun updateCompletedMaintenanceName(maintenanceId: Int, name: String) {
+        completedMaintenance.modifyCompletedMaintenanceName(maintenanceId, name)
 
     }
 }

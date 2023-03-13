@@ -4,9 +4,7 @@ import edu.ics499.team1.app.domains.User
 import edu.ics499.team1.app.services.CustomExceptions
 import edu.ics499.team1.app.entities.TripEntity
 import edu.ics499.team1.app.services.UserService
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
