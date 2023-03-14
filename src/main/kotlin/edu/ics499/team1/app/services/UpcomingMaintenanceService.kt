@@ -78,7 +78,7 @@ class UpcomingMaintenanceService(
             vehicle = upcoming.vehicle
         )
         completedMaintenanceRepository.save(completed)
-        upcomingMaintenanceRepository.deleteById(upcoming.id)
+        upcomingMaintenanceRepository.deleteById(upcoming.upcomingMaintenanceId)
     }
 
     fun callUpcomingMaintenanceAPI(): String { // todo: where do I go?
