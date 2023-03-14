@@ -73,9 +73,11 @@ class UserService(private val userRepository: UserRepository) {
     fun getUserTrips(userId: Int): List<TripEntity> {
         val trips = mutableListOf<TripEntity>()
         val vehicles = userRepository.getReferenceById(userId).vehicles
+
         for (vehicle in vehicles) {
             trips.addAll(vehicle.trips)
         }
+
         return trips
     }
 }

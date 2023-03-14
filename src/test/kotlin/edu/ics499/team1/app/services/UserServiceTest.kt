@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.User
+import edu.ics499.team1.app.entities.TripEntity
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import io.mockk.confirmVerified
@@ -52,7 +53,7 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `should call its data source to retrieve users`() {
+    fun `getUsers() is called with successful response`() {
         // given
         val user = UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList())
         val expectedResponse = listOf(user)
@@ -69,9 +70,52 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `should call deleteUser() and a delete a user by their id`() {
+    fun `deleteUser() is called with successful response`() {
         // given
         val userId = 123
 
+        // when
+        userService.deleteUser(userId)
+
+        // then
+        verify(exactly = 1) { userRepository.deleteById(userId) }
+
+        confirmVerified()
+    }
+
+    @Test
+    fun `getUserVehicles() is called with successful response`() {
+        // given
+        val userId = 123
+        val user = UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList())
+        val expectedResponse = user.vehicles
+
+        // when
+        every { userRepository.findById(userId) } returns Optional.of(user)
+        val actualResponse = userService.getUserVehicles(userId)
+
+        // then
+        verify(exactly = 1) { userRepository.findById(userId) }
+        assertEquals(expectedResponse, actualResponse)
+
+        confirmVerified()
+    }
+
+    @Test
+    fun `getUserTrips() is called with successful response`() {
+        // given
+        val userId = 123
+        val user = UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList())
+        val expectedResponse = emptyList<TripEntity>()
+
+        // when
+        every { userRepository.getReferenceById(userId) } returns user
+        val actualResponse = userService.getUserTrips(userId)
+
+        // then
+        verify(exactly = 1) { userRepository.getReferenceById(userId) }
+        assertEquals(expectedResponse, actualResponse)
+
+        confirmVerified()
     }
 }
