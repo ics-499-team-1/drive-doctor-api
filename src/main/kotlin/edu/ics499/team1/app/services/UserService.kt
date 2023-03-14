@@ -8,7 +8,6 @@ import edu.ics499.team1.app.repositories.UserRepository
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import java.util.*
-import kotlin.NoSuchElementException
 
 @Service
 class UserService(private val userRepository: UserRepository) {
@@ -56,12 +55,13 @@ class UserService(private val userRepository: UserRepository) {
      * @param userId An int designating the database user_id number
      * @exception NoSuchElementException Throws if the provided userId is not found in the database.
      */
-    fun deleteUser(userId: Int): Unit =
+    fun deleteUser(userId: Int) {
         try {
             userRepository.deleteById(userId)
         } catch (e: EmptyResultDataAccessException) {
             throw NoSuchElementException("No such user with userId $userId exists")
         }
+    }
 
     /**
      * Returns a list of the vehicles associated with the given userId
