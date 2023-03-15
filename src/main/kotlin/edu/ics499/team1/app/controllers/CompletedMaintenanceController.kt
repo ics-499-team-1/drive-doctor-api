@@ -19,6 +19,9 @@ class CompletedMaintenanceController(
     private val service: CompletedMaintenanceService,
 ) {
 
+//    @GetMapping
+//    fun getAllCompletedMaintenance() = service.getAllCompletedMaintenance()
+
     /**
      * Gets all maintenance records for a specific vehicle.
      * @param vehicleId
