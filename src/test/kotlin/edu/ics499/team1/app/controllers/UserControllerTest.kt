@@ -18,19 +18,24 @@ class UserControllerTest {
     private val userService: UserService = mockk(relaxed = true)
     private val userController = UserController(userService)
 
+    private val userId = 123
+    private val userRequest = User("John", "Doe", "johndoe@email.com", null)
+    private val userEntity = UserEntity(userId, "John", "Doe", "johndoe@email.com", null, emptyList())
+    private val vehicleEntity = VehicleEntity(1, "good car", 2015, "A", "car", "good", 12, null, null, false, userEntity, emptyList(), emptyList(), emptyList())
+    private val tripEntity = TripEntity(1, 50, "business", vehicleEntity, null, null, null, null)
+
     @Test
     fun `getUser() successful response`() {
         // given
-        val userId = 123
-        val userEntity = Optional.of(UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList()))
+        val expectedResponse = Optional.of(userEntity)
 
         // when
-        every { userService.getUser(123) } returns userEntity
+        every { userService.getUser(userId) } returns expectedResponse
         val actualResponse = userController.getUser(userId)
 
         // then
         verify(exactly = 1) { userService.getUser(userId) }
-        assertEquals(userEntity, actualResponse)
+        assertEquals(expectedResponse, actualResponse)
 
         confirmVerified()
     }
@@ -38,15 +43,15 @@ class UserControllerTest {
     @Test
     fun `getUsers() successful response`() {
         // given
-        val userEntityList = listOf(UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList()))
+        val expectedResponse = listOf(userEntity)
 
         // when
-        every { userService.getUsers() } returns userEntityList
+        every { userService.getUsers() } returns expectedResponse
         val actualResponse = userController.getUsers()
 
         // then
         verify(exactly = 1) { userService.getUsers() }
-        assertEquals(userEntityList, actualResponse)
+        assertEquals(expectedResponse, actualResponse)
 
         confirmVerified()
     }
@@ -54,8 +59,7 @@ class UserControllerTest {
     @Test
     fun `addUser() successful response`() {
         // given
-        val userRequest = User("John", "Doe", "johndoe@email.com", null)
-        val expectedResponse = UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList())
+        val expectedResponse = userEntity
 
         // when
         every { userService.createUser(userRequest) } returns expectedResponse
@@ -70,9 +74,6 @@ class UserControllerTest {
 
     @Test
     fun `deleteUser() successful response`() {
-        // given
-        val userId = 123
-
         // when
         userController.deleteUser(userId)
 
@@ -85,17 +86,15 @@ class UserControllerTest {
     @Test
     fun `getUserVehicles() successful response`() {
         // given
-        val userId = 123
-        val user = UserEntity(userId, "John", "Doe", "johndoe@email.com", null, emptyList())
-        val userVehicleList = listOf(VehicleEntity(1, "good car", 2015, "A", "car", "good", 12, null, null, false, user, emptyList(), emptyList(), emptyList()))
+        val expectedResponse = listOf(vehicleEntity)
 
         // when
-        every { userService.getUserVehicles(userId) } returns userVehicleList
+        every { userService.getUserVehicles(userId) } returns expectedResponse
         val actualResponse = userController.getUserVehicles(userId)
 
         // then
         verify(exactly = 1) { userService.getUserVehicles(userId) }
-        assertEquals(userVehicleList, actualResponse)
+        assertEquals(expectedResponse, actualResponse)
 
         confirmVerified()
     }
@@ -103,18 +102,15 @@ class UserControllerTest {
     @Test
     fun `getUserTrips() successful response`() {
         // given
-        val userId = 123
-        val user = UserEntity(userId, "John", "Doe", "johndoe@email.com", null, emptyList())
-        val vehicle = VehicleEntity(1, "good car", 2015, "A", "car", "good", 12, null, null, false, user, emptyList(), emptyList(), emptyList())
-        val userTripList = listOf(TripEntity(1, 50, "business", vehicle, null, null, null, null))
+        val expectedResponse = listOf(tripEntity)
 
         // when
-        every { userService.getUserTrips(userId) } returns userTripList
+        every { userService.getUserTrips(userId) } returns expectedResponse
         val actualResponse = userController.getUserTrips(userId)
 
         // then
         verify(exactly = 1) { userService.getUserTrips(userId) }
-        assertEquals(userTripList, actualResponse)
+        assertEquals(expectedResponse, actualResponse)
 
         confirmVerified()
     }
