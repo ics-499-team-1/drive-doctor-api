@@ -2,7 +2,7 @@ package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.User
 import edu.ics499.team1.app.entities.TripEntity
-import edu.ics499.team1.app.entities.UserEntity
+import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -17,19 +17,22 @@ internal class UserServiceTest {
     private val userRepository: UserRepository = mockk(relaxed = true)
     private val userService = UserService(userRepository)
 
+    private val userRequest = User("John", "Doe", "johndoe@email.com", null)
+    private val userEntity = userRequest.toUserEntity()
+    private val userId = userEntity.userId
+
     @Test
     fun `createUser() called with successful response`() {
         // given
-        val userRequest = User("John", "Doe", "johndoe@email.com", null)
-        val expectedResponse = userRequest.toUserEntity()
+        val expectedResponse = userEntity
 
         // when
-        every { userRepository.save(userRequest.toUserEntity()) } returns expectedResponse
+        every { userRepository.save(userEntity) } returns expectedResponse
         val actualResponse = userService.createUser(userRequest)
 
         // then
         verify(exactly = 1) { userRepository.existsByFirstNameAndLastNameAndEmail(userRequest.firstName, userRequest.lastName, userRequest.email) }
-        verify(exactly = 1) { userRepository.save(userRequest.toUserEntity()) }
+        verify(exactly = 1) { userRepository.save(userEntity) }
         assertEquals(expectedResponse, actualResponse)
 
         confirmVerified()
@@ -38,15 +41,14 @@ internal class UserServiceTest {
     @Test
     fun `getUser() is called with successful response`() {
         // given
-        val user = UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList())
-        val expectedResponse = Optional.of(user)
+        val expectedResponse = Optional.of(userEntity)
 
         // when
-        every { userRepository.findById(user.userId) } returns expectedResponse
-        val actualResponse = userService.getUser(user.userId)
+        every { userRepository.findById(userEntity.userId) } returns expectedResponse
+        val actualResponse = userService.getUser(userId)
 
         // then
-        verify(exactly = 1) { userRepository.findById(user.userId) }
+        verify(exactly = 1) { userRepository.findById(userId) }
         assertEquals(expectedResponse, actualResponse)
 
         confirmVerified()
@@ -55,8 +57,7 @@ internal class UserServiceTest {
     @Test
     fun `getUsers() is called with successful response`() {
         // given
-        val user = UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList())
-        val expectedResponse = listOf(user)
+        val expectedResponse = listOf(userEntity)
 
         // when
         every { userRepository.findAll() } returns expectedResponse
@@ -71,9 +72,6 @@ internal class UserServiceTest {
 
     @Test
     fun `deleteUser() is called with successful response`() {
-        // given
-        val userId = 123
-
         // when
         userService.deleteUser(userId)
 
@@ -86,12 +84,10 @@ internal class UserServiceTest {
     @Test
     fun `getUserVehicles() is called with successful response`() {
         // given
-        val userId = 123
-        val user = UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList())
-        val expectedResponse = user.vehicles
+        val expectedResponse = userEntity.vehicles
 
         // when
-        every { userRepository.findById(userId) } returns Optional.of(user)
+        every { userRepository.findById(userId) } returns Optional.of(userEntity)
         val actualResponse = userService.getUserVehicles(userId)
 
         // then
@@ -104,12 +100,10 @@ internal class UserServiceTest {
     @Test
     fun `getUserTrips() is called with successful response`() {
         // given
-        val userId = 123
-        val user = UserEntity(123, "John", "Doe", "johndoe@email.com", null, emptyList())
         val expectedResponse = emptyList<TripEntity>()
 
         // when
-        every { userRepository.getReferenceById(userId) } returns user
+        every { userRepository.getReferenceById(userId) } returns userEntity
         val actualResponse = userService.getUserTrips(userId)
 
         // then
