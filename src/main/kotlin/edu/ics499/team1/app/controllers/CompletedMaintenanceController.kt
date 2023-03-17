@@ -55,7 +55,7 @@ class CompletedMaintenanceController(
      */
     @PatchMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateCompletedMaintenanceName(@PathVariable maintenanceId: Int,
+    fun updateCompletedMaintenanceName(@PathVariable maintenanceId: String,
                                       @RequestBody completedMaintenance: CompletedMaintenance) =
         service.updateCompletedMaintenanceName(maintenanceId, completedMaintenance.name)
 
