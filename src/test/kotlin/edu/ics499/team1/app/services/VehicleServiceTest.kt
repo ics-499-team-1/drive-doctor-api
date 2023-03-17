@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class VehicleServiceTest {
-
     // relaxed set to true means that whenever a method is called on it, it will return some default value
     private val vehicleRepository: VehicleRepository = mockk(relaxed = true)
     private val userRepository: UserRepository = mockk(relaxed = true)
@@ -72,8 +71,8 @@ internal class VehicleServiceTest {
     @Test
     fun `createVehicle() works as expected`() {
         // given
-        every { vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber)} returns false
-        every { vehicleRepository.existsByVin(vehicle.vin)} returns false
+        every { vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber) } returns false
+        every { vehicleRepository.existsByVin(vehicle.vin) } returns false
         every { userRepository.getReferenceById(userId) } returns user
         every { vehicleRepository.save(any<VehicleEntity>()) } returns vehicleEntity
         val expectedResponse = vehicle.toVehicleEntity(user)
@@ -97,12 +96,12 @@ internal class VehicleServiceTest {
         val expectedResponse = Unit
 
         // when
-        val response = vehicleService.deleteVehicle(vehicleId)
+        val actualResponse = vehicleService.deleteVehicle(vehicleId)
 
         // then
         every { vehicleRepository.deleteById(vehicleId) } returns expectedResponse
         verify(exactly = 1) { vehicleRepository.deleteById(vehicleId) }
-        assertEquals(response, expectedResponse)
+        assertEquals(expectedResponse, actualResponse)
         confirmVerified()
     }
 }
