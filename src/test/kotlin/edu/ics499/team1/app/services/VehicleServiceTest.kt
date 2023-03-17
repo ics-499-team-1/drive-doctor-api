@@ -71,11 +71,11 @@ internal class VehicleServiceTest {
     @Test
     fun `createVehicle() works as expected`() {
         // given
+        val expectedResponse = vehicle.toVehicleEntity(user)
         every { vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber) } returns false
         every { vehicleRepository.existsByVin(vehicle.vin) } returns false
         every { userRepository.getReferenceById(mockUserId) } returns user
-        every { vehicleRepository.save(any<VehicleEntity>()) } returns vehicleEntity
-        val expectedResponse = vehicle.toVehicleEntity(user)
+        every { vehicleRepository.save(vehicle.toVehicleEntity(user)) } returns expectedResponse
 
         // when
         val actualResponse = vehicleService.createVehicle(vehicle)
