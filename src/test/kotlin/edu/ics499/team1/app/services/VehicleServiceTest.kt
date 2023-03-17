@@ -19,9 +19,9 @@ internal class VehicleServiceTest {
 
     private val vehicleService = VehicleService(vehicleRepository, userRepository)
 
-    private val userId = 123
+    private val mockUserId = 123
     private val user = UserEntity(
-        userId = userId,
+        userId = mockUserId,
         firstName = "John",
         lastName = "Smith",
         email = "johnsmith@email.com",
@@ -73,7 +73,7 @@ internal class VehicleServiceTest {
         // given
         every { vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber) } returns false
         every { vehicleRepository.existsByVin(vehicle.vin) } returns false
-        every { userRepository.getReferenceById(userId) } returns user
+        every { userRepository.getReferenceById(mockUserId) } returns user
         every { vehicleRepository.save(any<VehicleEntity>()) } returns vehicleEntity
         val expectedResponse = vehicle.toVehicleEntity(user)
 
