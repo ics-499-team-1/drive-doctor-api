@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class VehicleServiceTest {
-    // relaxed set to true means that whenever a method is called on it, it will return some default value
     private val vehicleRepository: VehicleRepository = mockk(relaxed = true)
     private val userRepository: UserRepository = mockk(relaxed = true)
 
