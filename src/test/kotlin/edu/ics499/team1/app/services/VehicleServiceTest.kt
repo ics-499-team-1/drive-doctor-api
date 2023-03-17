@@ -5,6 +5,7 @@ import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
+import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -89,42 +90,14 @@ internal class VehicleServiceTest {
         val vehicleId = 1
         val expectedResponse = Unit
 
-//        val user = UserEntity(
-//            userId = 321,
-//            firstName = "Ryan",
-//            lastName = "Gallagher",
-//            email = "ryangallagher@email.com",
-//            phoneNumber = "651-555-1234"
-//        )
-//        every { userRepository.getReferenceById(321) } returns user
-//
-//        val vehicle = Vehicle(
-//            name = "Test Vehicle",
-//            year = 2020,
-//            make = "TestMake",
-//            model = "TestModel",
-//            trim = "TestTrim",
-//            odometer = 123_000,
-//            licensePlateNumber = "ABC-XYZ",
-//            vin = "12345678900004567",
-//            userId = user.userId
-//        )
-//
-//        every { vehicleRepository.save(any<VehicleEntity>()) } returns vehicle.toVehicleEntity(user)
-
-        //val savedVehicle = vehicleService.createVehicle(vehicle)
 
         // when
-//        vehicleService.deleteVehicle(savedVehicle.vehicleId)
         val response = vehicleService.deleteVehicle(vehicleId)
 
         // then
         every { vehicleRepository.deleteById(vehicleId) } returns expectedResponse
         verify(exactly = 1) { vehicleRepository.deleteById(vehicleId) }
         assertEquals(response, expectedResponse)
-//        verify(exactly = 1) { vehicleRepository.deleteById(savedVehicle.vehicleId) }
-//        every { vehicleRepository.findById(savedVehicle.vehicleId) } returns Optional.empty()
-//        val deletedVehicle = vehicleRepository.findById(savedVehicle.vehicleId)
-//        assertEquals(/* expected = */ Optional.empty<VehicleEntity>(), /* actual = */ deletedVehicle)
+        confirmVerified()
     }
 }
