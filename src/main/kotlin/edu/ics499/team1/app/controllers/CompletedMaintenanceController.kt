@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.CompletedMaintenance
+import edu.ics499.team1.app.entities.CompletedMaintenanceEntity
 import edu.ics499.team1.app.services.CompletedMaintenanceService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -15,12 +16,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/v1/maintenance/completed-maintenance")
-class CompletedMaintenanceController(
-    private val service: CompletedMaintenanceService,
-) {
-
-//    @GetMapping
-//    fun getAllCompletedMaintenance() = service.getAllCompletedMaintenance()
+class CompletedMaintenanceController(private val service: CompletedMaintenanceService){
 
     /**
      * Gets all maintenance records for a specific vehicle.
@@ -38,10 +34,9 @@ class CompletedMaintenanceController(
      */
     @PostMapping("/vehicles/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun addMaintenance(@PathVariable vehicleId: Int, @RequestBody completedMaintenance: CompletedMaintenance) {
-        service.createCompletedMaintenance(vehicleId, completedMaintenance)
+    fun addMaintenance(@PathVariable vehicleId: Int, @RequestBody completedMaintenance: CompletedMaintenance):CompletedMaintenanceEntity{
+        return service.createCompletedMaintenance(vehicleId, completedMaintenance)
     }
-
     /**
      * Deletes a completed maintenance entity with the specified ID
      * @param maintenanceId
@@ -59,8 +54,8 @@ class CompletedMaintenanceController(
     @PatchMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.OK)
     fun updateCompletedMaintenanceName(@PathVariable maintenanceId: Int,
-                                      @RequestBody completedMaintenance: CompletedMaintenance) =
-        service.updateCompletedMaintenanceName(maintenanceId, completedMaintenance.name)
+                                      @RequestBody name: String) =
+        service.updateCompletedMaintenanceName(maintenanceId, name)
 
 
 //    @PostMapping // TODO: not sure how to map this yet. Needs own request mapping?

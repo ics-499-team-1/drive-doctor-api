@@ -10,7 +10,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 internal class CompletedMaintenanceServiceTest {
@@ -59,12 +58,11 @@ internal class CompletedMaintenanceServiceTest {
         every { completedMaintenanceRepository.save(maintenance.toCompletedMaintenanceEntity(vehicle)) } returns maintenance.toCompletedMaintenanceEntity(
             vehicle
         )
-        val actualResponse = completedMaintenanceService.createCompletedMaintenance(1, maintenance)
+        val actualResponse = completedMaintenanceService.createCompletedMaintenance(vehicle.vehicleId, maintenance)
         //then
         verify(exactly = 1) { vehicleRepository.getReferenceById(vehicle.vehicleId) }
         verify(exactly = 1) { completedMaintenanceRepository.save(maintenance.toCompletedMaintenanceEntity(vehicle)) }
         assertEquals(maintenance.toCompletedMaintenanceEntity(vehicle), actualResponse)
-        confirmVerified()
     }
 
     @Test
