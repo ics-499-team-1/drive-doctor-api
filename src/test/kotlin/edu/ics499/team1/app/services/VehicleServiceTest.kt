@@ -81,7 +81,7 @@ internal class VehicleServiceTest {
 
         // then
         verify(exactly = 1) { userRepository.getReferenceById(vehicle.userId)}
-        verify(exactly = 1) { vehicleRepository.save(vehicle.toVehicleEntity(user)) }
+        verify(exactly = 1) { vehicleRepository.save(expectedResponse) }
         verify(exactly = 1) { vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber) }
         verify(exactly = 1) {  vehicleRepository.existsByVin(vehicle.vin) }
         assertEquals(expectedResponse, actualResponse)
