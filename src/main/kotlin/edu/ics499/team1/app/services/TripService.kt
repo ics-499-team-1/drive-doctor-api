@@ -23,6 +23,7 @@ class TripService(
         return tripRepository.save(trip.toTripEntity(vehicle))
     }
 
+    // TODO: Add return object
     @Transactional
     fun setMileage(tripId: Int, mileage: Int) {
         tripRepository.updateMileage(tripId, mileage)
