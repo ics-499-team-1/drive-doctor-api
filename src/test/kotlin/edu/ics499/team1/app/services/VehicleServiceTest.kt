@@ -74,7 +74,7 @@ internal class VehicleServiceTest {
         every { vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber) } returns false
         every { vehicleRepository.existsByVin(vehicle.vin) } returns false
         every { userRepository.getReferenceById(mockUserId) } returns user
-        every { vehicleRepository.save(vehicle.toVehicleEntity(user)) } returns expectedResponse
+        every { vehicleRepository.save(expectedResponse) } returns expectedResponse
 
         // when
         val actualResponse = vehicleService.createVehicle(vehicle)
