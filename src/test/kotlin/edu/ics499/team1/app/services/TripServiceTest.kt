@@ -93,7 +93,6 @@ internal class TripServiceTest {
         confirmVerified()
     }
 
-    // TODO: Line 98 does not have a return type because nothing is being returned by the original function
     @Test
     fun `setMileage successful response`() {
         // given
