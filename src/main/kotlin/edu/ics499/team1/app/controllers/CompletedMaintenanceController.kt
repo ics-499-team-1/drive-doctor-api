@@ -25,7 +25,8 @@ class CompletedMaintenanceController(
      * @return The List<CompletedMaintenanceEntity> for the specified vehicle.
      */
     @GetMapping("/vehicles/{vehicleId}")
-    fun getCompletedMaintenancesByVehicleId(@PathVariable vehicleId: Int) = service.getCompletedMaintenanceByVehicleId(vehicleId)
+    fun getCompletedMaintenancesByVehicleId(@PathVariable vehicleId: Int) =
+        service.getCompletedMaintenanceByVehicleId(vehicleId)
 
     /**
      * Creates a new completed maintenance record for a specific vehicle.
@@ -35,7 +36,7 @@ class CompletedMaintenanceController(
      */
     @PostMapping("/vehicles/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun addMaintenance(@PathVariable vehicleId: String, @RequestBody completedMaintenance: CompletedMaintenance) {
+    fun addMaintenance(@PathVariable vehicleId: Int, @RequestBody completedMaintenance: CompletedMaintenance) {
         service.createCompletedMaintenance(vehicleId, completedMaintenance)
     }
 
@@ -45,7 +46,7 @@ class CompletedMaintenanceController(
      */
     @DeleteMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCompletedMaintenance(@PathVariable maintenanceId: String) {
+    fun deleteCompletedMaintenance(@PathVariable maintenanceId: Int) {
         service.removeCompletedMaintenance(maintenanceId)
     }
 
@@ -55,14 +56,10 @@ class CompletedMaintenanceController(
      */
     @PatchMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateCompletedMaintenanceName(@PathVariable maintenanceId: Int,
-                                      @RequestBody completedMaintenance: CompletedMaintenance) =
+    fun updateCompletedMaintenanceName(
+        @PathVariable maintenanceId: Int,
+        @RequestBody completedMaintenance: CompletedMaintenance
+    ) =
         service.updateCompletedMaintenanceName(maintenanceId, completedMaintenance.name)
-
-
-//    @PostMapping // TODO: not sure how to map this yet. Needs own request mapping?
-//    @ResponseStatus(HttpStatus.CREATED) // TODO: Could be patch mapped instead?
-//    fun completeMaintenance(@PathVariable id: String) {
-//        // service.completedMaintenanceRepository(id)
-//    }
+    
 }

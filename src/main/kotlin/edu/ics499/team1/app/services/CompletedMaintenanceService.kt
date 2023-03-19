@@ -1,9 +1,7 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.CompletedMaintenance
-import edu.ics499.team1.app.domains.UpcomingMaintenance
 import edu.ics499.team1.app.entities.CompletedMaintenanceEntity
-import edu.ics499.team1.app.entities.UpcomingMaintenanceEntity
 import edu.ics499.team1.app.repositories.CompletedMaintenanceRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
 import org.springframework.stereotype.Service
@@ -28,8 +26,8 @@ class CompletedMaintenanceService(
      * @param maintenance Of domain type CompletedMaintenance
      * @return Unit
      */
-    fun createCompletedMaintenance(vehicleId: String, maintenance: CompletedMaintenance) {
-        val vehicle = vehicleRepository.getReferenceById(vehicleId.toInt())
+    fun createCompletedMaintenance(vehicleId: Int, maintenance: CompletedMaintenance) {
+        val vehicle = vehicleRepository.getReferenceById(vehicleId)
         completedMaintenance.save(maintenance.toCompletedMaintenanceEntity(vehicle))
     }
 
@@ -38,8 +36,8 @@ class CompletedMaintenanceService(
      * @param maintenanceId
      * @return Unit
      */
-    fun removeCompletedMaintenance(maintenanceId: String) =
-        completedMaintenance.deleteById(maintenanceId.toInt())
+    fun removeCompletedMaintenance(maintenanceId: Int) =
+        completedMaintenance.deleteById(maintenanceId)
 
     /**
      * Updates the name field in an existing maintenance item.
@@ -47,8 +45,8 @@ class CompletedMaintenanceService(
      * @param name
      * @return Unit
      */
-    fun updateCompletedMaintenanceName(maintenanceId: String, name: String) {
-        completedMaintenance.modifyCompletedMaintenanceName(maintenanceId.toInt(), name)
+    fun updateCompletedMaintenanceName(maintenanceId: Int, name: String) {
+        completedMaintenance.modifyCompletedMaintenanceName(maintenanceId, name)
 
     }
 }
