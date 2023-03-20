@@ -22,7 +22,7 @@ class TripService(
 
         return tripRepository.save(trip.toTripEntity(vehicle))
     }
-    
+
     @Transactional
     fun setMileage(tripId: Int, mileage: Int) {
         tripRepository.updateMileage(tripId, mileage)
