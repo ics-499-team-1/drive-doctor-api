@@ -3,8 +3,6 @@ package edu.ics499.team1.app.controllers
 import edu.ics499.team1.app.domains.CompletedMaintenance
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
-import edu.ics499.team1.app.repositories.CompletedMaintenanceRepository
-import edu.ics499.team1.app.repositories.VehicleRepository
 import edu.ics499.team1.app.services.CompletedMaintenanceService
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -14,10 +12,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class CompletedMaintenanceControllerTest {
-    private val completedMaintenanceRepository: CompletedMaintenanceRepository = mockk(relaxed = true)
-    private val vehicleRepository: VehicleRepository = mockk(relaxed = true)
-    private val completedMaintenanceService =
-        CompletedMaintenanceService(completedMaintenanceRepository, vehicleRepository)
+    private val completedMaintenanceService: CompletedMaintenanceService = mockk(relaxed = true)
     private val completedMaintenanceController = CompletedMaintenanceController(completedMaintenanceService)
 
     private val user = UserEntity(
@@ -77,11 +72,21 @@ internal class CompletedMaintenanceControllerTest {
         val expectedResponse = completedMaintenanceEntity
 
         //when
-        every { completedMaintenanceService.createCompletedMaintenance(vehicle.vehicleId, completedMaintenance) } returns expectedResponse
+        every {
+            completedMaintenanceService.createCompletedMaintenance(
+                vehicle.vehicleId,
+                completedMaintenance
+            )
+        } returns expectedResponse
         val actualResponse = completedMaintenanceController.addMaintenance(vehicle.vehicleId, completedMaintenance)
 
         //then
-        verify(exactly = 1) { completedMaintenanceService.createCompletedMaintenance(vehicle.vehicleId, completedMaintenance) }
+        verify(exactly = 1) {
+            completedMaintenanceService.createCompletedMaintenance(
+                vehicle.vehicleId,
+                completedMaintenance
+            )
+        }
         assertEquals(expectedResponse, actualResponse)
         confirmVerified()
     }
@@ -101,11 +106,24 @@ internal class CompletedMaintenanceControllerTest {
         //given
         val expectedResponse = "New Oil Change"
         //when
-        every { completedMaintenanceController.updateCompletedMaintenanceName(completedMaintenanceEntity.maintenanceId, expectedResponse) } returns expectedResponse
-        val actualResponse = completedMaintenanceController.updateCompletedMaintenanceName(completedMaintenanceEntity.maintenanceId, expectedResponse)
+        every {
+            completedMaintenanceController.updateCompletedMaintenanceName(
+                completedMaintenanceEntity.maintenanceId,
+                expectedResponse
+            )
+        } returns expectedResponse
+        val actualResponse = completedMaintenanceController.updateCompletedMaintenanceName(
+            completedMaintenanceEntity.maintenanceId,
+            expectedResponse
+        )
         //then
-        verify(exactly = 1) { completedMaintenanceService.updateCompletedMaintenanceName(completedMaintenanceEntity.maintenanceId, expectedResponse) }
-        assertEquals(expectedResponse,actualResponse)
+        verify(exactly = 1) {
+            completedMaintenanceService.updateCompletedMaintenanceName(
+                completedMaintenanceEntity.maintenanceId,
+                expectedResponse
+            )
+        }
+        assertEquals(expectedResponse, actualResponse)
         confirmVerified()
     }
 }

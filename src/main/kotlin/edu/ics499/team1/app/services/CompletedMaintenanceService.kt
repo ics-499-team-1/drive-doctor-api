@@ -26,9 +26,9 @@ class CompletedMaintenanceService(
      * @param maintenance Of domain type CompletedMaintenance
      * @return Unit
      */
-    fun createCompletedMaintenance(vehicleId: Int, maintenance: CompletedMaintenance) : CompletedMaintenanceEntity{
+    fun createCompletedMaintenance(vehicleId: Int, maintenance: CompletedMaintenance): CompletedMaintenanceEntity {
         val vehicle = vehicleRepository.getReferenceById(vehicleId)
-       return completedMaintenanceRepository.save(maintenance.toCompletedMaintenanceEntity(vehicle))
+        return completedMaintenanceRepository.save(maintenance.toCompletedMaintenanceEntity(vehicle))
     }
 
     /**
