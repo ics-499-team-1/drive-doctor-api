@@ -9,7 +9,7 @@ import jakarta.persistence.*
 data class CompletedMaintenanceEntity(
     @Id
     @GeneratedValue
-    val maintenanceId: Int = 0,
+    val completedMaintenanceId: Int = 0,
     override val name: String,
     override val notes: String?,
     override val pictures: String?,

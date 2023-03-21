@@ -25,8 +25,9 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    testImplementation("org.testng:testng:7.1.0")
 
-	runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.13.4")
 	testImplementation("io.projectreactor:reactor-test")

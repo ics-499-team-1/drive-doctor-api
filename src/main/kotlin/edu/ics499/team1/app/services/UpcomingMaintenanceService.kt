@@ -17,6 +17,7 @@ class UpcomingMaintenanceService(
     private val upcomingMaintenanceRepository: UpcomingMaintenanceRepository,
     private val vehicleRepository: VehicleRepository,
     private val completedMaintenanceRepository: CompletedMaintenanceRepository) {
+
     /**
      * Service for returning upcoming maintenance items associated with a specific vehicle id.
      * @param vehicleId
@@ -24,6 +25,7 @@ class UpcomingMaintenanceService(
      */
     fun getUpcomingMaintenanceByVehicleId(vehicleId: Int): List<UpcomingMaintenanceEntity> =
         vehicleRepository.getReferenceById(vehicleId).upcomingMaintenance
+
     /**
      * Service for creating upcoming maintenance items associated with a specific vehicle id.
      * @param vehicleId
@@ -76,7 +78,7 @@ class UpcomingMaintenanceService(
             vehicle = upcoming.vehicle
         )
         completedMaintenanceRepository.save(completed)
-        upcomingMaintenanceRepository.deleteById(upcoming.maintenanceId)
+        upcomingMaintenanceRepository.deleteById(upcoming.upcomingMaintenanceId)
     }
 
     fun callUpcomingMaintenanceAPI(): String { // todo: where do I go?
