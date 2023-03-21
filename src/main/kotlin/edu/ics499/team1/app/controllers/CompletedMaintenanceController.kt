@@ -59,11 +59,5 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
         @RequestBody completedMaintenance: CompletedMaintenance
     ) =
         service.updateCompletedMaintenanceName(maintenanceId, completedMaintenance.name)
-
-
-//    @PostMapping // TODO: not sure how to map this yet. Needs own request mapping?
-//    @ResponseStatus(HttpStatus.CREATED) // TODO: Could be patch mapped instead?
-//    fun completeMaintenance(@PathVariable id: String) {
-//        // service.completedMaintenanceRepository(id)
-//    }
+    
 }
