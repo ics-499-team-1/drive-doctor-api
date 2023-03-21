@@ -43,7 +43,7 @@ class UpcomingMaintenanceController(
 
     /**
      * Deletes a vehicle with the specified vehicleId
-     * @param vehicleId
+     * @param maintenanceId
      */
     @DeleteMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -4,6 +4,7 @@ import edu.ics499.team1.app.entities.CompletedMaintenanceEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 
 data class CompletedMaintenance(
+    override val id: Int,
     override val name: String,
     override val notes: String?,
     override val pictures: String?,
@@ -12,8 +13,8 @@ data class CompletedMaintenance(
     val serviceCenter: String?,
     val mechanics: String?,
     val totalCost: Double?
-) : Maintenance  {
-    fun toCompletedMaintenanceEntity(vehicleReference: VehicleEntity) = CompletedMaintenanceEntity (
+) : Maintenance {
+    fun toCompletedMaintenanceEntity(vehicleReference: VehicleEntity) = CompletedMaintenanceEntity(
         name = this.name,
         notes = this.notes,
         pictures = this.pictures,
@@ -23,5 +24,5 @@ data class CompletedMaintenance(
         mechanics = this.mechanics,
         totalCost = this.totalCost,
         vehicle = vehicleReference
-        )
+    )
 }

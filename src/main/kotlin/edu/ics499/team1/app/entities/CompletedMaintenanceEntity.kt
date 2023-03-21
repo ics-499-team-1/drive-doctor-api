@@ -1,7 +1,6 @@
 package edu.ics499.team1.app.entities
 
 import com.fasterxml.jackson.annotation.JsonBackReference
-import edu.ics499.team1.app.domains.Vehicle
 import jakarta.persistence.*
 
 @Entity
@@ -9,7 +8,7 @@ import jakarta.persistence.*
 data class CompletedMaintenanceEntity(
     @Id
     @GeneratedValue
-    val maintenanceId: Int = 0,
+    val completedMaintenanceId: Int = 0,
     override val name: String,
     override val notes: String?,
     override val pictures: String?,

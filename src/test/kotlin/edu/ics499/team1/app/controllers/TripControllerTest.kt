@@ -1,4 +1,4 @@
-package edu.ics499.team1.app.services
+package edu.ics499.team1.app.controllers
 
 import edu.ics499.team1.app.domains.Trip
 import edu.ics499.team1.app.domains.VehicleTripMileage
@@ -6,24 +6,20 @@ import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.TripRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
+import edu.ics499.team1.app.services.TripService
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
-
-internal class TripServiceTest {
-
-    private val tripRepository = mockk<TripRepository>()
-
-    private val vehicleRepository = mockk<VehicleRepository>()
-
+import org.junit.jupiter.api.Test
+class TripControllerTest {
     private val mileage = 100
 
-    private val tripService = TripService(
-        tripRepository,
-        vehicleRepository,
+    private val tripService = mockk<TripService>()
+
+    private val tripController = TripController(
+        tripService
     )
 
     private val tripDomain = Trip(
@@ -61,49 +57,42 @@ internal class TripServiceTest {
 
     private val tripEntity = tripDomain.toTripEntity(vehicleEntity)
 
-    @Test
-    fun `getTrips successful response - should call its data source to retrieve trips`() {
+
+    @Test 
+    fun `getTrips successful response`() {
         // given
         val listOfTripEntity = listOf(tripEntity)
 
         //when
-        every { tripRepository.findAll() } returns listOfTripEntity
-        val actualResponse = tripService.getTrips()
+        every { tripService.getTrips() } returns listOfTripEntity
+        val actualResponse = tripController.getTrips()
 
         // then
-        verify(exactly = 1) { tripRepository.findAll() }
+        verify(exactly = 1) { tripService.getTrips() }
         assertEquals(listOfTripEntity, actualResponse)
         confirmVerified()
     }
 
     @Test
     fun `addTrip successful response`() {
-        // given
-        val tripEntity = tripDomain.toTripEntity(vehicleEntity)
-        
         // when
-        every { vehicleRepository.getReferenceById(tripDomain.vehicleId) } returns vehicleEntity
-        every { tripRepository.save(tripDomain.toTripEntity(vehicleReference = vehicleEntity)) } returns tripEntity
-        val actualResponse = tripService.addTrip(trip = tripDomain)
-        
+        every { tripService.addTrip(trip = tripDomain) } returns tripEntity
+        val actualResponse = tripController.addTrip(tripDomain)
+
         // then
-        verify(exactly = 1) { vehicleRepository.getReferenceById(tripDomain.vehicleId) }
-        verify(exactly = 1) { tripRepository.save(tripDomain.toTripEntity(vehicleReference = vehicleEntity)) }
+        verify(exactly = 1) { tripService.addTrip(trip = tripDomain) }
         assertEquals(tripEntity, actualResponse)
         confirmVerified()
     }
 
     @Test
     fun `setMileage successful response`() {
-        // given
-        val tripEntity = tripDomain.toTripEntity(vehicleEntity)
-
         // when
-        every { tripRepository.updateMileage(tripId = tripEntity.tripId, mileage = mileage) } returns Unit
-        val actualResponse = tripService.setMileage(tripId = tripEntity.tripId, mileage = mileage)
+        every { tripService.setMileage(tripId = tripEntity.tripId, mileage = mileage) } returns Unit
+        val actualResponse = tripController.setMileage(tripId = tripEntity.tripId, mileage = mileage)
 
         // then
-        verify(exactly = 1) { tripRepository.updateMileage(tripId = tripEntity.tripId, mileage = mileage) }
+        verify(exactly = 1) { tripService.setMileage(tripId = tripEntity.tripId, mileage = mileage) }
         assertEquals(Unit, actualResponse)
         confirmVerified()
     }
@@ -117,13 +106,11 @@ internal class TripServiceTest {
         )
 
         // when
-        every { vehicleRepository.getReferenceById(vehicleEntity.vehicleId) } returns vehicleEntity
-        every { tripRepository.findAllByVehicle(vehicleEntity) } returns vehicleEntity.trips
-        val actualResponse = tripService.getTotalMileage(vehicleId = vehicleEntity.vehicleId)
+        every { tripService.getTotalMileage(vehicleId = vehicleEntity.vehicleId) } returns vehicleTripMileage
+        val actualResponse = tripController.getTotalMileage(vehicleId = vehicleEntity.vehicleId)
 
         // then
-        verify(exactly = 1) { vehicleRepository.getReferenceById(vehicleEntity.vehicleId) }
-        verify(exactly = 1) { tripRepository.findAllByVehicle(vehicleEntity) }
+        verify(exactly = 1) { tripService.getTotalMileage(vehicleId = vehicleEntity.vehicleId) }
         assertEquals(vehicleTripMileage, actualResponse)
         confirmVerified()
     }
