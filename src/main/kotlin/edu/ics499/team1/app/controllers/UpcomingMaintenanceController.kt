@@ -26,8 +26,7 @@ class UpcomingMaintenanceController(
      * @return The List<UpcomingMaintenanceEntity> for the specified vehicle.
      */
     @GetMapping("/vehicles/{vehicleId}")
-    fun getUpcomingMaintenancesByVehicleId(@PathVariable vehicleId: Int) =
-        service.getUpcomingMaintenanceByVehicleId(vehicleId)
+    fun getUpcomingMaintenancesByVehicleId(@PathVariable vehicleId: Int) = service.getUpcomingMaintenanceByVehicleId(vehicleId)
 
     /**
      * Creates a new upcoming maintenance record for a specific vehicle.
@@ -65,7 +64,6 @@ class UpcomingMaintenanceController(
 
 
     @PostMapping("/convert/{maintenanceId}")
-    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
     fun convertUpcomingToCompletedMaintenance(
         @PathVariable maintenanceId: Int,
         @RequestBody completedMaintenance: CompletedMaintenance

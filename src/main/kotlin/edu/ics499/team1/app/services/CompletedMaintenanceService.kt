@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class CompletedMaintenanceService(
-    private val completedMaintenance: CompletedMaintenanceRepository,
+    private val completedMaintenanceRepository: CompletedMaintenanceRepository,
     private val vehicleRepository: VehicleRepository
 ) {
 
@@ -26,9 +26,9 @@ class CompletedMaintenanceService(
      * @param maintenance Of domain type CompletedMaintenance
      * @return Unit
      */
-    fun createCompletedMaintenance(vehicleId: String, maintenance: CompletedMaintenance) {
-        val vehicle = vehicleRepository.getReferenceById(vehicleId.toInt())
-        completedMaintenance.save(maintenance.toCompletedMaintenanceEntity(vehicle))
+    fun createCompletedMaintenance(vehicleId: Int, maintenance: CompletedMaintenance): CompletedMaintenanceEntity {
+        val vehicle = vehicleRepository.getReferenceById(vehicleId)
+        return completedMaintenanceRepository.save(maintenance.toCompletedMaintenanceEntity(vehicle))
     }
 
     /**
@@ -36,8 +36,8 @@ class CompletedMaintenanceService(
      * @param maintenanceId
      * @return Unit
      */
-    fun removeCompletedMaintenance(maintenanceId: String) =
-        completedMaintenance.deleteById(maintenanceId.toInt())
+    fun removeCompletedMaintenance(maintenanceId: Int): Unit =
+        completedMaintenanceRepository.deleteById(maintenanceId)
 
     /**
      * Updates the name field in an existing maintenance item.
