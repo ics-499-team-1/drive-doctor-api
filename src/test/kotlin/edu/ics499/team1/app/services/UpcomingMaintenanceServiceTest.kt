@@ -4,24 +4,19 @@ package edu.ics499.team1.app.services
 import edu.ics499.team1.app.fixtures.CompletedMaintenanceFixture
 import edu.ics499.team1.app.fixtures.UpcomingMaintenanceFixture
 import edu.ics499.team1.app.fixtures.VehicleFixture
-import edu.ics499.team1.app.repositories.CompletedMaintenanceRepository
 import edu.ics499.team1.app.repositories.UpcomingMaintenanceRepository
-import edu.ics499.team1.app.repositories.VehicleRepository
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertIterableEquals
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class UpcomingMaintenanceServiceTest {
 
     private val uMRepository: UpcomingMaintenanceRepository = mockk(relaxed = true)
-    private val cMRepository: CompletedMaintenanceRepository = mockk(relaxed = true)
-    private val vehicleRepository: VehicleRepository = mockk(relaxed = true)
-    private val uMService = UpcomingMaintenanceService(uMRepository, vehicleRepository, cMRepository)
+    private val uMService: UpcomingMaintenanceService = mockk(relaxed = true)
 
     @Test
     fun `should return the correct list of upcomingMaintenance entities`() {
@@ -41,9 +36,7 @@ class UpcomingMaintenanceServiceTest {
         confirmVerified()
     }
 
-    // TODO FUBAR: Cast Class error
     @Test
-    @Disabled
     fun `should call createUpcomingMaintenance and return Unit`() {
         //given
         val uMDomain = UpcomingMaintenanceFixture.upcomingMaintenanceDomain()
@@ -102,7 +95,6 @@ class UpcomingMaintenanceServiceTest {
 
     // TODO FUBAR: Cast Class error
     @Test
-    @Disabled
     fun `should convert upcoming to completed maintenance`() {
         // given
         val uMID = 1
