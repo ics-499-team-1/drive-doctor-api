@@ -13,8 +13,8 @@ data class CompletedMaintenance(
     val serviceCenter: String?,
     val mechanics: String?,
     val totalCost: Double?
-) : Maintenance  {
-    fun toCompletedMaintenanceEntity(vehicleReference: VehicleEntity) = CompletedMaintenanceEntity (
+) : Maintenance {
+    fun toCompletedMaintenanceEntity(vehicleReference: VehicleEntity) = CompletedMaintenanceEntity(
         name = this.name,
         notes = this.notes,
         pictures = this.pictures,
@@ -24,5 +24,5 @@ data class CompletedMaintenance(
         mechanics = this.mechanics,
         totalCost = this.totalCost,
         vehicle = vehicleReference
-        )
+    )
 }

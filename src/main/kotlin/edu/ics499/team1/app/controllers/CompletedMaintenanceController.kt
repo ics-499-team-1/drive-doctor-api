@@ -25,7 +25,8 @@ class CompletedMaintenanceController(
      * @return The List<CompletedMaintenanceEntity> for the specified vehicle.
      */
     @GetMapping("/vehicles/{vehicleId}")
-    fun getCompletedMaintenancesByVehicleId(@PathVariable vehicleId: Int) = service.getCompletedMaintenanceByVehicleId(vehicleId)
+    fun getCompletedMaintenancesByVehicleId(@PathVariable vehicleId: Int) =
+        service.getCompletedMaintenanceByVehicleId(vehicleId)
 
     /**
      * Creates a new completed maintenance record for a specific vehicle.
@@ -55,8 +56,10 @@ class CompletedMaintenanceController(
      */
     @PatchMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateCompletedMaintenanceName(@PathVariable maintenanceId: Int,
-                                      @RequestBody completedMaintenance: CompletedMaintenance) =
+    fun updateCompletedMaintenanceName(
+        @PathVariable maintenanceId: Int,
+        @RequestBody completedMaintenance: CompletedMaintenance
+    ) =
         service.updateCompletedMaintenanceName(maintenanceId, completedMaintenance.name)
 
 

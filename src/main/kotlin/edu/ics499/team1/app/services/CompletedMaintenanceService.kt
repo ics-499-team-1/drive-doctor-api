@@ -1,9 +1,7 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.CompletedMaintenance
-import edu.ics499.team1.app.domains.UpcomingMaintenance
 import edu.ics499.team1.app.entities.CompletedMaintenanceEntity
-import edu.ics499.team1.app.entities.UpcomingMaintenanceEntity
 import edu.ics499.team1.app.repositories.CompletedMaintenanceRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
 import org.springframework.stereotype.Service
@@ -48,7 +46,6 @@ class CompletedMaintenanceService(
      * @return Unit
      */
     fun updateCompletedMaintenanceName(maintenanceId: Int, name: String) {
-        completedMaintenance.modifyCompletedMaintenanceName(maintenanceId.toInt(), name)
-
+        completedMaintenance.modifyCompletedMaintenanceName(maintenanceId, name)
     }
 }

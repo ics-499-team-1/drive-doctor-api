@@ -1,7 +1,6 @@
 package edu.ics499.team1.app.entities
 
 import com.fasterxml.jackson.annotation.JsonBackReference
-import edu.ics499.team1.app.domains.Vehicle
 import jakarta.persistence.*
 
 @Entity

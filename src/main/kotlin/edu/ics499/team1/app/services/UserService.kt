@@ -1,18 +1,13 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.User
-import edu.ics499.team1.app.domains.Vehicle
 import edu.ics499.team1.app.entities.TripEntity
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
-import edu.ics499.team1.app.repositories.VehicleRepository
 import org.springframework.dao.EmptyResultDataAccessException
-import org.springframework.data.domain.Example
 import org.springframework.stereotype.Service
-import org.springframework.util.AutoPopulatingList.ElementInstantiationException
 import java.util.*
-import kotlin.NoSuchElementException
 
 @Service
 class UserService(private val userRepository: UserRepository) {
@@ -25,8 +20,9 @@ class UserService(private val userRepository: UserRepository) {
      * @return A UserEntity of the created user.
      */
     fun createUser(user: User): UserEntity {
-        if ( userRepository.existsByFirstNameAndLastNameAndEmail
-                (user.firstName, user.lastName, user.email)) {
+        if (userRepository.existsByFirstNameAndLastNameAndEmail
+                (user.firstName, user.lastName, user.email)
+        ) {
             throw CustomExceptions.UserAlreadyExistsException("User already exists in the system")
         }
 
@@ -59,26 +55,29 @@ class UserService(private val userRepository: UserRepository) {
      * @param userId An int designating the database user_id number
      * @exception NoSuchElementException Throws if the provided userId is not found in the database.
      */
-    fun deleteUser(userId: Int): Unit =
+    fun deleteUser(userId: Int) {
         try {
             userRepository.deleteById(userId)
         } catch (e: EmptyResultDataAccessException) {
             throw NoSuchElementException("No such user with userId $userId exists")
         }
-    
+    }
+
     /**
      * Returns a list of the vehicles associated with the given userId
      * @param userId An int for the database user_id number
      * @return A List<VehicleEntity> associated with the userId
      */
-    fun getUserVehicles(userId: Int) : List<VehicleEntity> = userRepository.findById(userId).get().vehicles
+    fun getUserVehicles(userId: Int): List<VehicleEntity> = userRepository.findById(userId).get().vehicles
 
     fun getUserTrips(userId: Int): List<TripEntity> {
         val trips = mutableListOf<TripEntity>()
         val vehicles = userRepository.getReferenceById(userId).vehicles
+
         for (vehicle in vehicles) {
             trips.addAll(vehicle.trips)
         }
+
         return trips
     }
 }
