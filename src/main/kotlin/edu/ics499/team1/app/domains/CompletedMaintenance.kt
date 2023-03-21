@@ -4,6 +4,7 @@ import edu.ics499.team1.app.entities.CompletedMaintenanceEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 
 data class CompletedMaintenance(
+    override val id: Int,
     override val name: String,
     override val notes: String?,
     override val pictures: String?,

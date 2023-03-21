@@ -47,6 +47,5 @@ class CompletedMaintenanceService(
      */
     fun updateCompletedMaintenanceName(maintenanceId: Int, name: String) {
         completedMaintenance.modifyCompletedMaintenanceName(maintenanceId, name)
-
     }
 }
