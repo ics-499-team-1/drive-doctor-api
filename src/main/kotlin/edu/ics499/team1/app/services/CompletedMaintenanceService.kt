@@ -46,6 +46,6 @@ class CompletedMaintenanceService(
      * @return Unit
      */
     fun updateCompletedMaintenanceName(maintenanceId: Int, name: String) {
-        completedMaintenance.modifyCompletedMaintenanceName(maintenanceId, name)
+        completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceId, name)
     }
 }
