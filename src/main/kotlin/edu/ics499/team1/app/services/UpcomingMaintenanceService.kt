@@ -16,7 +16,9 @@ import org.springframework.web.reactive.function.client.WebClient
 class UpcomingMaintenanceService(
     private val upcomingMaintenanceRepository: UpcomingMaintenanceRepository,
     private val vehicleRepository: VehicleRepository,
-    private val completedMaintenanceRepository: CompletedMaintenanceRepository) {
+    private val completedMaintenanceRepository: CompletedMaintenanceRepository
+) {
+
     /**
      * Service for returning upcoming maintenance items associated with a specific vehicle id.
      * @param vehicleId
@@ -24,6 +26,7 @@ class UpcomingMaintenanceService(
      */
     fun getUpcomingMaintenanceByVehicleId(vehicleId: Int): List<UpcomingMaintenanceEntity> =
         vehicleRepository.getReferenceById(vehicleId).upcomingMaintenance
+
     /**
      * Service for creating upcoming maintenance items associated with a specific vehicle id.
      * @param vehicleId
@@ -64,7 +67,7 @@ class UpcomingMaintenanceService(
      */
     fun convertUpcomingToCompleted(maintenanceId: Int, completedMaintenance: CompletedMaintenance) {
         val upcoming = upcomingMaintenanceRepository.getReferenceById(maintenanceId)
-        val completed = CompletedMaintenanceEntity (
+        val completed = CompletedMaintenanceEntity(
             name = upcoming.name,
             notes = upcoming.notes,
             pictures = upcoming.pictures,
@@ -76,11 +79,11 @@ class UpcomingMaintenanceService(
             vehicle = upcoming.vehicle
         )
         completedMaintenanceRepository.save(completed)
-        upcomingMaintenanceRepository.deleteById(upcoming.maintenanceId)
+        upcomingMaintenanceRepository.deleteById(upcoming.upcomingMaintenanceId)
     }
 
     fun callUpcomingMaintenanceAPI(): String { // todo: where do I go?
-        val client : WebClient = WebClient.builder()
+        val client: WebClient = WebClient.builder()
             .baseUrl("http://api.carmd.com/v3.0")
             .defaultHeader("authorization", "Basic MjBlY2EyMjItMjc3Ny00MTQxLWJhOGEtNDdlMjhiNGYyNzBl")
             .defaultHeader("partner-token", "24e07ee005cc4294b928ccdc4a4db54c")

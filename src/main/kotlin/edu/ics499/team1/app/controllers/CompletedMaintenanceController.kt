@@ -24,7 +24,8 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
      * @return The List<CompletedMaintenanceEntity> for the specified vehicle.
      */
     @GetMapping("/vehicles/{vehicleId}")
-    fun getCompletedMaintenancesByVehicleId(@PathVariable vehicleId: Int) = service.getCompletedMaintenanceByVehicleId(vehicleId)
+    fun getCompletedMaintenancesByVehicleId(@PathVariable vehicleId: Int) =
+        service.getCompletedMaintenanceByVehicleId(vehicleId)
 
     /**
      * Creates a new completed maintenance record for a specific vehicle.
@@ -53,9 +54,11 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
      */
     @PatchMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateCompletedMaintenanceName(@PathVariable maintenanceId: Int,
-                                      @RequestBody name: String) =
-        service.updateCompletedMaintenanceName(maintenanceId, name)
+    fun updateCompletedMaintenanceName(
+        @PathVariable maintenanceId: Int,
+        @RequestBody completedMaintenance: CompletedMaintenance
+    ) =
+        service.updateCompletedMaintenanceName(maintenanceId, completedMaintenance.name)
 
 
 //    @PostMapping // TODO: not sure how to map this yet. Needs own request mapping?
