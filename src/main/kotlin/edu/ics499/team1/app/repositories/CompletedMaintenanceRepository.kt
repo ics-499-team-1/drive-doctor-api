@@ -17,5 +17,5 @@ interface CompletedMaintenanceRepository : JpaRepository<CompletedMaintenanceEnt
     @Transactional
     @Modifying
     @Query("update CompletedMaintenanceEntity m set m.name =?2 where m.maintenanceId = ?1")
-    fun modifyCompletedMaintenanceName(maintenanceId: Int, name: String)
+    fun modifyCompletedMaintenanceName(maintenanceId: Int, name: String): String
 }

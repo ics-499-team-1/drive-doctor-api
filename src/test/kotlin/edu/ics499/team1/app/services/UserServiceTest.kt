@@ -1,8 +1,10 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.User
-import edu.ics499.team1.app.entities.UserEntity
+import edu.ics499.team1.app.entities.TripEntity
+import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
+import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -11,80 +13,103 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class UserServiceTest {
+
     private val userRepository: UserRepository = mockk(relaxed = true)
     private val userService = UserService(userRepository)
 
-    // should this one return all the users too and verify that that has happened
-    // or simply verify that findAll() on userRepo has been called?
+    private val userRequest = User("John", "Doe", "johndoe@email.com", null)
+    private val userEntity = userRequest.toUserEntity()
+    private val userId = userEntity.userId
+
     @Test
-    fun `should call its data source to retrieve users`() {
+    fun `createUser() called with successful response`() {
+        // given
+        val expectedResponse = userEntity
+
         // when
-        userService.getUsers()
+        every { userRepository.save(userEntity) } returns expectedResponse
+        val actualResponse = userService.createUser(userRequest)
+
+        // then
+        verify(exactly = 1) { userRepository.existsByFirstNameAndLastNameAndEmail(userRequest.firstName, userRequest.lastName, userRequest.email) }
+        verify(exactly = 1) { userRepository.save(userEntity) }
+        assertEquals(expectedResponse, actualResponse)
+
+        confirmVerified()
+    }
+
+    @Test
+    fun `getUser() is called with successful response`() {
+        // given
+        val expectedResponse = Optional.of(userEntity)
+
+        // when
+        every { userRepository.findById(userEntity.userId) } returns expectedResponse
+        val actualResponse = userService.getUser(userId)
+
+        // then
+        verify(exactly = 1) { userRepository.findById(userId) }
+        assertEquals(expectedResponse, actualResponse)
+
+        confirmVerified()
+    }
+
+    @Test
+    fun `getUsers() is called with successful response`() {
+        // given
+        val expectedResponse = listOf(userEntity)
+
+        // when
+        every { userRepository.findAll() } returns expectedResponse
+        val actualResponse = userService.getUsers()
 
         // then
         verify(exactly = 1) { userRepository.findAll() }
-    }
-    
-    @Test
-    fun `should call its data source to retrieve a user by a specific userId`() {
-        // given
-        val user = UserEntity(
-            userId = 1,
-            firstName = "Brian",
-            lastName = "Griffin",
-            email = "bg@email.com",
-            phoneNumber = "651-555-6789"
-        )
-        every { userRepository.getReferenceById(user.userId) } returns user
-        
-        // when
-        val result = userService.getUser(user.userId)
-        
-        // then
-        verify(exactly = 1) { userRepository.findById(user.userId) }
-        assertEquals(user.firstName, result.get().firstName)
-        assertEquals(user.lastName, result.get().lastName)
-        assertEquals(user.email, result.get().email)
-        assertEquals(user.phoneNumber, result.get().phoneNumber)
+        assertEquals(expectedResponse, actualResponse)
+
+        confirmVerified()
     }
 
     @Test
-    fun `should create a new user by calling UserService's createUser()`() {
-        // given
-
-
+    fun `deleteUser() is called with successful response`() {
         // when
-
+        userService.deleteUser(userId)
 
         // then
+        verify(exactly = 1) { userRepository.deleteById(userId) }
 
+        confirmVerified()
     }
 
     @Test
-    fun `should call deleteUser() and a delete a user by their id`() {
+    fun `getUserVehicles() is called with successful response`() {
         // given
-        val user = User(
-            firstName = "Peter",
-            lastName = "Griffin",
-            email = "pg@email.com",
-            phoneNumber = "651-555-6111",
-        )
-        every { userRepository.save(any<UserEntity>()) } returns UserEntity(
-            firstName = user.firstName,
-            lastName = user.lastName,
-            email = user.email,
-            phoneNumber = user.phoneNumber,
-        )
-
-        val savedUser = userService.createUser(user)
+        val expectedResponse = userEntity.vehicles
 
         // when
-        userService.deleteUser(savedUser.userId)
+        every { userRepository.findById(userId) } returns Optional.of(userEntity)
+        val actualResponse = userService.getUserVehicles(userId)
 
         // then
-        verify(exactly = 1) { userRepository.deleteById(savedUser.userId) }
-        every { userRepository.findById(savedUser.userId) } returns Optional.empty()
-        val deletedVehicle = userRepository.findById(savedUser.userId)
-        assertEquals(/* expected = */ Optional.empty<UserEntity>(), /* actual = */ deletedVehicle)
+        verify(exactly = 1) { userRepository.findById(userId) }
+        assertEquals(expectedResponse, actualResponse)
+
+        confirmVerified()
+    }
+
+    @Test
+    fun `getUserTrips() is called with successful response`() {
+        // given
+        val expectedResponse = emptyList<TripEntity>()
+
+        // when
+        every { userRepository.getReferenceById(userId) } returns userEntity
+        val actualResponse = userService.getUserTrips(userId)
+
+        // then
+        verify(exactly = 1) { userRepository.getReferenceById(userId) }
+        assertEquals(expectedResponse, actualResponse)
+
+        confirmVerified()
     }
 }
