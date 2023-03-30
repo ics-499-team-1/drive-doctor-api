@@ -18,6 +18,18 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/v1/trips")
 class TripController(private val tripService: TripService) {
 
+    // Add this method to allow CORS requests
+    @Suppress("unused")
+    @RequestMapping("/**")
+    @CrossOrigin(
+        origins = ["http://localhost:5173"],
+        allowedHeaders = ["*"],
+        methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.DELETE]
+    )
+    fun corsFilter(): String {
+        return ""
+    }
+
     @GetMapping
     fun getTrips() = tripService.getTrips()
 

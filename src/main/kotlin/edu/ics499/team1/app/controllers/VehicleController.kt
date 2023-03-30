@@ -16,6 +16,18 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/v1/vehicles")  // TODO Is this a logical mapping?
 class VehicleController(private val service: VehicleService) {
 
+    // Add this method to allow CORS requests
+    @Suppress("unused")
+    @RequestMapping("/**")
+    @CrossOrigin(
+        origins = ["http://localhost:5173"],
+        allowedHeaders = ["*"],
+        methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.DELETE]
+    )
+    fun corsFilter(): String {
+        return ""
+    }
+
     @ExceptionHandler(NoSuchElementException::class)
     fun handleNotFound(e: NoSuchElementException): ResponseEntity<String> =
         ResponseEntity(e.message, HttpStatus.NOT_FOUND)

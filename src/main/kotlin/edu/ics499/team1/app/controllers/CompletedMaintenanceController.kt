@@ -16,7 +16,19 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/v1/maintenance/completed-maintenance")
-class CompletedMaintenanceController(private val service: CompletedMaintenanceService){
+class CompletedMaintenanceController(private val service: CompletedMaintenanceService) {
+
+    // Add this method to allow CORS requests
+    @Suppress("unused")
+    @RequestMapping("/**")
+    @CrossOrigin(
+        origins = ["http://localhost:5173"],
+        allowedHeaders = ["*"],
+        methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.DELETE]
+    )
+    fun corsFilter(): String {
+        return ""
+    }
 
     /**
      * Gets all maintenance records for a specific vehicle.
@@ -35,9 +47,13 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
      */
     @PostMapping("/vehicles/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun addMaintenance(@PathVariable vehicleId: Int, @RequestBody completedMaintenance: CompletedMaintenance):CompletedMaintenanceEntity{
+    fun addMaintenance(
+        @PathVariable vehicleId: Int,
+        @RequestBody completedMaintenance: CompletedMaintenance
+    ): CompletedMaintenanceEntity {
         return service.createCompletedMaintenance(vehicleId, completedMaintenance)
     }
+
     /**
      * Deletes a completed maintenance entity with the specified ID
      * @param maintenanceId
@@ -59,5 +75,5 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
         @RequestBody completedMaintenance: CompletedMaintenance
     ) =
         service.updateCompletedMaintenanceName(maintenanceId, completedMaintenance.name)
-    
+
 }

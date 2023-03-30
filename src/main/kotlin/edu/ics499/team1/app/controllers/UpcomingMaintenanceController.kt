@@ -20,6 +20,19 @@ class UpcomingMaintenanceController(
     private val service: UpcomingMaintenanceService,
 ) {
 
+    // Add this method to allow CORS requests
+    @Suppress("unused")
+    @RequestMapping("/**")
+    @CrossOrigin(
+        origins = ["http://localhost:5173"],
+        allowedHeaders = ["*"],
+        methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.DELETE]
+    )
+    fun corsFilter(): String {
+        return ""
+    }
+
+
     /**
      * Gets all maintenance records for a specific vehicle.
      * @param vehicleId
@@ -76,3 +89,4 @@ class UpcomingMaintenanceController(
     @ResponseStatus(HttpStatus.CREATED)
     fun loadUpcomingMaintenance() = service.callUpcomingMaintenanceAPI() // todo: @PathVariable maintenanceId: String
 }
+
