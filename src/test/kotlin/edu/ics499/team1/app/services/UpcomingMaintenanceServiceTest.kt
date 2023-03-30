@@ -83,11 +83,11 @@ class UpcomingMaintenanceServiceTest {
         val expectedResponse = Unit
 
         // when
-        every { uMService.updateUpcomingMaintenanceName(uMID, name) } returns Unit
-        val actualResponse = uMService.updateUpcomingMaintenanceName(uMID, name)
+        every { uMService.updateUpcomingMaintenanceEntity(uMID, name) } returns Unit
+        val actualResponse = uMService.updateUpcomingMaintenanceEntity(uMID, name)
 
         //then
-        verify(exactly = 1) { uMService.updateUpcomingMaintenanceName(uMID, name) }
+        verify(exactly = 1) { uMService.updateUpcomingMaintenanceEntity(uMID, name) }
         assertEquals(actualResponse, expectedResponse)
         confirmVerified()
 

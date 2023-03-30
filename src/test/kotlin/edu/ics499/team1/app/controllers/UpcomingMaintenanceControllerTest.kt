@@ -77,11 +77,11 @@ class UpcomingMaintenanceControllerTest {
         val uMDomain = UpcomingMaintenanceFixture.upcomingMaintenanceDomain(name = "tom")
 
         // when
-        every { uMService.updateUpcomingMaintenanceName(uMId, "tom") } returns Unit
-        val response = uMController.updateUpcomingMaintenanceName(uMId, uMDomain)
+        every { uMService.updateUpcomingMaintenanceEntity(uMId, "tom") } returns Unit
+        val response = uMController.updateUpcomingMaintenance(uMId, uMDomain)
 
         //then
-        verify(exactly = 1) { uMService.updateUpcomingMaintenanceName(uMId, "tom") }
+        verify(exactly = 1) { uMService.updateUpcomingMaintenanceEntity(uMId, "tom") }
         assertEquals(response, Unit)
         confirmVerified()
     }

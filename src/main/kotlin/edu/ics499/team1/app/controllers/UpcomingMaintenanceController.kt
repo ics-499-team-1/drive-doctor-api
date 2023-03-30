@@ -58,11 +58,12 @@ class UpcomingMaintenanceController(
      */
     @PatchMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateUpcomingMaintenanceName(
+    fun updateUpcomingMaintenance(
         @PathVariable maintenanceId: Int,
         @RequestBody upcomingMaintenance: UpcomingMaintenance
-    ) =
-        service.updateUpcomingMaintenanceName(maintenanceId, upcomingMaintenance.name)
+    ) {
+        return service.updateUpcomingMaintenanceEntity(maintenanceId, upcomingMaintenance)
+    }
 
 
     @PostMapping("/convert/{maintenanceId}")

@@ -52,9 +52,17 @@ class UpcomingMaintenanceService(
      * @param name
      * @return Unit
      */
-    fun updateUpcomingMaintenanceName(maintenanceId: Int, name: String) {
-        upcomingMaintenanceRepository.modifyUpcomingMaintenanceName(maintenanceId, name)
-
+    fun updateUpcomingMaintenanceEntity(id: Int, upcomingMaintenance: UpcomingMaintenance) {
+        upcomingMaintenanceRepository.modifyUpcomingMaintenanceName(
+            id,
+            upcomingMaintenance.name,
+            upcomingMaintenance.notes,
+            upcomingMaintenance.pictures,
+            upcomingMaintenance.mileageInterval,
+            upcomingMaintenance.timeInterval,
+            upcomingMaintenance.mileageReminder,
+            upcomingMaintenance.timeReminder
+        );
     }
 
     /**
