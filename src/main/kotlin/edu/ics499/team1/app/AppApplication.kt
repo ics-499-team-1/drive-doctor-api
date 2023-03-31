@@ -19,7 +19,6 @@ fun main(args: Array<String>) {
 // See this link for more info: https://www.baeldung.com/spring-cors
 
 @Configuration
-@EnableWebMvc
 class WebConfig : WebMvcConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
