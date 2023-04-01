@@ -44,6 +44,7 @@ internal class CompletedMaintenanceServiceTest {
         )
 
         val maintenance = CompletedMaintenance(
+            id = 1,
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
@@ -90,6 +91,7 @@ internal class CompletedMaintenanceServiceTest {
             user = user
         )
         val maintenance = CompletedMaintenance(
+            id = 1,
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
@@ -152,6 +154,7 @@ internal class CompletedMaintenanceServiceTest {
             user = user
         )
         val maintenance = CompletedMaintenance(
+            id = 1,
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
@@ -165,17 +168,17 @@ internal class CompletedMaintenanceServiceTest {
         val maintenanceEntity = maintenance.toCompletedMaintenanceEntity(vehicle)
         val newName = "New Name"
         every {
-            completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceEntity.maintenanceId, newName)
+            completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceEntity.completedMaintenanceId, newName)
         } returns newName
 
         // when
         val updatedName =
-            completedMaintenanceService.updateCompletedMaintenanceName(maintenanceEntity.maintenanceId, newName)
+            completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceEntity.completedMaintenanceId, newName)
 
         // then
         verify(exactly = 1) {
             completedMaintenanceRepository.modifyCompletedMaintenanceName(
-                maintenanceEntity.maintenanceId,
+                maintenanceEntity.completedMaintenanceId,
                 newName
             )
         }
