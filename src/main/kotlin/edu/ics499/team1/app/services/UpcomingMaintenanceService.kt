@@ -76,9 +76,9 @@ class UpcomingMaintenanceService(
     fun convertUpcomingToCompleted(maintenanceId: Int, completedMaintenance: CompletedMaintenance) {
         val upcoming = upcomingMaintenanceRepository.getReferenceById(maintenanceId)
         val completed = CompletedMaintenanceEntity(
-            name = upcoming.name,
-            notes = upcoming.notes,
-            pictures = upcoming.pictures,
+            name = completedMaintenance.name,
+            notes = completedMaintenance.notes,
+            pictures = completedMaintenance.pictures,
             date = completedMaintenance.date,
             mileage = completedMaintenance.mileage,
             serviceCenter = completedMaintenance.serviceCenter,

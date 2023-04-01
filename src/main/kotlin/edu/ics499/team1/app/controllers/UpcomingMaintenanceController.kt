@@ -67,7 +67,7 @@ class UpcomingMaintenanceController(
 
 
     @PostMapping("/convert/{maintenanceId}")
-    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    @ResponseStatus(HttpStatus.CREATED)
     fun convertUpcomingToCompletedMaintenance(
         @PathVariable maintenanceId: Int,
         @RequestBody completedMaintenance: CompletedMaintenance
