@@ -21,7 +21,7 @@ class CompletedMaintenanceFixture {
             vehicle: VehicleEntity = VehicleFixture.vehicleEntity()
         ): CompletedMaintenanceEntity {
             return CompletedMaintenanceEntity(
-                maintenanceId = maintenanceId, name = name, notes = notes,
+                completedMaintenanceId = maintenanceId, name = name, notes = notes,
                 pictures = pictures, date = date, mileage = mileage, serviceCenter = serviceCenter,
                 mechanics = mechanics, totalCost = totalCost, vehicle = vehicle
             )
@@ -38,6 +38,7 @@ class CompletedMaintenanceFixture {
             totalCost: Double = 1.0,
         ): CompletedMaintenance {
             return CompletedMaintenance(
+                id = 1,
                 name = name, notes = notes,
                 pictures = pictures, date = date, mileage = mileage, serviceCenter = serviceCenter,
                 mechanics = mechanics, totalCost = totalCost

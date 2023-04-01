@@ -23,7 +23,7 @@ class UpcomingMaintenanceFixture {
             )
         ): UpcomingMaintenanceEntity {
             return UpcomingMaintenanceEntity(
-                maintenanceId = maintenanceId, name = name, notes = notes,
+                upcomingMaintenanceId = maintenanceId, name = name, notes = notes,
                 pictures = pictures, mileageInterval = mileageInterval, timeInterval = timeInterval,
                 mileageReminder = mileageReminder, timeReminder = timeReminder,
                 VehicleFixture.vehicleEntity()
@@ -40,6 +40,7 @@ class UpcomingMaintenanceFixture {
             timeReminder: Boolean = false,
         ): UpcomingMaintenance {
             return UpcomingMaintenance(
+                id = 1,
                 name = name, notes = notes,
                 pictures = pictures, mileageInterval = mileageInterval, timeInterval = timeInterval,
                 mileageReminder = mileageReminder, timeReminder = timeReminder,
