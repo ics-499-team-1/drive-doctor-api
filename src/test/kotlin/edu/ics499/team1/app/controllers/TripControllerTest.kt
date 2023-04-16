@@ -4,8 +4,6 @@ import edu.ics499.team1.app.domains.Trip
 import edu.ics499.team1.app.domains.VehicleTripMileage
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
-import edu.ics499.team1.app.repositories.TripRepository
-import edu.ics499.team1.app.repositories.VehicleRepository
 import edu.ics499.team1.app.services.TripService
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -39,6 +37,7 @@ class TripControllerTest {
         email = "fake@email.com",
         phoneNumber = "123-456-789",
         vehicles = emptyList(),
+        password = "password",
     )
 
     private val vehicleEntity = VehicleEntity(

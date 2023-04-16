@@ -4,9 +4,10 @@ server:
 
 spring:
   datasource:
+    url: jdbc:postgresql://drive-doctor.c02zvzfbrnh9.us-east-1.rds.amazonaws.com:5432/drive-doctor
     username: postgres
-    password: password
-    url: jdbc:postgresql://localhost:5432/postgres
+    password: VE9R&1&?1#ybCA|c*x?&KeLJ!t8O
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,7 +15,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   jackson:
     property-naming-strategy: SNAKE_CASE
 

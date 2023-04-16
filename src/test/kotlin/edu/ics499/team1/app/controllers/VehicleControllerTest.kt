@@ -23,7 +23,8 @@ class VehicleControllerTest {
         firstName = "John",
         lastName = "Smith",
         email = "johnsmith@email.com",
-        phoneNumber = "651-555-4455"
+        phoneNumber = "651-555-4455",
+        password = "password"
     )
     private val vehicle = Vehicle(
         name = "My Car",

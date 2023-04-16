@@ -43,6 +43,7 @@ internal class TripServiceTest {
         email = "fake@email.com",
         phoneNumber = "123-456-789",
         vehicles = emptyList(),
+        password = "password",
     )
 
     private val vehicleEntity = VehicleEntity(

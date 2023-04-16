@@ -17,7 +17,7 @@ internal class UserServiceTest {
     private val userRepository: UserRepository = mockk(relaxed = true)
     private val userService = UserService(userRepository)
 
-    private val userRequest = User("John", "Doe", "johndoe@email.com", null)
+    private val userRequest = User("John", "Doe", "johndoe@email.com", "password", "1234567890")
     private val userEntity = userRequest.toUserEntity()
     private val userId = userEntity.userId
 

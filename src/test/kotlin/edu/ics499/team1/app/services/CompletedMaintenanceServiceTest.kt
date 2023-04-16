@@ -27,7 +27,8 @@ internal class CompletedMaintenanceServiceTest {
             lastName = "Smith",
             email = "johnsmith@email.com",
             phoneNumber = "651-555-4455",
-            vehicles = emptyList()
+            vehicles = emptyList(),
+            password = "password"
         )
         val vehicle = VehicleEntity(
             vehicleId = 1,
@@ -75,7 +76,8 @@ internal class CompletedMaintenanceServiceTest {
             lastName = "Smith",
             email = "johnsmith@email.com",
             phoneNumber = "651-555-4455",
-            vehicles = emptyList()
+            vehicles = emptyList(),
+            password = "password"
         )
         val vehicle = VehicleEntity(
             vehicleId = 1,
@@ -138,7 +140,8 @@ internal class CompletedMaintenanceServiceTest {
             lastName = "Smith",
             email = "johnsmith@email.com",
             phoneNumber = "651-555-4455",
-            vehicles = emptyList()
+            vehicles = emptyList(),
+            password = "password"
         )
         val vehicle = VehicleEntity(
             vehicleId = 1,

@@ -21,7 +21,8 @@ internal class CompletedMaintenanceControllerTest {
         lastName = "Smith",
         email = "johnsmith@email.com",
         phoneNumber = "651-555-4455",
-        vehicles = emptyList()
+        vehicles = emptyList(),
+        password = "password"
     )
     private val vehicle = VehicleEntity(
         vehicleId = 1,
