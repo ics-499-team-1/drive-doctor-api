@@ -2,6 +2,7 @@ package edu.ics499.team1.app.security.config
 
 import io.jsonwebtoken.Jwt
 import jakarta.servlet.FilterChain
+import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -13,6 +14,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import reactor.util.annotation.NonNull
+import java.io.IOException
 
 @Component
 class JwtAuthenticationFilter(
@@ -20,15 +22,19 @@ class JwtAuthenticationFilter(
     private val userDetailsService: UserDetailsService,
 ) : OncePerRequestFilter() {
 
+    @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(
         @NonNull request: HttpServletRequest,
         @NonNull response: HttpServletResponse,
         @NonNull filterChain: FilterChain
     ) {
+        if (request.servletPath.contains("/api/v1/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         // Try to extract the authorization header
-        val authHeader: String = request.getHeader("Authorization")
-        val jwtToken: String
-        val userEmail: String
+        val authHeader: String? = request.getHeader("Authorization")
+        val userEmail: String?
 
         /* If the authorization header is null OR not the authorization header starts with Bearer
         Then pass the request and response to the next filter. */
@@ -38,7 +44,7 @@ class JwtAuthenticationFilter(
         }
 
         // Extract the jwt token from the authorization header ("Bearer " = 7 spaces)
-        jwtToken= authHeader.substring(7)
+        val jwtToken: String = authHeader.substring(7)
 
         // Extract the user email
         userEmail = jwtService.extractUsername(jwtToken)

@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:postgresql://drive-doctor.c02zvzfbrnh9.us-east-1.rds.amazonaws.com:5432/drive-doctor
     username: postgres
-    password: VE9R&1&?1#ybCA|c*x?&KeLJ!t8O
+    password: 1*1SivcrpL7m6tgLpsX$o{Hb9a3k
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
