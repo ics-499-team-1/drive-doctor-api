@@ -34,7 +34,8 @@ class JwtAuthenticationFilter(
         }
         // Try to extract the authorization header
         val authHeader: String? = request.getHeader("Authorization")
-        val userEmail: String?
+        println(authHeader)
+        val userEmail: String
 
         /* If the authorization header is null OR not the authorization header starts with Bearer
         Then pass the request and response to the next filter. */
