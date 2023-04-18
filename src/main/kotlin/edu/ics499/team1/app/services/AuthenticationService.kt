@@ -33,7 +33,6 @@ class AuthenticationService(
         ).toUserEntity()
         userRepository.save(userEntity)
         val jwtToken = jwtService.generateJwtToken(userEntity)
-        println(AuthenticationResponse(jwtToken))
         return AuthenticationResponse(jwtToken)
     }
 
