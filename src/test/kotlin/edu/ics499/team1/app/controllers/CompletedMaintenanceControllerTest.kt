@@ -21,8 +21,10 @@ internal class CompletedMaintenanceControllerTest {
         lastName = "Smith",
         email = "johnsmith@email.com",
         phoneNumber = "651-555-4455",
-        vehicles = emptyList()
+        vehicles = emptyList(),
+        password = "password"
     )
+
     private val vehicle = VehicleEntity(
         vehicleId = 1,
         name = "My Car",
@@ -36,6 +38,7 @@ internal class CompletedMaintenanceControllerTest {
         deactivated = false,
         user = user
     )
+
     private val completedMaintenance = CompletedMaintenance(
         id = 1,
         name = "Oil Change",
@@ -111,7 +114,7 @@ internal class CompletedMaintenanceControllerTest {
                 completedMaintenance
             )
         } returns Unit
-        val actualResponse =  completedMaintenanceController.updateCompletedMaintenanceName(
+        val actualResponse = completedMaintenanceController.updateCompletedMaintenanceName(
             completedMaintenanceEntity.completedMaintenanceId,
             completedMaintenance
         )

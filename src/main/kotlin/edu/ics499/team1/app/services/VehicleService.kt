@@ -7,7 +7,6 @@ import edu.ics499.team1.app.repositories.VehicleRepository
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import java.util.*
-import kotlin.NoSuchElementException
 
 @Service
 class VehicleService(

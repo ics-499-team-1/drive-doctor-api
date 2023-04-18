@@ -27,7 +27,8 @@ internal class CompletedMaintenanceServiceTest {
             lastName = "Smith",
             email = "johnsmith@email.com",
             phoneNumber = "651-555-4455",
-            vehicles = emptyList()
+            vehicles = emptyList(),
+            password = "password"
         )
         val vehicle = VehicleEntity(
             vehicleId = 1,
@@ -75,7 +76,8 @@ internal class CompletedMaintenanceServiceTest {
             lastName = "Smith",
             email = "johnsmith@email.com",
             phoneNumber = "651-555-4455",
-            vehicles = emptyList()
+            vehicles = emptyList(),
+            password = "password"
         )
         val vehicle = VehicleEntity(
             vehicleId = 1,
@@ -138,7 +140,8 @@ internal class CompletedMaintenanceServiceTest {
             lastName = "Smith",
             email = "johnsmith@email.com",
             phoneNumber = "651-555-4455",
-            vehicles = emptyList()
+            vehicles = emptyList(),
+            password = "password"
         )
         val vehicle = VehicleEntity(
             vehicleId = 1,
@@ -168,12 +171,18 @@ internal class CompletedMaintenanceServiceTest {
         val maintenanceEntity = maintenance.toCompletedMaintenanceEntity(vehicle)
         val newName = "New Name"
         every {
-            completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceEntity.completedMaintenanceId, newName)
+            completedMaintenanceRepository.modifyCompletedMaintenanceName(
+                maintenanceEntity.completedMaintenanceId,
+                newName
+            )
         } returns newName
 
         // when
         val updatedName =
-            completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceEntity.completedMaintenanceId, newName)
+            completedMaintenanceRepository.modifyCompletedMaintenanceName(
+                maintenanceEntity.completedMaintenanceId,
+                newName
+            )
 
         // then
         verify(exactly = 1) {

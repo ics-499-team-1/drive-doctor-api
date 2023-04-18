@@ -6,12 +6,14 @@ data class User(
     val firstName: String,
     val lastName: String,
     val email: String,
+    val password: String,
     val phoneNumber: String?
 ) {
     fun toUserEntity() = UserEntity(
         firstName = this.firstName,
         lastName = this.lastName,
         email = this.email,
+        password = this.password,
         phoneNumber = this.phoneNumber
     )
 }

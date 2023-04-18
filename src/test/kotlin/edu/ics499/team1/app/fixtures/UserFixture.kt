@@ -12,6 +12,7 @@ class UserFixture {
             firstName: String = "first$userId",
             lastName: String = "last$userId",
             email: String = "email$userId",
+            password: String = "password$userId",
             phoneNumber: String? = null,
             vehicles: List<VehicleEntity> = listOf()
         ): UserEntity {
@@ -21,7 +22,8 @@ class UserFixture {
                 lastName = lastName,
                 email = email,
                 phoneNumber = phoneNumber,
-                vehicles = vehicles
+                vehicles = vehicles,
+                password = password
             )
         }
     }
