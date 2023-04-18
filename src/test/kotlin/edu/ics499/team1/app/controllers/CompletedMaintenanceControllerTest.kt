@@ -24,6 +24,7 @@ internal class CompletedMaintenanceControllerTest {
         vehicles = emptyList(),
         password = "password"
     )
+
     private val vehicle = VehicleEntity(
         vehicleId = 1,
         name = "My Car",
@@ -37,6 +38,7 @@ internal class CompletedMaintenanceControllerTest {
         deactivated = false,
         user = user
     )
+
     private val completedMaintenance = CompletedMaintenance(
         id = 1,
         name = "Oil Change",

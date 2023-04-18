@@ -57,7 +57,6 @@ class TripControllerTest {
 
     private val tripEntity = tripDomain.toTripEntity(vehicleEntity)
 
-
     @Test
     fun `getTrips successful response`() {
         // given
