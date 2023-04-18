@@ -21,8 +21,24 @@ class UserControllerTest {
 
     private val userId = 123
     private val userRequest = User("John", "Doe", "johndoe@email.com", "password", "1234567890")
-    private val userEntity = UserEntity(userId, "John", "Doe", "johndoe@email.com", "password", Role.USER, "1234567890", emptyList())
-    private val vehicleEntity = VehicleEntity(1, "good car", 2015, "A", "car", "good", 12, null, null, false, userEntity, emptyList(), emptyList(), emptyList())
+    private val userEntity =
+        UserEntity(userId, "John", "Doe", "johndoe@email.com", "password", Role.USER, "1234567890", emptyList())
+    private val vehicleEntity = VehicleEntity(
+        1,
+        "good car",
+        2015,
+        "A",
+        "car",
+        "good",
+        12,
+        null,
+        null,
+        false,
+        userEntity,
+        emptyList(),
+        emptyList(),
+        emptyList()
+    )
     private val tripEntity = TripEntity(1, 50, "business", vehicleEntity, null, null, null, null)
 
     @Test

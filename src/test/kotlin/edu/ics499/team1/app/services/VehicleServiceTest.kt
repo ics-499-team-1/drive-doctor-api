@@ -52,7 +52,7 @@ internal class VehicleServiceTest {
         deactivated = false,
         user = user
     )
-   
+
     @Test
     fun `getVehicles() works as expected`() {
         // given
@@ -81,14 +81,14 @@ internal class VehicleServiceTest {
         val actualResponse = vehicleService.createVehicle(vehicle)
 
         // then
-        verify(exactly = 1) { userRepository.getReferenceById(vehicle.userId)}
+        verify(exactly = 1) { userRepository.getReferenceById(vehicle.userId) }
         verify(exactly = 1) { vehicleRepository.save(expectedResponse) }
         verify(exactly = 1) { vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber) }
-        verify(exactly = 1) {  vehicleRepository.existsByVin(vehicle.vin) }
+        verify(exactly = 1) { vehicleRepository.existsByVin(vehicle.vin) }
         assertEquals(expectedResponse, actualResponse)
         confirmVerified()
     }
-    
+
     @Test
     fun `deleteVehicle() works as expected`() {
         // given

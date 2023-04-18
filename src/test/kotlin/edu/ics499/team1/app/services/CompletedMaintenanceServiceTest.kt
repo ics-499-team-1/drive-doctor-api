@@ -171,12 +171,18 @@ internal class CompletedMaintenanceServiceTest {
         val maintenanceEntity = maintenance.toCompletedMaintenanceEntity(vehicle)
         val newName = "New Name"
         every {
-            completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceEntity.completedMaintenanceId, newName)
+            completedMaintenanceRepository.modifyCompletedMaintenanceName(
+                maintenanceEntity.completedMaintenanceId,
+                newName
+            )
         } returns newName
 
         // when
         val updatedName =
-            completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceEntity.completedMaintenanceId, newName)
+            completedMaintenanceRepository.modifyCompletedMaintenanceName(
+                maintenanceEntity.completedMaintenanceId,
+                newName
+            )
 
         // then
         verify(exactly = 1) {

@@ -112,7 +112,7 @@ internal class CompletedMaintenanceControllerTest {
                 completedMaintenance
             )
         } returns Unit
-        val actualResponse =  completedMaintenanceController.updateCompletedMaintenanceName(
+        val actualResponse = completedMaintenanceController.updateCompletedMaintenanceName(
             completedMaintenanceEntity.completedMaintenanceId,
             completedMaintenance
         )

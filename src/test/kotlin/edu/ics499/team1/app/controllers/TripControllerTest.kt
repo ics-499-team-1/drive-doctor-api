@@ -11,6 +11,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+
 class TripControllerTest {
     private val mileage = 100
 
@@ -57,7 +58,7 @@ class TripControllerTest {
     private val tripEntity = tripDomain.toTripEntity(vehicleEntity)
 
 
-    @Test 
+    @Test
     fun `getTrips successful response`() {
         // given
         val listOfTripEntity = listOf(tripEntity)

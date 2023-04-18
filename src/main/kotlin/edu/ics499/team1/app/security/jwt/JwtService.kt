@@ -42,7 +42,10 @@ class JwtService {
             .setSubject(userDetails.username) // set the subject of the claim
             .setIssuedAt(Date(System.currentTimeMillis())) // set the time of when the jwt token was issued
             .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 24)) // set the time of when the jwt token will expire
-            .signWith(getSignInKey(), SignatureAlgorithm.HS256) // set the signing key and the algorithm that will be used
+            .signWith(
+                getSignInKey(),
+                SignatureAlgorithm.HS256
+            ) // set the signing key and the algorithm that will be used
             .compact() // builds the JWT and serializes it to a compact URL-safe string
     }
 
