@@ -1,10 +1,11 @@
-package edu.ics499.team1.app.security.config
+package edu.ics499.team1.app.security.jwt
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.security.Key
@@ -15,7 +16,8 @@ import java.util.*
 class JwtService {
 
     // Needs to be a minimum of 256-bit encryption in hex format
-    private final val secretKey = "397A24432646294A404E635266556A586E327234753778214125442A472D4B61"
+    @Value("\${drive-doctor.jwt-secret-key}")
+    private final lateinit var secretKey: String
 
     fun extractUsername(jwtToken: String): String {
         return extractClaim(jwtToken) { obj: Claims -> obj.subject }

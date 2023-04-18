@@ -1,6 +1,5 @@
-package edu.ics499.team1.app.security.config
+package edu.ics499.team1.app.security.jwt
 
-import io.jsonwebtoken.Jwt
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
@@ -10,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import reactor.util.annotation.NonNull

@@ -1,7 +1,9 @@
-package edu.ics499.team1.app.security.auth
+package edu.ics499.team1.app.controllers
 
+import edu.ics499.team1.app.security.auth.AuthenticationRequest
+import edu.ics499.team1.app.services.AuthenticationService
+import edu.ics499.team1.app.security.auth.RegisterRequest
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping

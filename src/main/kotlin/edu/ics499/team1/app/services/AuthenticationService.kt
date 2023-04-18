@@ -1,17 +1,14 @@
-package edu.ics499.team1.app.security.auth
+package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.User
-import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.repositories.UserRepository
-import edu.ics499.team1.app.security.config.JwtService
-import edu.ics499.team1.app.services.CustomExceptions
-import org.springframework.http.HttpHeaders;
+import edu.ics499.team1.app.security.auth.AuthenticationRequest
+import edu.ics499.team1.app.security.auth.AuthenticationResponse
+import edu.ics499.team1.app.security.auth.RegisterRequest
+import edu.ics499.team1.app.security.jwt.JwtService
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,15 +24,15 @@ class AuthenticationService(
         ) {
             throw CustomExceptions.UserAlreadyExistsException("User already exists in the system")
         }
-        val user = User(
+        val userEntity = User(
             firstName = request.firstName,
             lastName = request.lastName,
             email = request.email,
             password = passwordEncoder.encode(request.password),
             phoneNumber = request.phoneNumber
         ).toUserEntity()
-        userRepository.save(user)
-        val jwtToken = jwtService.generateJwtToken(user)
+        userRepository.save(userEntity)
+        val jwtToken = jwtService.generateJwtToken(userEntity)
         println(AuthenticationResponse(jwtToken))
         return AuthenticationResponse(jwtToken)
     }
