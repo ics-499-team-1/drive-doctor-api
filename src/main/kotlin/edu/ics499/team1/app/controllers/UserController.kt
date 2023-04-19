@@ -48,7 +48,6 @@ class UserController(private val userService: UserService) {
     @GetMapping("/{userId}/vehicles")
     fun getUserVehicles(@PathVariable userId: Int) = userService.getUserVehicles(userId)
 
-
     @GetMapping("/{userId}/trips")
     fun getUserTrips(@PathVariable userId: Int): List<TripEntity> {
         return userService.getUserTrips(userId)

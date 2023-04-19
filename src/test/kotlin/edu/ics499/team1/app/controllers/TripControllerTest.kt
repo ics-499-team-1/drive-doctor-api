@@ -4,8 +4,6 @@ import edu.ics499.team1.app.domains.Trip
 import edu.ics499.team1.app.domains.VehicleTripMileage
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
-import edu.ics499.team1.app.repositories.TripRepository
-import edu.ics499.team1.app.repositories.VehicleRepository
 import edu.ics499.team1.app.services.TripService
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -13,6 +11,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+
 class TripControllerTest {
     private val mileage = 100
 
@@ -39,6 +38,7 @@ class TripControllerTest {
         email = "fake@email.com",
         phoneNumber = "123-456-789",
         vehicles = emptyList(),
+        password = "password",
     )
 
     private val vehicleEntity = VehicleEntity(
@@ -57,8 +57,7 @@ class TripControllerTest {
 
     private val tripEntity = tripDomain.toTripEntity(vehicleEntity)
 
-
-    @Test 
+    @Test
     fun `getTrips successful response`() {
         // given
         val listOfTripEntity = listOf(tripEntity)

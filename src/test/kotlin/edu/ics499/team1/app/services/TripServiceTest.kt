@@ -10,8 +10,8 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 internal class TripServiceTest {
 
@@ -43,6 +43,7 @@ internal class TripServiceTest {
         email = "fake@email.com",
         phoneNumber = "123-456-789",
         vehicles = emptyList(),
+        password = "password",
     )
 
     private val vehicleEntity = VehicleEntity(
@@ -80,12 +81,12 @@ internal class TripServiceTest {
     fun `addTrip successful response`() {
         // given
         val tripEntity = tripDomain.toTripEntity(vehicleEntity)
-        
+
         // when
         every { vehicleRepository.getReferenceById(tripDomain.vehicleId) } returns vehicleEntity
         every { tripRepository.save(tripDomain.toTripEntity(vehicleReference = vehicleEntity)) } returns tripEntity
         val actualResponse = tripService.addTrip(trip = tripDomain)
-        
+
         // then
         verify(exactly = 1) { vehicleRepository.getReferenceById(tripDomain.vehicleId) }
         verify(exactly = 1) { tripRepository.save(tripDomain.toTripEntity(vehicleReference = vehicleEntity)) }

@@ -2,7 +2,6 @@ package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.User
 import edu.ics499.team1.app.entities.TripEntity
-import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -17,7 +16,7 @@ internal class UserServiceTest {
     private val userRepository: UserRepository = mockk(relaxed = true)
     private val userService = UserService(userRepository)
 
-    private val userRequest = User("John", "Doe", "johndoe@email.com", null)
+    private val userRequest = User("John", "Doe", "johndoe@email.com", "password", "1234567890")
     private val userEntity = userRequest.toUserEntity()
     private val userId = userEntity.userId
 
@@ -31,7 +30,13 @@ internal class UserServiceTest {
         val actualResponse = userService.createUser(userRequest)
 
         // then
-        verify(exactly = 1) { userRepository.existsByFirstNameAndLastNameAndEmail(userRequest.firstName, userRequest.lastName, userRequest.email) }
+        verify(exactly = 1) {
+            userRepository.existsByFirstNameAndLastNameAndEmail(
+                userRequest.firstName,
+                userRequest.lastName,
+                userRequest.email
+            )
+        }
         verify(exactly = 1) { userRepository.save(userEntity) }
         assertEquals(expectedResponse, actualResponse)
 
