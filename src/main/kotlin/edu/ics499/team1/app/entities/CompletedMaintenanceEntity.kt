@@ -11,7 +11,6 @@ data class CompletedMaintenanceEntity(
     val completedMaintenanceId: Int = 0,
     override val name: String,
     override val notes: String?,
-    override val pictures: String?,
     val date: String,
     val mileage: Int,
     val serviceCenter: String?,

@@ -107,18 +107,18 @@ internal class CompletedMaintenanceControllerTest {
         val expectedResponse = "New Oil Change"
         //when
         every {
-            completedMaintenanceController.updateCompletedMaintenanceName(
+            completedMaintenanceController.updateCompletedMaintenance(
                 completedMaintenanceEntity.maintenanceId,
                 expectedResponse
             )
         } returns expectedResponse
-        val actualResponse = completedMaintenanceController.updateCompletedMaintenanceName(
+        val actualResponse = completedMaintenanceController.updateCompletedMaintenance(
             completedMaintenanceEntity.maintenanceId,
             expectedResponse
         )
         //then
         verify(exactly = 1) {
-            completedMaintenanceService.updateCompletedMaintenanceName(
+            completedMaintenanceService.updateCompletedMaintenance(
                 completedMaintenanceEntity.maintenanceId,
                 expectedResponse
             )

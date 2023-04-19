@@ -170,7 +170,7 @@ internal class CompletedMaintenanceServiceTest {
 
         // when
         val updatedName =
-            completedMaintenanceService.updateCompletedMaintenanceName(maintenanceEntity.maintenanceId, newName)
+            completedMaintenanceService.updateCompletedMaintenance(maintenanceEntity.maintenanceId, newName)
 
         // then
         verify(exactly = 1) {

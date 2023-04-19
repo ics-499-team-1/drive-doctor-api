@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*
 // TODO: Exception Handlers
 /**
  * [getCompletedMaintenancesByVehicleId] Returns all of a vehicle's completed maintenance records
- * [addCompletedMaintenance] Adds a completed maintenance record
- * [deleteUpcomingMaintenance] Removes a maintenance record
+ * [addMaintenance] Adds a completed maintenance record
+ * [deleteCompletedMaintenance] Removes a maintenance record
  */
 @RestController
 @RequestMapping("/v1/maintenance/completed-maintenance")
-class CompletedMaintenanceController(private val service: CompletedMaintenanceService){
+class CompletedMaintenanceController(private val service: CompletedMaintenanceService) {
 
     /**
      * Gets all maintenance records for a specific vehicle.
@@ -35,9 +35,13 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
      */
     @PostMapping("/vehicles/{vehicleId}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun addMaintenance(@PathVariable vehicleId: Int, @RequestBody completedMaintenance: CompletedMaintenance):CompletedMaintenanceEntity{
+    fun addMaintenance(
+        @PathVariable vehicleId: Int,
+        @RequestBody completedMaintenance: CompletedMaintenance
+    ): CompletedMaintenanceEntity {
         return service.createCompletedMaintenance(vehicleId, completedMaintenance)
     }
+
     /**
      * Deletes a completed maintenance entity with the specified ID
      * @param maintenanceId
@@ -54,10 +58,10 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
      */
     @PatchMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateCompletedMaintenanceName(
+    fun updateCompletedMaintenance(
         @PathVariable maintenanceId: Int,
         @RequestBody completedMaintenance: CompletedMaintenance
     ) =
-        service.updateCompletedMaintenanceName(maintenanceId, completedMaintenance.name)
-    
+        service.updateCompletedMaintenance(maintenanceId, completedMaintenance)
+
 }

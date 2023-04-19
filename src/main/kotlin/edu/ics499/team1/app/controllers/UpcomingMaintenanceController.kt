@@ -76,5 +76,5 @@ class UpcomingMaintenanceController(
 
     @GetMapping("/credits")  //todo: logical end point. Should the service be called in create vehicle?"
     @ResponseStatus(HttpStatus.CREATED)
-    fun loadUpcomingMaintenance() = service.callUpcomingMaintenanceAPI() // todo: @PathVariable maintenanceId: String
+    fun loadUpcomingMaintenance() = service.callAPIForCredits() // todo: @PathVariable maintenanceId: String
 }

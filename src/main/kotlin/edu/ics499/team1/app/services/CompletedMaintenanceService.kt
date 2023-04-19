@@ -45,7 +45,16 @@ class CompletedMaintenanceService(
      * @param name
      * @return Unit
      */
-    fun updateCompletedMaintenanceName(maintenanceId: Int, name: String) {
-        completedMaintenanceRepository.modifyCompletedMaintenanceName(maintenanceId, name)
+    fun updateCompletedMaintenance(maintenanceId: Int, completedMaintenance: CompletedMaintenance) {
+        completedMaintenanceRepository.modifyCompletedMaintenanceName(
+            maintenanceId,
+            completedMaintenance.name,
+            completedMaintenance.notes,
+            completedMaintenance.date,
+            completedMaintenance.mileage,
+            completedMaintenance.serviceCenter,
+            completedMaintenance.mechanics,
+            completedMaintenance.totalCost
+        )
     }
 }
