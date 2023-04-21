@@ -20,6 +20,7 @@ internal class CompletedMaintenanceControllerTest {
         firstName = "John",
         lastName = "Smith",
         email = "johnsmith@email.com",
+        password = "password",
         phoneNumber = "651-555-4455",
         vehicles = emptyList()
     )
@@ -42,7 +43,6 @@ internal class CompletedMaintenanceControllerTest {
         date = "3/12/2023",
         mileage = 101000,
         mechanics = "Self",
-        pictures = null,
         serviceCenter = null,
         totalCost = 63.5,
     )
@@ -94,10 +94,10 @@ internal class CompletedMaintenanceControllerTest {
     @Test
     fun `deleteCompletedMaintenance() success`() {
         //when
-        completedMaintenanceController.deleteCompletedMaintenance(completedMaintenanceEntity.maintenanceId)
+        completedMaintenanceController.deleteCompletedMaintenance(completedMaintenanceEntity.completedMaintenanceId)
 
         //then
-        verify(exactly = 1) { completedMaintenanceService.removeCompletedMaintenance(completedMaintenanceEntity.maintenanceId) }
+        verify(exactly = 1) { completedMaintenanceService.removeCompletedMaintenance(completedMaintenanceEntity.completedMaintenanceId) }
         confirmVerified()
     }
 
@@ -108,18 +108,18 @@ internal class CompletedMaintenanceControllerTest {
         //when
         every {
             completedMaintenanceController.updateCompletedMaintenance(
-                completedMaintenanceEntity.maintenanceId,
+                completedMaintenanceEntity.completedMaintenanceId,
                 expectedResponse
             )
         } returns expectedResponse
         val actualResponse = completedMaintenanceController.updateCompletedMaintenance(
-            completedMaintenanceEntity.maintenanceId,
+            completedMaintenanceEntity.completedMaintenanceId,
             expectedResponse
         )
         //then
         verify(exactly = 1) {
             completedMaintenanceService.updateCompletedMaintenance(
-                completedMaintenanceEntity.maintenanceId,
+                completedMaintenanceEntity.completedMaintenanceId,
                 expectedResponse
             )
         }

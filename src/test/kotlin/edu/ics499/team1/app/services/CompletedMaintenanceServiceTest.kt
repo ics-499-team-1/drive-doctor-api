@@ -45,13 +45,11 @@ internal class CompletedMaintenanceServiceTest {
         )
 
         val maintenance = CompletedMaintenance(
-            id = 1,
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
             mileage = 101000,
             mechanics = "Self",
-            pictures = null,
             serviceCenter = null,
             totalCost = 63.5,
         )
@@ -93,13 +91,11 @@ internal class CompletedMaintenanceServiceTest {
             user = user
         )
         val maintenance = CompletedMaintenance(
-            id = 1,
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
             mileage = 101000,
             mechanics = "Self",
-            pictures = null,
             serviceCenter = null,
             totalCost = 63.5,
         )
@@ -157,13 +153,11 @@ internal class CompletedMaintenanceServiceTest {
             user = user
         )
         val maintenance = CompletedMaintenance(
-            id = 1,
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
             mileage = 101000,
             mechanics = "Self",
-            pictures = null,
             serviceCenter = null,
             totalCost = 63.5,
         )

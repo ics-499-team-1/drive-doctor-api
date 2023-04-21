@@ -6,10 +6,10 @@ import edu.ics499.team1.app.security.auth.AuthenticationRequest
 import edu.ics499.team1.app.security.auth.AuthenticationResponse
 import edu.ics499.team1.app.security.auth.RegisterRequest
 import edu.ics499.team1.app.security.jwt.JwtService
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Service
 
 @Service
 class AuthenticationService(

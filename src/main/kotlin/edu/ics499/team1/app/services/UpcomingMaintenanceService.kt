@@ -166,7 +166,7 @@ class UpcomingMaintenanceService(
                     .retrieve()
                     .bodyToMono(String::class.java)
                     .block()
-                println(response);
+                println(response)
             }
         }
         return upcomingMaintenanceRepository.saveAll(maintList)

@@ -18,7 +18,6 @@ class SecurityConfiguration(
     private val authenticationProvider: AuthenticationProvider,
 ) {
 
-    @Suppress("unused")
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
