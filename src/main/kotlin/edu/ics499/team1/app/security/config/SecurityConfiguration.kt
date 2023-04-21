@@ -9,9 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.web.servlet.config.annotation.CorsRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
+@Suppress("unused")
 @Configuration
 @EnableWebSecurity
 class SecurityConfiguration(
@@ -19,6 +18,7 @@ class SecurityConfiguration(
     private val authenticationProvider: AuthenticationProvider,
 ) {
 
+    @Suppress("unused")
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -39,18 +39,6 @@ class SecurityConfiguration(
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
         return http.build()
-    }
-
-    @Bean
-    fun corsConfigurer(): WebMvcConfigurer {
-        return object : WebMvcConfigurer {
-            override fun addCorsMappings(registry: CorsRegistry) {
-                registry.addMapping("/**")
-                    .allowedOrigins("*")
-                    .allowedMethods("*")
-                    .allowedHeaders("*")
-            }
-        }
     }
 }
 
