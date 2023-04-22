@@ -192,6 +192,4 @@ class UpcomingMaintenanceService(
         calendar.add(Calendar.DAY_OF_MONTH, offsetDays)
         return dateFormat.format(calendar.time)
     }
-
-
 }
