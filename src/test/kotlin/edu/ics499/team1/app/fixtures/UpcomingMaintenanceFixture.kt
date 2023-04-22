@@ -1,7 +1,6 @@
 package edu.ics499.team1.app.fixtures
 
 import edu.ics499.team1.app.domains.UpcomingMaintenance
-import edu.ics499.team1.app.domains.Vehicle
 import edu.ics499.team1.app.entities.UpcomingMaintenanceEntity
 import kotlin.random.Random
 

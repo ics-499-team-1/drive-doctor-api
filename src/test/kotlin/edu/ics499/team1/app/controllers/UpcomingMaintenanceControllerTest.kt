@@ -3,7 +3,6 @@ package edu.ics499.team1.app.controllers
 import edu.ics499.team1.app.domains.UpcomingMaintenance
 import edu.ics499.team1.app.fixtures.CompletedMaintenanceFixture
 import edu.ics499.team1.app.fixtures.UpcomingMaintenanceFixture
-import edu.ics499.team1.app.fixtures.VehicleFixture
 import edu.ics499.team1.app.services.UpcomingMaintenanceService
 import io.mockk.confirmVerified
 import io.mockk.every

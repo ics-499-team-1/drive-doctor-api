@@ -1,7 +1,6 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.CompletedMaintenance
-import edu.ics499.team1.app.entities.CompletedMaintenanceEntity
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.CompletedMaintenanceRepository
