@@ -12,7 +12,6 @@ class CompletedMaintenanceFixture {
             maintenanceId: Int = Random(4).nextInt(),
             name: String = "Jack Handy",
             notes: String? = null,
-            pictures: String? = null,
             date: String = "mm/dd/yyyy",
             mileage: Int = 1,
             serviceCenter: String? = null,
@@ -21,16 +20,14 @@ class CompletedMaintenanceFixture {
             vehicle: VehicleEntity = VehicleFixture.vehicleEntity()
         ): CompletedMaintenanceEntity {
             return CompletedMaintenanceEntity(
-                completedMaintenanceId = maintenanceId, name = name, notes = notes,
-                pictures = pictures, date = date, mileage = mileage, serviceCenter = serviceCenter,
-                mechanics = mechanics, totalCost = totalCost, vehicle = vehicle
+                completedMaintenanceId = maintenanceId, name = name, notes = notes, date = date, mileage = mileage,
+                serviceCenter = serviceCenter, mechanics = mechanics, totalCost = totalCost, vehicle = vehicle
             )
         }
 
         fun completedMaintenanceDomain(
             name: String = "Jack Handy",
             notes: String? = null,
-            pictures: String? = null,
             date: String = "mm/dd/yyyy",
             mileage: Int = 1,
             serviceCenter: String? = null,
@@ -38,9 +35,7 @@ class CompletedMaintenanceFixture {
             totalCost: Double = 1.0,
         ): CompletedMaintenance {
             return CompletedMaintenance(
-                id = 1,
-                name = name, notes = notes,
-                pictures = pictures, date = date, mileage = mileage, serviceCenter = serviceCenter,
+                name = name, notes = notes, date = date, mileage = mileage, serviceCenter = serviceCenter,
                 mechanics = mechanics, totalCost = totalCost
             )
         }

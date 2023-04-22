@@ -42,11 +42,11 @@ class CompletedMaintenanceService(
     /**
      * Updates the name field in an existing maintenance item.
      * @param maintenanceId
-     * @param name
+     * @param completedMaintenance
      * @return Unit
      */
     fun updateCompletedMaintenance(maintenanceId: Int, completedMaintenance: CompletedMaintenance) {
-        completedMaintenanceRepository.modifyCompletedMaintenanceName(
+         return completedMaintenanceRepository.modifyCompletedMaintenanceName(
             maintenanceId,
             completedMaintenance.name,
             completedMaintenance.notes,

@@ -38,9 +38,7 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
     fun addMaintenance(
         @PathVariable vehicleId: Int,
         @RequestBody completedMaintenance: CompletedMaintenance
-    ): CompletedMaintenanceEntity {
-        return service.createCompletedMaintenance(vehicleId, completedMaintenance)
-    }
+    ): CompletedMaintenanceEntity = service.createCompletedMaintenance(vehicleId, completedMaintenance)
 
     /**
      * Deletes a completed maintenance entity with the specified ID
@@ -48,9 +46,7 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
      */
     @DeleteMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteCompletedMaintenance(@PathVariable maintenanceId: Int) {
-        service.removeCompletedMaintenance(maintenanceId)
-    }
+    fun deleteCompletedMaintenance(@PathVariable maintenanceId: Int) = service.removeCompletedMaintenance(maintenanceId)
 
     // todo There is probably a more robust way to do this, if we want to adapt it for all fields
     /**
@@ -61,7 +57,5 @@ class CompletedMaintenanceController(private val service: CompletedMaintenanceSe
     fun updateCompletedMaintenance(
         @PathVariable maintenanceId: Int,
         @RequestBody completedMaintenance: CompletedMaintenance
-    ) =
-        service.updateCompletedMaintenance(maintenanceId, completedMaintenance)
-
+    ) = service.updateCompletedMaintenance(maintenanceId, completedMaintenance)
 }

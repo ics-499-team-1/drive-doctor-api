@@ -10,7 +10,7 @@ interface CompletedMaintenanceRepository : JpaRepository<CompletedMaintenanceEnt
 
     /**
      * Updates the name field of the CompletedMaintenanceEntity.
-     * @param maintenanceID
+     * @param maintenanceId
      * @param name
      * @return Unit
      */
@@ -26,5 +26,5 @@ interface CompletedMaintenanceRepository : JpaRepository<CompletedMaintenanceEnt
         serviceCenter: String?,
         mechanics: String?,
         totalCost: Double?
-    ): Unit
+    )
 }

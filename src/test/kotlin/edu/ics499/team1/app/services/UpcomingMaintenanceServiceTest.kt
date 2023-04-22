@@ -43,7 +43,7 @@ class UpcomingMaintenanceServiceTest {
         val vehicleID = 1
         val vehicle = VehicleFixture.vehicleEntity(vehicleId = vehicleID)
         val vehicleDomain = VehicleFixture.vehicleDomain()
-        val umEntity = UpcomingMaintenanceFixture.upcomingMaintenanceEntity(maintenanceId = 1, vehicle = vehicleDomain)
+        val umEntity = UpcomingMaintenanceFixture.upcomingMaintenanceEntity()
 
         //when
         every { uMRepository.save(uMDomain.toUpcomingMaintenanceEntity(vehicle)) } returns umEntity // kicks the can down the road
@@ -65,12 +65,11 @@ class UpcomingMaintenanceServiceTest {
 
         // when
         every { uMService.removeUpcomingMaintenance(uMID) } returns Unit
-        val expectedResponse = Unit
-        val actualResponse = uMService.removeUpcomingMaintenance(uMID)
+        val response = uMService.removeUpcomingMaintenance(uMID)
 
         //then
         verify(exactly = 1) { uMService.removeUpcomingMaintenance(uMID) }
-        assertEquals(expectedResponse, actualResponse)
+        assertEquals(response, Unit)
         confirmVerified()
     }
 
@@ -78,17 +77,15 @@ class UpcomingMaintenanceServiceTest {
     fun `should update an upcoming maintenance entity name`() {
         // given
         val uMID = 1
-        val uMEntity = UpcomingMaintenanceFixture.upcomingMaintenanceEntity(maintenanceId = uMID)
-        val name = "rory"
-        val expectedResponse = Unit
+        val upcomingMaintenanceDomain = UpcomingMaintenanceFixture.upcomingMaintenanceDomain()
 
         // when
-        every { uMService.updateUpcomingMaintenanceEntity(uMID, name) } returns Unit
-        val actualResponse = uMService.updateUpcomingMaintenanceEntity(uMID, name)
+        every { uMService.updateUpcomingMaintenanceEntity(uMID, upcomingMaintenanceDomain) } returns Unit
+        val response = uMService.updateUpcomingMaintenanceEntity(uMID, upcomingMaintenanceDomain)
 
         //then
-        verify(exactly = 1) { uMService.updateUpcomingMaintenanceEntity(uMID, name) }
-        assertEquals(actualResponse, expectedResponse)
+        verify(exactly = 1) { uMService.updateUpcomingMaintenanceEntity(uMID, upcomingMaintenanceDomain) }
+        assertEquals(response, Unit)
         confirmVerified()
 
     }
@@ -102,12 +99,11 @@ class UpcomingMaintenanceServiceTest {
 
         // when
         every { uMService.convertUpcomingToCompleted(uMID, cMDomain) } returns Unit
-        val expectedResponse = Unit
-        val actualResponse = uMService.convertUpcomingToCompleted(uMID, cMDomain)
+        val response = uMService.convertUpcomingToCompleted(uMID, cMDomain)
 
         //then
         verify(exactly = 1) { uMService.convertUpcomingToCompleted(uMID, cMDomain) }
-        assertEquals(expectedResponse, actualResponse)
+        assertEquals(response, Unit)
         confirmVerified()
     }
 }

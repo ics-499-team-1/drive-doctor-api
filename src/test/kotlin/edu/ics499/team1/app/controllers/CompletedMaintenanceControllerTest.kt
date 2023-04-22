@@ -24,6 +24,7 @@ internal class CompletedMaintenanceControllerTest {
         phoneNumber = "651-555-4455",
         vehicles = emptyList()
     )
+
     private val vehicle = VehicleEntity(
         vehicleId = 1,
         name = "My Car",
@@ -37,6 +38,7 @@ internal class CompletedMaintenanceControllerTest {
         deactivated = false,
         user = user
     )
+
     private val completedMaintenance = CompletedMaintenance(
         name = "Oil Change",
         notes = null,
@@ -104,26 +106,36 @@ internal class CompletedMaintenanceControllerTest {
     @Test
     fun `updateCompletedMaintenanceName() success`() {
         //given
-        val expectedResponse = "New Oil Change"
+        val expectedCompletedMaintenanceResponse = CompletedMaintenance(
+            name = "Updated Oil Change",
+            notes = null,
+            date = "4/32/2023",
+            mileage = 102000,
+            mechanics = "Self",
+            serviceCenter = null,
+            totalCost = 63.5,
+        )
+
         //when
         every {
             completedMaintenanceController.updateCompletedMaintenance(
                 completedMaintenanceEntity.completedMaintenanceId,
-                expectedResponse
+                expectedCompletedMaintenanceResponse
             )
-        } returns expectedResponse
-        val actualResponse = completedMaintenanceController.updateCompletedMaintenance(
+        } returns Unit
+        val response = completedMaintenanceController.updateCompletedMaintenance(
             completedMaintenanceEntity.completedMaintenanceId,
-            expectedResponse
+            expectedCompletedMaintenanceResponse
         )
+
         //then
         verify(exactly = 1) {
             completedMaintenanceService.updateCompletedMaintenance(
                 completedMaintenanceEntity.completedMaintenanceId,
-                expectedResponse
+                expectedCompletedMaintenanceResponse
             )
         }
-        assertEquals(expectedResponse, actualResponse)
+        assertEquals(response, Unit)
         confirmVerified()
     }
 }
