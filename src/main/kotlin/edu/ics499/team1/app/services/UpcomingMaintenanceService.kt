@@ -111,43 +111,43 @@ class UpcomingMaintenanceService(
 
     @Transactional
     fun upcomingMaintenanceGenerator(vehicle: VehicleEntity, sourceData: MGS): List<UpcomingMaintenanceEntity> {
-        val maintList = ArrayList<UpcomingMaintenanceEntity>()
+        val maintenanceList = ArrayList<UpcomingMaintenanceEntity>()
         /**
          * This is the demo mode. It initializes three oil changes, a tire rotation, and 2 blinker fluid changes.
          */
         if (sourceData == MGS.Demo) {
             val odometer = vehicle.odometer
-            maintList.add(
+            maintenanceList.add(
                 UpcomingMaintenance(
                     "Oil Change with Filter", "Demo", odometer - 3000,
                     "none", mileageReminder = true, timeReminder = false
                 ).toUpcomingMaintenanceEntity(vehicle)
             )
-            maintList.add(
+            maintenanceList.add(
                 UpcomingMaintenance(
                     "Oil Change with Filter", "Demo", odometer + 3000,
                     "none", mileageReminder = true, timeReminder = false
                 ).toUpcomingMaintenanceEntity(vehicle)
             )
-            maintList.add(
+            maintenanceList.add(
                 UpcomingMaintenance(
                     "Oil Change with Filter", "Demo", odometer + 6000,
                     "none", mileageReminder = true, timeReminder = false
                 ).toUpcomingMaintenanceEntity(vehicle)
             )
-            maintList.add(
+            maintenanceList.add(
                 UpcomingMaintenance(
                     "Blinker Fluid Check", "Demo", null,
                     dateMaker(14), mileageReminder = false, timeReminder = true
                 ).toUpcomingMaintenanceEntity(vehicle)
             )
-            maintList.add(
+            maintenanceList.add(
                 UpcomingMaintenance(
                     "Blinker Fluid Check", "Demo", null,
                     dateMaker(28), mileageReminder = false, timeReminder = true
                 ).toUpcomingMaintenanceEntity(vehicle)
             )
-            maintList.add(
+            maintenanceList.add(
                 UpcomingMaintenance(
                     "Tire Rotation", "Demo", vehicle.odometer + 10000,
                     dateMaker(180), mileageReminder = true, timeReminder = true
@@ -160,7 +160,7 @@ class UpcomingMaintenanceService(
                 .defaultHeader("partner-token", "24e07ee005cc4294b928ccdc4a4db54c")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build()
-            if (vehicle.vin != null && vehicle.odometer != null) {
+            if (vehicle.vin != null) {
                 val response = client.get()
                     .uri("/maint?vin=${vehicle.vin}&mileage=${vehicle.odometer}")
                     .retrieve()
@@ -169,11 +169,11 @@ class UpcomingMaintenanceService(
                 println(response)
             }
         }
-        return upcomingMaintenanceRepository.saveAll(maintList)
+        return upcomingMaintenanceRepository.saveAll(maintenanceList)
     }
 
     /**
-     * Enum for the maintenenance generator. Totally unneccesary, but w/e.
+     * Enum for the maintenance generator. Totally unnecessary, but w/e.
      */
     enum class MGS {
         Demo,

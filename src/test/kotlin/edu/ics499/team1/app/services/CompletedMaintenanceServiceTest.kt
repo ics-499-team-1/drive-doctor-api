@@ -68,7 +68,7 @@ internal class CompletedMaintenanceServiceTest {
 
     @Test
     fun `getCompletedMaintenanceByVehicleId() works as expected`() {
-        //given
+        // given
         val user = UserEntity(
             userId = 1,
             firstName = "John",
@@ -78,6 +78,7 @@ internal class CompletedMaintenanceServiceTest {
             vehicles = emptyList(),
             password = "password"
         )
+
         val vehicle = VehicleEntity(
             vehicleId = 1,
             name = "My Car",
@@ -91,6 +92,7 @@ internal class CompletedMaintenanceServiceTest {
             deactivated = false,
             user = user
         )
+
         val maintenance = CompletedMaintenance(
             name = "Oil Change",
             notes = null,
@@ -100,6 +102,7 @@ internal class CompletedMaintenanceServiceTest {
             serviceCenter = null,
             totalCost = 63.5,
         )
+
         val completedMaintenanceEntity = maintenance.toCompletedMaintenanceEntity(vehicle)
         val completedMaintenanceList = listOf(completedMaintenanceEntity)
 
@@ -112,7 +115,6 @@ internal class CompletedMaintenanceServiceTest {
         verify(exactly = 1) { vehicleRepository.getReferenceById(vehicle.vehicleId).completedMaintenance }
         assertEquals(completedMaintenanceList, result)
     }
-
 
     @Test
     fun `removeCompletedMaintenance() works as expected`() {
@@ -128,6 +130,7 @@ internal class CompletedMaintenanceServiceTest {
         confirmVerified(completedMaintenanceRepository)
     }
 
+    // TODO: needs to test the completed maintenance SERVICE NOT the completed maintenance REPOSITORY
     @Test
     fun `updateCompletedMaintenanceName() as expected`() {
         // given
@@ -140,6 +143,7 @@ internal class CompletedMaintenanceServiceTest {
             vehicles = emptyList(),
             password = "password"
         )
+
         val vehicle = VehicleEntity(
             vehicleId = 1,
             name = "My Car",
@@ -153,6 +157,7 @@ internal class CompletedMaintenanceServiceTest {
             deactivated = false,
             user = user
         )
+
         val completedMaintenance = CompletedMaintenance(
             name = "Oil Change",
             notes = null,
@@ -163,12 +168,10 @@ internal class CompletedMaintenanceServiceTest {
             totalCost = 63.5,
         )
 
-
-
         val completedMaintenanceEntity = completedMaintenance.toCompletedMaintenanceEntity(vehicle)
         val newName = "New Name"
 
-        val updatedCompletedMaintenanceEntity = CompletedMaintenance(
+        val updatedCompletedMaintenanceDomain = CompletedMaintenance(
             name = newName,
             notes = null,
             date = "3/12/2023",
@@ -176,45 +179,27 @@ internal class CompletedMaintenanceServiceTest {
             mechanics = "Self",
             serviceCenter = null,
             totalCost = 63.5,
-        ).toCompletedMaintenanceEntity(vehicle)
+        )
 
         every {
-            completedMaintenanceRepository.modifyCompletedMaintenanceName(
+            completedMaintenanceService.updateCompletedMaintenance(
                 maintenanceId = completedMaintenanceEntity.completedMaintenanceId,
-                name = newName,
-                notes = completedMaintenanceEntity.notes,
-                date = completedMaintenanceEntity.date,
-                mileage = completedMaintenanceEntity.mileage,
-                serviceCenter = completedMaintenanceEntity.serviceCenter,
-                mechanics = completedMaintenanceEntity.mechanics,
-                totalCost = completedMaintenanceEntity.totalCost
+                completedMaintenance = updatedCompletedMaintenanceDomain
             )
         } returns Unit
 
         // when
         val response =
-            completedMaintenanceRepository.modifyCompletedMaintenanceName(
+            completedMaintenanceService.updateCompletedMaintenance(
                 maintenanceId = completedMaintenanceEntity.completedMaintenanceId,
-                name = newName,
-                notes = completedMaintenanceEntity.notes,
-                date = completedMaintenanceEntity.date,
-                mileage = completedMaintenanceEntity.mileage,
-                serviceCenter = completedMaintenanceEntity.serviceCenter,
-                mechanics = completedMaintenanceEntity.mechanics,
-                totalCost = completedMaintenanceEntity.totalCost
+                completedMaintenance = updatedCompletedMaintenanceDomain
             )
 
         // then
         verify(exactly = 1) {
-            completedMaintenanceRepository.modifyCompletedMaintenanceName(
+            completedMaintenanceService.updateCompletedMaintenance(
                 maintenanceId = completedMaintenanceEntity.completedMaintenanceId,
-                name = newName,
-                notes = completedMaintenanceEntity.notes,
-                date = completedMaintenanceEntity.date,
-                mileage = completedMaintenanceEntity.mileage,
-                serviceCenter = completedMaintenanceEntity.serviceCenter,
-                mechanics = completedMaintenanceEntity.mechanics,
-                totalCost = completedMaintenanceEntity.totalCost
+                completedMaintenance = updatedCompletedMaintenanceDomain
             )
         }
         assertEquals(response, Unit)
