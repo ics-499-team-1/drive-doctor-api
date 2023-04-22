@@ -1,5 +1,6 @@
 package edu.ics499.team1.app.services
 
+import edu.ics499.team1.app.domains.UpcomingMaintenance
 import edu.ics499.team1.app.domains.Vehicle
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
@@ -82,6 +83,7 @@ internal class VehicleServiceTest {
         val actualResponse = vehicleService.createVehicle(vehicle)
 
         // then
+        verify(exactly = 1) { upcomingMaintenanceService.upcomingMaintenanceGenerator(vehicleEntity, UpcomingMaintenanceService.MGS.Demo) }
         verify(exactly = 1) { userRepository.getReferenceById(vehicle.userId) }
         verify(exactly = 1) { vehicleRepository.save(expectedResponse) }
         verify(exactly = 1) { vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber) }
