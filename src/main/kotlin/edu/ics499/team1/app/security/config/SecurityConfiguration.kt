@@ -16,11 +16,13 @@ class SecurityConfiguration(
     private val jwtAuthFilter: JwtAuthenticationFilter,
     private val authenticationProvider: AuthenticationProvider,
 ) {
-
+    
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
+            .cors()
+            .and()
             .csrf()
             .disable()
             .authorizeHttpRequests()

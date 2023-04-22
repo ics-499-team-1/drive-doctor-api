@@ -19,7 +19,7 @@ class JwtService {
     @Value("\${drive-doctor.jwt-secret-key}")
     private final lateinit var secretKey: String
 
-    fun extractUsername(jwtToken: String): String {
+    fun extractUsername(jwtToken: String): String? {
         return extractClaim(jwtToken) { obj: Claims -> obj.subject }
     }
 
@@ -33,7 +33,7 @@ class JwtService {
     }
 
     fun generateJwtToken(
-        extractClaims: Map<String, Object>,
+        extractClaims: Map<String, Any>,
         userDetails: UserDetails
     ): String {
         return Jwts
@@ -53,7 +53,7 @@ class JwtService {
         jwtToken: String,
         userDetails: UserDetails
     ): Boolean {
-        val username: String = extractUsername(jwtToken)
+        val username: String? = extractUsername(jwtToken)
         return (username == userDetails.username) && !isTokenExpired(jwtToken)
     }
 

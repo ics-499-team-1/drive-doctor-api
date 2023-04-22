@@ -15,8 +15,9 @@ import org.junit.jupiter.api.Test
 internal class VehicleServiceTest {
     private val vehicleRepository: VehicleRepository = mockk(relaxed = true)
     private val userRepository: UserRepository = mockk(relaxed = true)
+    private val upcomingMaintenanceService: UpcomingMaintenanceService = mockk(relaxed = true)
 
-    private val vehicleService = VehicleService(vehicleRepository, userRepository)
+    private val vehicleService = VehicleService(vehicleRepository, userRepository, upcomingMaintenanceService)
 
     private val mockUserId = 123
     private val user = UserEntity(

@@ -27,25 +27,24 @@ class JwtAuthenticationFilter(
         @NonNull filterChain: FilterChain
     ) {
         if (request.servletPath.contains("/api/v1/auth")) {
-            filterChain.doFilter(request, response);
-            return;
+            filterChain.doFilter(request, response)
+            return
         }
         // Try to extract the authorization header
         val authHeader: String? = request.getHeader("Authorization")
-        val userEmail: String
 
         /* If the authorization header is null OR not the authorization header starts with Bearer
         Then pass the request and response to the next filter. */
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
+        if ((authHeader == null) || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response)
+            return
         }
 
         // Extract the jwt token from the authorization header ("Bearer " = 7 spaces)
         val jwtToken: String = authHeader.substring(7)
 
         // Extract the user email
-        userEmail = jwtService.extractUsername(jwtToken)
+        val userEmail: String? = jwtService.extractUsername(jwtToken)
 
         // If the user's email is not null and the user isn't already authenticated
         if (userEmail != null && SecurityContextHolder.getContext().authentication == null) {

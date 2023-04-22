@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.services
 
 import edu.ics499.team1.app.domains.CompletedMaintenance
+import edu.ics499.team1.app.entities.CompletedMaintenanceEntity
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.CompletedMaintenanceRepository
@@ -45,13 +46,11 @@ internal class CompletedMaintenanceServiceTest {
         )
 
         val maintenance = CompletedMaintenance(
-            id = 1,
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
             mileage = 101000,
             mechanics = "Self",
-            pictures = null,
             serviceCenter = null,
             totalCost = 63.5,
         )
@@ -93,13 +92,11 @@ internal class CompletedMaintenanceServiceTest {
             user = user
         )
         val maintenance = CompletedMaintenance(
-            id = 1,
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
             mileage = 101000,
             mechanics = "Self",
-            pictures = null,
             serviceCenter = null,
             totalCost = 63.5,
         )
@@ -156,41 +153,70 @@ internal class CompletedMaintenanceServiceTest {
             deactivated = false,
             user = user
         )
-        val maintenance = CompletedMaintenance(
-            id = 1,
+        val completedMaintenance = CompletedMaintenance(
             name = "Oil Change",
             notes = null,
             date = "3/12/2023",
             mileage = 101000,
             mechanics = "Self",
-            pictures = null,
             serviceCenter = null,
             totalCost = 63.5,
         )
 
-        val maintenanceEntity = maintenance.toCompletedMaintenanceEntity(vehicle)
+
+
+        val completedMaintenanceEntity = completedMaintenance.toCompletedMaintenanceEntity(vehicle)
         val newName = "New Name"
+
+        val updatedCompletedMaintenanceEntity = CompletedMaintenance(
+            name = newName,
+            notes = null,
+            date = "3/12/2023",
+            mileage = 101000,
+            mechanics = "Self",
+            serviceCenter = null,
+            totalCost = 63.5,
+        ).toCompletedMaintenanceEntity(vehicle)
+
         every {
             completedMaintenanceRepository.modifyCompletedMaintenanceName(
-                maintenanceEntity.completedMaintenanceId,
-                newName
+                maintenanceId = completedMaintenanceEntity.completedMaintenanceId,
+                name = newName,
+                notes = completedMaintenanceEntity.notes,
+                date = completedMaintenanceEntity.date,
+                mileage = completedMaintenanceEntity.mileage,
+                serviceCenter = completedMaintenanceEntity.serviceCenter,
+                mechanics = completedMaintenanceEntity.mechanics,
+                totalCost = completedMaintenanceEntity.totalCost
             )
-        } returns newName
+        } returns Unit
 
         // when
-        val updatedName =
+        val response =
             completedMaintenanceRepository.modifyCompletedMaintenanceName(
-                maintenanceEntity.completedMaintenanceId,
-                newName
+                maintenanceId = completedMaintenanceEntity.completedMaintenanceId,
+                name = newName,
+                notes = completedMaintenanceEntity.notes,
+                date = completedMaintenanceEntity.date,
+                mileage = completedMaintenanceEntity.mileage,
+                serviceCenter = completedMaintenanceEntity.serviceCenter,
+                mechanics = completedMaintenanceEntity.mechanics,
+                totalCost = completedMaintenanceEntity.totalCost
             )
 
         // then
         verify(exactly = 1) {
             completedMaintenanceRepository.modifyCompletedMaintenanceName(
-                maintenanceEntity.completedMaintenanceId,
-                newName
+                maintenanceId = completedMaintenanceEntity.completedMaintenanceId,
+                name = newName,
+                notes = completedMaintenanceEntity.notes,
+                date = completedMaintenanceEntity.date,
+                mileage = completedMaintenanceEntity.mileage,
+                serviceCenter = completedMaintenanceEntity.serviceCenter,
+                mechanics = completedMaintenanceEntity.mechanics,
+                totalCost = completedMaintenanceEntity.totalCost
             )
         }
-        assertEquals(newName, updatedName)
+        assertEquals(response, Unit)
     }
 }

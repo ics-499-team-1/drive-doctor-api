@@ -12,20 +12,14 @@ class UpcomingMaintenanceFixture {
             maintenanceId: Int = Random(4).nextInt(),
             name: String = "Jack Handy",
             notes: String? = null,
-            pictures: String? = null,
             mileageInterval: Int? = null,
             timeInterval: String? = null,
             mileageReminder: Boolean = false,
-            timeReminder: Boolean = false,
-            vehicle: Vehicle = Vehicle(
-                "dummy", 1, "none", "none", "none",
-                1234, "none", "none", false, Random(4).nextInt()
-            )
+            timeReminder: Boolean = false
         ): UpcomingMaintenanceEntity {
             return UpcomingMaintenanceEntity(
-                upcomingMaintenanceId = maintenanceId, name = name, notes = notes,
-                pictures = pictures, mileageInterval = mileageInterval, timeInterval = timeInterval,
-                mileageReminder = mileageReminder, timeReminder = timeReminder,
+                upcomingMaintenanceId = maintenanceId, name = name, notes = notes, mileageInterval = mileageInterval,
+                timeInterval = timeInterval, mileageReminder = mileageReminder, timeReminder = timeReminder,
                 VehicleFixture.vehicleEntity()
             )
         }
@@ -33,16 +27,13 @@ class UpcomingMaintenanceFixture {
         fun upcomingMaintenanceDomain(
             name: String = "Jack Handy",
             notes: String? = null,
-            pictures: String? = null,
             mileageInterval: Int? = null,
             timeInterval: String? = null,
             mileageReminder: Boolean = false,
             timeReminder: Boolean = false,
         ): UpcomingMaintenance {
             return UpcomingMaintenance(
-                id = 1,
-                name = name, notes = notes,
-                pictures = pictures, mileageInterval = mileageInterval, timeInterval = timeInterval,
+                name = name, notes = notes, mileageInterval = mileageInterval, timeInterval = timeInterval,
                 mileageReminder = mileageReminder, timeReminder = timeReminder,
             )
         }

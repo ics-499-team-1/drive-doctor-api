@@ -1,5 +1,6 @@
 package edu.ics499.team1.app.controllers
 
+import edu.ics499.team1.app.domains.UpcomingMaintenance
 import edu.ics499.team1.app.fixtures.CompletedMaintenanceFixture
 import edu.ics499.team1.app.fixtures.UpcomingMaintenanceFixture
 import edu.ics499.team1.app.fixtures.VehicleFixture
@@ -39,7 +40,6 @@ class UpcomingMaintenanceControllerTest {
     fun `deleteUpcomingMaintenanceByID()`() {
         // given
         val uMId = 123
-        val uMEntity = UpcomingMaintenanceFixture.upcomingMaintenanceEntity(maintenanceId = 123)
 
         // when
         every { uMService.removeUpcomingMaintenance(uMId) } returns Unit
@@ -54,11 +54,8 @@ class UpcomingMaintenanceControllerTest {
     @Test
     fun `should add an UpcomingMaintenance entity to the repository`() {
         // given
-        val uMId = 123
         val vId = 1
-        val vEntity = VehicleFixture.vehicleEntity(vehicleId = vId)
         val uMDomain = UpcomingMaintenanceFixture.upcomingMaintenanceDomain()
-
 
         // when
         every { uMService.createUpcomingMaintenance(vId, uMDomain) } returns Unit
@@ -74,14 +71,21 @@ class UpcomingMaintenanceControllerTest {
     fun `should update the upcomingMaintenance`() {
         // given
         val uMId = 123
-        val uMDomain = UpcomingMaintenanceFixture.upcomingMaintenanceDomain(name = "tom")
+        val expectedResponse = UpcomingMaintenance(
+            name = "",
+            notes = null,
+            mileageInterval = 1,
+            timeInterval = "",
+            mileageReminder = false,
+            timeReminder = false
+        )
 
         // when
-        every { uMService.updateUpcomingMaintenanceName(uMId, "tom") } returns Unit
-        val response = uMController.updateUpcomingMaintenanceName(uMId, uMDomain)
+        every { uMService.updateUpcomingMaintenanceEntity(uMId, expectedResponse) } returns Unit
+        val response = uMController.updateUpcomingMaintenance(uMId, expectedResponse)
 
         //then
-        verify(exactly = 1) { uMService.updateUpcomingMaintenanceName(uMId, "tom") }
+        verify(exactly = 1) { uMService.updateUpcomingMaintenanceEntity(uMId, expectedResponse) }
         assertEquals(response, Unit)
         confirmVerified()
     }

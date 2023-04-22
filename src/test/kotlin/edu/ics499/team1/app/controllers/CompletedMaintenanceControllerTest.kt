@@ -20,9 +20,9 @@ internal class CompletedMaintenanceControllerTest {
         firstName = "John",
         lastName = "Smith",
         email = "johnsmith@email.com",
+        password = "password",
         phoneNumber = "651-555-4455",
-        vehicles = emptyList(),
-        password = "password"
+        vehicles = emptyList()
     )
 
     private val vehicle = VehicleEntity(
@@ -40,13 +40,11 @@ internal class CompletedMaintenanceControllerTest {
     )
 
     private val completedMaintenance = CompletedMaintenance(
-        id = 1,
         name = "Oil Change",
         notes = null,
         date = "3/12/2023",
         mileage = 101000,
         mechanics = "Self",
-        pictures = null,
         serviceCenter = null,
         totalCost = 63.5,
     )
@@ -107,24 +105,37 @@ internal class CompletedMaintenanceControllerTest {
 
     @Test
     fun `updateCompletedMaintenanceName() success`() {
+        //given
+        val expectedCompletedMaintenanceResponse = CompletedMaintenance(
+            name = "Updated Oil Change",
+            notes = null,
+            date = "4/32/2023",
+            mileage = 102000,
+            mechanics = "Self",
+            serviceCenter = null,
+            totalCost = 63.5,
+        )
+
         //when
         every {
-            completedMaintenanceController.updateCompletedMaintenanceName(
+            completedMaintenanceController.updateCompletedMaintenance(
                 completedMaintenanceEntity.completedMaintenanceId,
-                completedMaintenance
+                expectedCompletedMaintenanceResponse
             )
         } returns Unit
-        val actualResponse = completedMaintenanceController.updateCompletedMaintenanceName(
+        val response = completedMaintenanceController.updateCompletedMaintenance(
             completedMaintenanceEntity.completedMaintenanceId,
-            completedMaintenance
+            expectedCompletedMaintenanceResponse
         )
-        // then
+
+        //then
         verify(exactly = 1) {
-            completedMaintenanceController.updateCompletedMaintenanceName(
+            completedMaintenanceService.updateCompletedMaintenance(
                 completedMaintenanceEntity.completedMaintenanceId,
-                completedMaintenance
+                expectedCompletedMaintenanceResponse
             )
         }
-        assertEquals(Unit, actualResponse)
+        assertEquals(response, Unit)
+        confirmVerified()
     }
 }

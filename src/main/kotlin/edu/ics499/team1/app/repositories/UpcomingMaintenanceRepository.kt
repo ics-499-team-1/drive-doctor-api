@@ -16,6 +16,14 @@ interface UpcomingMaintenanceRepository : JpaRepository<UpcomingMaintenanceEntit
      */
     @Transactional
     @Modifying
-    @Query("update UpcomingMaintenanceEntity m set m.name =?2 where m.upcomingMaintenanceId = ?1")
-    fun modifyUpcomingMaintenanceName(maintenanceId: Int, name: String)
+    @Query("update UpcomingMaintenanceEntity m set m.name =?2, m.notes=?3, m.mileageInterval=?4, m.timeInterval=?5, m.mileageReminder=?6, m.timeReminder=?7 where m.upcomingMaintenanceId = ?1")
+    fun modifyUpcomingMaintenanceName(
+        maintenanceId: Int,
+        name: String,
+        notes: String?,
+        mileageInterval: Int?,
+        timeInterval: String?,
+        mileageReminder: Boolean?,
+        timeReminder: Boolean
+    )
 }

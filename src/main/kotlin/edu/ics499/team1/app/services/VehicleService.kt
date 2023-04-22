@@ -11,7 +11,8 @@ import java.util.*
 @Service
 class VehicleService(
     private val vehicleRepository: VehicleRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val upcomingMaintenanceService: UpcomingMaintenanceService
 ) {
     /**
      * Returns a List of all vehicle entities in the db
@@ -39,9 +40,11 @@ class VehicleService(
         if (vehicle.vin != null && vehicleRepository.existsByVin(vehicle.vin))
             throw CustomExceptions.VinAlreadyExistsException("Vehicle with vin ${vehicle.vin} already exists")
 
-
         val user = userRepository.getReferenceById(vehicle.userId)
-        return vehicleRepository.save(vehicle.toVehicleEntity(user))
+        val newVehicleEntity = vehicleRepository.save(vehicle.toVehicleEntity(user))
+        // call to add maintenance items
+        upcomingMaintenanceService.upcomingMaintenanceGenerator(newVehicleEntity, UpcomingMaintenanceService.MGS.Demo)
+        return newVehicleEntity
     }
 
     /**

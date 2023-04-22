@@ -58,15 +58,16 @@ class UpcomingMaintenanceController(
      */
     @PatchMapping("/{maintenanceId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateUpcomingMaintenanceName(
+    fun updateUpcomingMaintenance(
         @PathVariable maintenanceId: Int,
         @RequestBody upcomingMaintenance: UpcomingMaintenance
-    ) =
-        service.updateUpcomingMaintenanceName(maintenanceId, upcomingMaintenance.name)
+    ) {
+        return service.updateUpcomingMaintenanceEntity(maintenanceId, upcomingMaintenance)
+    }
 
 
     @PostMapping("/convert/{maintenanceId}")
-    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    @ResponseStatus(HttpStatus.CREATED)
     fun convertUpcomingToCompletedMaintenance(
         @PathVariable maintenanceId: Int,
         @RequestBody completedMaintenance: CompletedMaintenance
@@ -75,5 +76,5 @@ class UpcomingMaintenanceController(
 
     @GetMapping("/credits")  //todo: logical end point. Should the service be called in create vehicle?"
     @ResponseStatus(HttpStatus.CREATED)
-    fun loadUpcomingMaintenance() = service.callUpcomingMaintenanceAPI() // todo: @PathVariable maintenanceId: String
+    fun loadUpcomingMaintenance() = service.callAPIForCredits() // todo: @PathVariable maintenanceId: String
 }
