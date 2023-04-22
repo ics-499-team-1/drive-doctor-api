@@ -52,5 +52,3 @@ data class UserEntity(
         return true
     }
 }
-
-

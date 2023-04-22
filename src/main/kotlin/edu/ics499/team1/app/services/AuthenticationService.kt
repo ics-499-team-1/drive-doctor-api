@@ -31,9 +31,9 @@ class AuthenticationService(
             password = passwordEncoder.encode(request.password),
             phoneNumber = request.phoneNumber
         ).toUserEntity()
-        userRepository.save(userEntity)
+        val createdUser = userRepository.save(userEntity)
         val jwtToken = jwtService.generateJwtToken(userEntity)
-        return AuthenticationResponse(jwtToken)
+        return AuthenticationResponse(jwtToken, createdUser.userId)
     }
 
     fun authenticate(request: AuthenticationRequest): AuthenticationResponse {
@@ -42,6 +42,6 @@ class AuthenticationService(
         )
         val user = userRepository.findByEmail(request.email).orElseThrow()
         val jwtToken = jwtService.generateJwtToken(user)
-        return AuthenticationResponse(jwtToken)
+        return AuthenticationResponse(jwtToken, user.userId)
     }
 }
