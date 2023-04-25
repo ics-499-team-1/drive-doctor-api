@@ -95,7 +95,11 @@ class UpcomingMaintenanceService(
         upcomingMaintenanceRepository.deleteById(upcoming.upcomingMaintenanceId)
     }
 
+    /**
+     * It calls for credits
+     */
     fun callAPIForCredits(): String { // todo: where do I go?
+
         val client: WebClient = WebClient.builder()
             .baseUrl("http://api.carmd.com/v3.0")
             .defaultHeader("authorization", "Basic MjBlY2EyMjItMjc3Ny00MTQxLWJhOGEtNDdlMjhiNGYyNzBl")
@@ -107,13 +111,21 @@ class UpcomingMaintenanceService(
             .retrieve()
             .bodyToMono(String::class.java)
             .block()
-
         return response ?: ""
 
     }
 
+    /**
+     * Attempts to make a call to the CARMD API using values from the vehicle Entity.
+     * If it succeeds, it parses the JSON into  a list of UpcomingMaintenanceDomain objects and then
+     * associates them with the vehicle supplied as a list of UpcomingMaintenanceEntity objects.
+     * These are then saved in the database.
+     * If the call to CARMD fails, it calls defaultMaintenanceGenerator and saves the list of
+     * UpcomingMaitnenanceEntity objects returned.
+     * @param vehicle VehicleEntity that will receive the maintenance items generated.
+     */
     @Transactional
-    fun upcomingMaintenanceGenerator(vehicle: VehicleEntity): List<UpcomingMaintenanceEntity> {
+    fun carMDMaintenanceGenerator(vehicle: VehicleEntity): List<UpcomingMaintenanceEntity> {
         val maintenanceList = ArrayList<UpcomingMaintenanceEntity>()
         var uriString = ""
 
