@@ -4,7 +4,6 @@ import edu.ics499.team1.app.domains.User
 import edu.ics499.team1.app.repositories.UserRepository
 import edu.ics499.team1.app.security.auth.AuthenticationRequest
 import edu.ics499.team1.app.security.auth.AuthenticationResponse
-import edu.ics499.team1.app.security.auth.RegisterRequest
 import edu.ics499.team1.app.security.jwt.JwtService
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -18,19 +17,13 @@ class AuthenticationService(
     private val authenticationManager: AuthenticationManager,
     private val userRepository: UserRepository
 ) {
-    fun register(request: RegisterRequest): AuthenticationResponse {
+    fun register(user: User): AuthenticationResponse {
         if (userRepository.existsByFirstNameAndLastNameAndEmail
-                (request.firstName, request.lastName, request.email)
+                (user.firstName, user.lastName, user.email)
         ) {
             throw CustomExceptions.UserAlreadyExistsException("User already exists in the system")
         }
-        val userEntity = User(
-            firstName = request.firstName,
-            lastName = request.lastName,
-            email = request.email,
-            password = passwordEncoder.encode(request.password),
-            phoneNumber = request.phoneNumber
-        ).toUserEntity()
+        val userEntity = user.toUserEntity()
         val createdUser = userRepository.save(userEntity)
         val jwtToken = jwtService.generateJwtToken(userEntity)
         return AuthenticationResponse(jwtToken, createdUser.userId)
