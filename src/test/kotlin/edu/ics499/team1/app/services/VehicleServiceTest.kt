@@ -83,9 +83,8 @@ internal class VehicleServiceTest {
 
         // then
         verify(exactly = 1) {
-            upcomingMaintenanceService.upcomingMaintenanceGenerator(
-                vehicleEntity,
-                UpcomingMaintenanceService.MGS.Demo
+            upcomingMaintenanceService.carMDMaintenanceGenerator(
+                vehicleEntity
             )
         }
         verify(exactly = 1) { userRepository.getReferenceById(vehicle.userId) }

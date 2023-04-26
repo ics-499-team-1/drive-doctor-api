@@ -43,7 +43,7 @@ class VehicleService(
         val user = userRepository.getReferenceById(vehicle.userId)
         val newVehicleEntity = vehicleRepository.save(vehicle.toVehicleEntity(user))
         // call to add maintenance items
-        upcomingMaintenanceService.upcomingMaintenanceGenerator(newVehicleEntity, UpcomingMaintenanceService.MGS.Demo)
+        upcomingMaintenanceService.carMDMaintenanceGenerator(newVehicleEntity)
         return newVehicleEntity
     }
 

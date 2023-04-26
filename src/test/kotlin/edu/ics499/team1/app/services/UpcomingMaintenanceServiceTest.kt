@@ -42,7 +42,6 @@ class UpcomingMaintenanceServiceTest {
         val uMDomain = UpcomingMaintenanceFixture.upcomingMaintenanceDomain()
         val vehicleID = 1
         val vehicle = VehicleFixture.vehicleEntity(vehicleId = vehicleID)
-        val vehicleDomain = VehicleFixture.vehicleDomain()
         val umEntity = UpcomingMaintenanceFixture.upcomingMaintenanceEntity()
 
         //when

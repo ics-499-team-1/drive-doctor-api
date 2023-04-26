@@ -1,5 +1,8 @@
 package edu.ics499.team1.app.services
 
+import com.google.gson.Gson
+import edu.ics499.team1.app.consumers.CarMDMaintenance
+import edu.ics499.team1.app.consumers.convertCarMDDataToMaintenanceDomain
 import edu.ics499.team1.app.domains.CompletedMaintenance
 import edu.ics499.team1.app.domains.UpcomingMaintenance
 import edu.ics499.team1.app.entities.CompletedMaintenanceEntity
@@ -92,7 +95,11 @@ class UpcomingMaintenanceService(
         upcomingMaintenanceRepository.deleteById(upcoming.upcomingMaintenanceId)
     }
 
+    /**
+     * It calls for credits
+     */
     fun callAPIForCredits(): String { // todo: where do I go?
+
         val client: WebClient = WebClient.builder()
             .baseUrl("http://api.carmd.com/v3.0")
             .defaultHeader("authorization", "Basic MjBlY2EyMjItMjc3Ny00MTQxLWJhOGEtNDdlMjhiNGYyNzBl")
@@ -104,80 +111,108 @@ class UpcomingMaintenanceService(
             .retrieve()
             .bodyToMono(String::class.java)
             .block()
-
         return response ?: ""
 
     }
 
+    /**
+     * Attempts to make a call to the CARMD API using values from the vehicle Entity.
+     * If it succeeds, it parses the JSON into  a list of UpcomingMaintenanceDomain objects and then
+     * associates them with the vehicle supplied as a list of UpcomingMaintenanceEntity objects.
+     * These are then saved in the database.
+     * If the call to CARMD fails, it calls defaultMaintenanceGenerator and saves the list of
+     * UpcomingMaitnenanceEntity objects returned.
+     * @param vehicle VehicleEntity that will receive the maintenance items generated.
+     */
     @Transactional
-    fun upcomingMaintenanceGenerator(vehicle: VehicleEntity, sourceData: MGS): List<UpcomingMaintenanceEntity> {
+    fun carMDMaintenanceGenerator(vehicle: VehicleEntity): List<UpcomingMaintenanceEntity> {
         val maintenanceList = ArrayList<UpcomingMaintenanceEntity>()
-        /**
-         * This is the demo mode. It initializes three oil changes, a tire rotation, and 2 blinker fluid changes.
-         */
-        if (sourceData == MGS.Demo) {
-            val odometer = vehicle.odometer
-            maintenanceList.add(
-                UpcomingMaintenance(
-                    "Oil Change with Filter", "Demo", odometer - 3000,
-                    "none", mileageReminder = true, timeReminder = false
-                ).toUpcomingMaintenanceEntity(vehicle)
-            )
-            maintenanceList.add(
-                UpcomingMaintenance(
-                    "Oil Change with Filter", "Demo", odometer + 3000,
-                    "none", mileageReminder = true, timeReminder = false
-                ).toUpcomingMaintenanceEntity(vehicle)
-            )
-            maintenanceList.add(
-                UpcomingMaintenance(
-                    "Oil Change with Filter", "Demo", odometer + 6000,
-                    "none", mileageReminder = true, timeReminder = false
-                ).toUpcomingMaintenanceEntity(vehicle)
-            )
-            maintenanceList.add(
-                UpcomingMaintenance(
-                    "Blinker Fluid Check", "Demo", null,
-                    dateMaker(14), mileageReminder = false, timeReminder = true
-                ).toUpcomingMaintenanceEntity(vehicle)
-            )
-            maintenanceList.add(
-                UpcomingMaintenance(
-                    "Blinker Fluid Check", "Demo", null,
-                    dateMaker(28), mileageReminder = false, timeReminder = true
-                ).toUpcomingMaintenanceEntity(vehicle)
-            )
-            maintenanceList.add(
-                UpcomingMaintenance(
-                    "Tire Rotation", "Demo", vehicle.odometer + 10000,
-                    dateMaker(180), mileageReminder = true, timeReminder = true
-                ).toUpcomingMaintenanceEntity(vehicle)
-            )
-        } else if (sourceData == MGS.Live) {
-            val client: WebClient = WebClient.builder()
-                .baseUrl("http://api.carmd.com/v3.0")
-                .defaultHeader("authorization", "Basic MjBlY2EyMjItMjc3Ny00MTQxLWJhOGEtNDdlMjhiNGYyNzBl")
-                .defaultHeader("partner-token", "24e07ee005cc4294b928ccdc4a4db54c")
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build()
-            if (vehicle.vin != null) {
-                val response = client.get()
-                    .uri("/maint?vin=${vehicle.vin}&mileage=${vehicle.odometer}")
-                    .retrieve()
-                    .bodyToMono(String::class.java)
-                    .block()
-                println(response)
+        var uriString = ""
+
+        // Building the WebClient for a CarMD call
+        val client: WebClient = WebClient.builder()
+            .baseUrl("http://api.carmd.com/v3.0")
+            .defaultHeader("authorization", "Basic MjBlY2EyMjItMjc3Ny00MTQxLWJhOGEtNDdlMjhiNGYyNzBl")
+            .defaultHeader("partner-token", "24e07ee005cc4294b928ccdc4a4db54c")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build()
+        // checking for which uriString to use
+        if (vehicle.vin != null && vehicle.vin.length == 17) {
+            uriString = "/maint?vin=${vehicle.vin}&mileage=${vehicle.odometer}"; // set uriString with vin
+        } else if (vehicle.year != null && vehicle.make != null && vehicle.model != null) {
+            uriString = "/maint?year=${vehicle.year.toString()}&make=${vehicle.make}" +
+                    "&model=${vehicle.model}&mileage=${vehicle.odometer}" // set uriString with year/make/model
+        }
+        // get the response with the uriString
+        if (uriString != "") {
+            val response = client.get()
+                .uri(uriString)
+                .retrieve()
+                .bodyToMono(String::class.java)
+                .block()
+            val gson = Gson()
+            val carMDMaintenance = gson.fromJson(response, CarMDMaintenance::class.java)
+            // is there data? If not we run the default
+            if (carMDMaintenance.data != null && carMDMaintenance.message.credentials == "valid") {
+                for (item in carMDMaintenance.data) {
+                    if (item != null)
+                        maintenanceList.add(
+                            convertCarMDDataToMaintenanceDomain(item).toUpcomingMaintenanceEntity(
+                                vehicle
+                            )
+                        )
+                }
+            } else {
+                maintenanceList.addAll(defaultUpcomingMaintenanceGenerator(vehicle))  // default added to empty list
             }
         }
+
         return upcomingMaintenanceRepository.saveAll(maintenanceList)
     }
 
     /**
-     * Enum for the maintenance generator. Totally unnecessary, but w/e.
+     * This is the default maintenance generator for newly created vehicles. Called when calls to the API fail.
+     * @param vehicle The vehicle being created.
      */
-    enum class MGS {
-        Demo,
-        Live
+    private fun defaultUpcomingMaintenanceGenerator(vehicle: VehicleEntity): ArrayList<UpcomingMaintenanceEntity> {
+        val maintenanceList = ArrayList<UpcomingMaintenanceEntity>()
+        maintenanceList.add(
+            UpcomingMaintenance(
+                "Oil Change with Filter", "Demo", vehicle.odometer - 3000,
+                "none", mileageReminder = true, timeReminder = false
+            ).toUpcomingMaintenanceEntity(vehicle)
+        )
+        maintenanceList.add(
+            UpcomingMaintenance(
+                "Oil Change with Filter", "Demo", vehicle.odometer + 3000,
+                "none", mileageReminder = true, timeReminder = false
+            ).toUpcomingMaintenanceEntity(vehicle)
+        )
+        maintenanceList.add(
+            UpcomingMaintenance(
+                "Oil Change with Filter", "Demo", vehicle.odometer + 6000,
+                "none", mileageReminder = true, timeReminder = false
+            ).toUpcomingMaintenanceEntity(vehicle)
+        )
+        maintenanceList.add(
+            UpcomingMaintenance(
+                "Blinker Fluid Check", "Demo", null,
+                dateMaker(14), mileageReminder = false, timeReminder = true
+            ).toUpcomingMaintenanceEntity(vehicle)
+        )
+        maintenanceList.add(
+            UpcomingMaintenance(
+                "Blinker Fluid Check", "Demo", null,
+                dateMaker(28), mileageReminder = false, timeReminder = true
+            ).toUpcomingMaintenanceEntity(vehicle)
+        )
+        maintenanceList.add(
+            UpcomingMaintenance(
+                "Tire Rotation", "Demo", vehicle.odometer + 10000,
+                dateMaker(180), mileageReminder = true, timeReminder = true
+            ).toUpcomingMaintenanceEntity(vehicle)
+        )
+        return maintenanceList
     }
 
     /**
