@@ -96,24 +96,28 @@ class UpcomingMaintenanceService(
     }
 
     /**
-     * It calls for credits
+     * It calls CARMD and queries the credits.
      */
-    fun callAPIForCredits(): String { // todo: where do I go?
+    fun callAPIForCredits(): String {
+        val authorizationKey = System.getenv("CARMD_AUTHORIZATION_KEY")
+        val partnerToken = System.getenv("PARTNER_TOKEN")
 
         val client: WebClient = WebClient.builder()
             .baseUrl("http://api.carmd.com/v3.0")
-            .defaultHeader("authorization", "Basic MjBlY2EyMjItMjc3Ny00MTQxLWJhOGEtNDdlMjhiNGYyNzBl")
-            .defaultHeader("partner-token", "24e07ee005cc4294b928ccdc4a4db54c")
+            .defaultHeader("authorization", authorizationKey)
+            .defaultHeader("partner-token", partnerToken)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
+
         val response = client.get()
             .uri("/credits")
             .retrieve()
             .bodyToMono(String::class.java)
             .block()
-        return response ?: ""
 
+        return response ?: ""
     }
+
 
     /**
      * Attempts to make a call to the CARMD API using values from the vehicle Entity.
@@ -123,17 +127,20 @@ class UpcomingMaintenanceService(
      * If the call to CARMD fails, it calls defaultMaintenanceGenerator and saves the list of
      * UpcomingMaitnenanceEntity objects returned.
      * @param vehicle VehicleEntity that will receive the maintenance items generated.
+     * @return  The List of UpcomingMaintenanceEntity objects created and saved to the repository.
      */
     @Transactional
     fun carMDMaintenanceGenerator(vehicle: VehicleEntity): List<UpcomingMaintenanceEntity> {
         val maintenanceList = ArrayList<UpcomingMaintenanceEntity>()
         var uriString = ""
+        val authorizationKey = System.getenv("CARMD_AUTHORIZATION_KEY")
+        val partnerToken = System.getenv("PARTNER_TOKEN")
 
         // Building the WebClient for a CarMD call
         val client: WebClient = WebClient.builder()
             .baseUrl("http://api.carmd.com/v3.0")
-            .defaultHeader("authorization", "Basic MjBlY2EyMjItMjc3Ny00MTQxLWJhOGEtNDdlMjhiNGYyNzBl")
-            .defaultHeader("partner-token", "24e07ee005cc4294b928ccdc4a4db54c")
+            .defaultHeader("authorization", authorizationKey)
+            .defaultHeader("partner-token", partnerToken)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build()
         // checking for which uriString to use
@@ -178,37 +185,37 @@ class UpcomingMaintenanceService(
         val maintenanceList = ArrayList<UpcomingMaintenanceEntity>()
         maintenanceList.add(
             UpcomingMaintenance(
-                "Oil Change with Filter", "Demo", vehicle.odometer - 3000,
+                "Oil Change with Filter", "Default", vehicle.odometer - 3000,
                 "none", mileageReminder = true, timeReminder = false
             ).toUpcomingMaintenanceEntity(vehicle)
         )
         maintenanceList.add(
             UpcomingMaintenance(
-                "Oil Change with Filter", "Demo", vehicle.odometer + 3000,
+                "Oil Change with Filter", "Default", vehicle.odometer + 3000,
                 "none", mileageReminder = true, timeReminder = false
             ).toUpcomingMaintenanceEntity(vehicle)
         )
         maintenanceList.add(
             UpcomingMaintenance(
-                "Oil Change with Filter", "Demo", vehicle.odometer + 6000,
+                "Oil Change with Filter", "Default", vehicle.odometer + 6000,
                 "none", mileageReminder = true, timeReminder = false
             ).toUpcomingMaintenanceEntity(vehicle)
         )
         maintenanceList.add(
             UpcomingMaintenance(
-                "Blinker Fluid Check", "Demo", null,
+                "Blinker Fluid Check", "Default", null,
                 dateMaker(14), mileageReminder = false, timeReminder = true
             ).toUpcomingMaintenanceEntity(vehicle)
         )
         maintenanceList.add(
             UpcomingMaintenance(
-                "Blinker Fluid Check", "Demo", null,
+                "Blinker Fluid Check", "Default", null,
                 dateMaker(28), mileageReminder = false, timeReminder = true
             ).toUpcomingMaintenanceEntity(vehicle)
         )
         maintenanceList.add(
             UpcomingMaintenance(
-                "Tire Rotation", "Demo", vehicle.odometer + 10000,
+                "Tire Rotation", "Default", vehicle.odometer + 10000,
                 dateMaker(180), mileageReminder = true, timeReminder = true
             ).toUpcomingMaintenanceEntity(vehicle)
         )
