@@ -32,7 +32,7 @@ class UpcomingMaintenanceService(
      * @return List<UpcomingMaintenanceEntity>
      */
     fun getUpcomingMaintenanceByVehicleId(vehicleId: Int): List<UpcomingMaintenanceEntity> =
-        vehicleRepository.getReferenceById(vehicleId).upcomingMaintenance
+        vehicleRepository.getReferenceById(vehicleId).upcomingMaintenance.sortedBy { it.mileageInterval }
 
     /**
      * Service for creating upcoming maintenance items associated with a specific vehicle id.
