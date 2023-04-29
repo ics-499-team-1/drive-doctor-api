@@ -28,8 +28,8 @@ data class VehicleEntity(
     val trips: List<TripEntity> = emptyList(),
     @OneToMany(mappedBy = "vehicle", cascade = [CascadeType.ALL])
     @JsonManagedReference
-    val upcomingMaintenance: List<UpcomingMaintenanceEntity> = emptyList(),
+    var upcomingMaintenance: List<UpcomingMaintenanceEntity> = emptyList(),
     @OneToMany(mappedBy = "vehicle", cascade = [CascadeType.ALL])
     @JsonManagedReference
-    val completedMaintenance: List<CompletedMaintenanceEntity> = emptyList(),
+    var completedMaintenance: List<CompletedMaintenanceEntity> = emptyList(),
 )

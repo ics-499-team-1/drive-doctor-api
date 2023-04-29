@@ -30,7 +30,7 @@ class VehicleService(
      * @return A VehicleEntity of the created vehicle.
      */
     fun createVehicle(vehicle: Vehicle): VehicleEntity {
-        if ((vehicle.licensePlateNumber != null &&
+        if ((vehicle.licensePlateNumber != null && vehicle.vin != "" &&
                     vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber))
         )
             throw CustomExceptions.LicensePlateAlreadyExistsException(
@@ -60,16 +60,18 @@ class VehicleService(
         }
 
     /**
-     * Returns a single VehicleEntity
+     * Returns a single VehicleEntity. Sorts maintenance lists based on mileage.
      * @param vehicleId An int for the database vehicle ID number
      * @return A VehicleEntity containing the vehicle ID
      * @exception NoSuchElementException Throws if no vehicle with the given vehicleId can be found.
      */
     fun getVehicle(vehicleId: Int): Optional<VehicleEntity> {
-        val vehicleRep = vehicleRepository.findById(vehicleId)
+        var vehicleRep = vehicleRepository.findById(vehicleId)
         if (vehicleRep.isEmpty) {
             throw NoSuchElementException("Could not find a vehicle with vehicleID $vehicleId")
         } else {
+            vehicleRep.get().upcomingMaintenance = vehicleRep.get().upcomingMaintenance.sortedBy { it.mileageInterval }
+            vehicleRep.get().completedMaintenance = vehicleRep.get().completedMaintenance.sortedBy { it.mileage }
             return vehicleRep
         }
     }
