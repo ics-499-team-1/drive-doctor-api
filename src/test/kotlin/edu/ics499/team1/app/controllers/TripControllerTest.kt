@@ -100,6 +100,8 @@ class TripControllerTest {
     fun `getTotalMileage successful response`() {
         // given
         val vehicleTripMileage = VehicleTripMileage(
+            vehicleId = vehicleEntity.vehicleId,
+            vehicleName = vehicleEntity.name,
             totalMiles = vehicleEntity.trips.sumOf { it.mileage },
             trips = vehicleEntity.trips
         )
@@ -111,6 +113,26 @@ class TripControllerTest {
         // then
         verify(exactly = 1) { tripService.getTotalMileage(vehicleId = vehicleEntity.vehicleId) }
         assertEquals(vehicleTripMileage, actualResponse)
+        confirmVerified()
+    }
+
+    @Test
+    fun `getTotalMileageByUser successful response`() {
+        // given
+        val vehicleTripMileageByUser = listOf<VehicleTripMileage>(VehicleTripMileage(
+            vehicleId = vehicleEntity.vehicleId,
+            vehicleName = vehicleEntity.name,
+            totalMiles = vehicleEntity.trips.sumOf { it.mileage },
+            trips = vehicleEntity.trips
+        ))
+
+        // when
+        every { tripService.getTotalMileageByUser(user.userId) } returns vehicleTripMileageByUser
+        val actualResponse = tripController.getTotalMileageByUser(user.userId)
+
+        // then
+        verify(exactly = 1) { tripService.getTotalMileageByUser(user.userId) }
+        assertEquals(vehicleTripMileageByUser, actualResponse)
         confirmVerified()
     }
 }

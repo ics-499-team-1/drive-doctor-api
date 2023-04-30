@@ -20,7 +20,7 @@ data class UserEntity(
     @Enumerated(EnumType.STRING)
     val role: Role = Role.USER,
     val phoneNumber: String?,
-    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JsonManagedReference
     val vehicles: List<VehicleEntity> = emptyList(),
 ) : UserDetails {

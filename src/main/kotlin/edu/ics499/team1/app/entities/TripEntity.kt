@@ -11,7 +11,7 @@ data class TripEntity(
     val tripId: Int = 0,
     val mileage: Int,
     val type: String,
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vehicle_id")
     @JsonBackReference
     val vehicle: VehicleEntity,

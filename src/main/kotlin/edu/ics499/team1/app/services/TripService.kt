@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class TripService(
     private val tripRepository: TripRepository,
     private val vehicleRepository: VehicleRepository,
+    private val userService: UserService
 ) {
 
     fun getTrips(): List<TripEntity> = tripRepository.findAll()
@@ -33,8 +34,27 @@ class TripService(
         val trips = tripRepository.findAllByVehicle(vehicle)
 
         return VehicleTripMileage(
+            vehicleId = vehicle.vehicleId,
+            vehicleName = vehicle.name,
             totalMiles = trips.sumOf { it.mileage },
             trips = trips
         )
+    }
+
+    fun getTotalMileageByUser(userId: Int): List<VehicleTripMileage> {
+        val vehicles = userService.getUserVehicles(userId)
+        val vehicleTripMiles = mutableListOf<VehicleTripMileage>()
+
+        vehicles.forEach { vehicle ->
+            val trips = tripRepository.findAllByVehicle(vehicle)
+            vehicleTripMiles.add(VehicleTripMileage(
+                vehicleId = vehicle.vehicleId,
+                vehicleName = vehicle.name,
+                totalMiles = trips.sumOf { it.mileage },
+                trips = trips
+            ))
+        }
+
+        return vehicleTripMiles
     }
 }
