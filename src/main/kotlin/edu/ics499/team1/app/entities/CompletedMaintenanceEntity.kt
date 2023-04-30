@@ -16,7 +16,7 @@ data class CompletedMaintenanceEntity(
     val serviceCenter: String?,
     val mechanics: String?,
     val totalCost: Double?,
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "vehicle_id")
     @JsonBackReference
     val vehicle: VehicleEntity
