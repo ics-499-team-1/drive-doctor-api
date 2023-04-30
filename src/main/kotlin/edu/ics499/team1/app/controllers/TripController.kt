@@ -25,7 +25,6 @@ class TripController(private val tripService: TripService) {
     @ResponseStatus(HttpStatus.CREATED)
     fun addTrip(@RequestBody trip: Trip) = tripService.addTrip(trip)
 
-    // todo: Should this be in the vehicle controller?
     @PatchMapping("/{tripId}/mileage/{mileage}")
     fun setMileage(@PathVariable tripId: Int, @PathVariable mileage: Int) {
         tripService.setMileage(tripId, mileage)
@@ -33,4 +32,7 @@ class TripController(private val tripService: TripService) {
 
     @GetMapping("/{vehicleId}/mileage")
     fun getTotalMileage(@PathVariable vehicleId: Int) = tripService.getTotalMileage(vehicleId)
+
+    @GetMapping("/mileage/{userId}")
+    fun getTotalMileageByUser(@PathVariable userId: Int) = tripService.getTotalMileageByUser(userId)
 }

@@ -16,14 +16,15 @@ import org.junit.jupiter.api.Test
 internal class TripServiceTest {
 
     private val tripRepository = mockk<TripRepository>()
-
     private val vehicleRepository = mockk<VehicleRepository>()
+    private val userService = mockk<UserService>()
 
     private val mileage = 100
 
     private val tripService = TripService(
         tripRepository,
         vehicleRepository,
+        userService
     )
 
     private val tripDomain = Trip(
@@ -113,6 +114,8 @@ internal class TripServiceTest {
     fun `getTotalMileage successful response`() {
         // given
         val vehicleTripMileage = VehicleTripMileage(
+            vehicleId = vehicleEntity.vehicleId,
+            vehicleName = vehicleEntity.name,
             totalMiles = vehicleEntity.trips.sumOf { it.mileage },
             trips = vehicleEntity.trips
         )
@@ -126,6 +129,28 @@ internal class TripServiceTest {
         verify(exactly = 1) { vehicleRepository.getReferenceById(vehicleEntity.vehicleId) }
         verify(exactly = 1) { tripRepository.findAllByVehicle(vehicleEntity) }
         assertEquals(vehicleTripMileage, actualResponse)
+        confirmVerified()
+    }
+
+    @Test
+    fun `getTotalMileageByUser successful response`() {
+        // given
+        val vehicleTripMileageList = listOf<VehicleTripMileage>(VehicleTripMileage(
+            vehicleId = vehicleEntity.vehicleId,
+            vehicleName = vehicleEntity.name,
+            totalMiles = vehicleEntity.trips.sumOf { it.mileage },
+            trips = vehicleEntity.trips
+        ))
+
+        // when
+        every { userService.getUserVehicles(user.userId) } returns listOf(vehicleEntity)
+        every { tripRepository.findAllByVehicle(vehicleEntity) } returns vehicleEntity.trips
+        val actualResponse = tripService.getTotalMileageByUser(userId = user.userId)
+
+        // then
+        verify(exactly = 1) { userService.getUserVehicles(user.userId) }
+        verify(exactly = 1) { tripRepository.findAllByVehicle(vehicleEntity) }
+        assertEquals(vehicleTripMileageList, actualResponse)
         confirmVerified()
     }
 }
