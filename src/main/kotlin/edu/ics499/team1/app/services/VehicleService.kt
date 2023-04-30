@@ -37,7 +37,7 @@ class VehicleService(
                 "Vehicle with license plate number " +
                         "${vehicle.licensePlateNumber} already exists"
             )
-        if (vehicle.vin != null && vehicleRepository.existsByVin(vehicle.vin))
+        if (!vehicle.vin.isNullOrBlank() && vehicleRepository.existsByVin(vehicle.vin))
             throw CustomExceptions.VinAlreadyExistsException("Vehicle with vin ${vehicle.vin} already exists")
 
         val user = userRepository.getReferenceById(vehicle.userId)
