@@ -74,22 +74,6 @@ class UserControllerTest {
     }
 
     @Test
-    fun `addUser() successful response`() {
-        // given
-        val expectedResponse = userEntity
-
-        // when
-        every { userService.createUser(userRequest) } returns expectedResponse
-        val actualResponse = userController.addUser(userRequest)
-
-        // then
-        verify(exactly = 1) { userService.createUser(userRequest) }
-        assertEquals(expectedResponse, actualResponse)
-
-        confirmVerified()
-    }
-
-    @Test
     fun `deleteUser() successful response`() {
         // when
         userController.deleteUser(userId)

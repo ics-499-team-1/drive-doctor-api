@@ -13,23 +13,6 @@ import java.util.*
 class UserService(private val userRepository: UserRepository) {
 
     /**
-     * Creates a new Vehicle in the database.
-     * @param user: a domain of type User
-     * @exception CustomExceptions.UserAlreadyExistsException Throws if the combination of firstName, lastName, and
-     * email are already in the database.
-     * @return A UserEntity of the created user.
-     */
-    fun createUser(user: User): UserEntity {
-        if (userRepository.existsByFirstNameAndLastNameAndEmail
-                (user.firstName, user.lastName, user.email)
-        ) {
-            throw CustomExceptions.UserAlreadyExistsException("User already exists in the system")
-        }
-
-        return userRepository.save(user.toUserEntity())
-    }
-
-    /**
      * Returns a single UserEntity
      * @param userId An int for the database user_id number
      * @return An Optional<userEntity> matching the userId, or null if no match is found

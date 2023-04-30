@@ -23,7 +23,8 @@ class AuthenticationService(
         ) {
             throw CustomExceptions.UserAlreadyExistsException("User already exists in the system")
         }
-        val userEntity = user.toUserEntity()
+        val userPassword = passwordEncoder.encode(user.password)
+        val userEntity = user.toUserEntity(userPassword)
         val createdUser = userRepository.save(userEntity)
         val jwtToken = jwtService.generateJwtToken(userEntity)
         return AuthenticationResponse(jwtToken, createdUser.userId)

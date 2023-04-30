@@ -17,31 +17,8 @@ internal class UserServiceTest {
     private val userService = UserService(userRepository)
 
     private val userRequest = User("John", "Doe", "johndoe@email.com", "password", "1234567890")
-    private val userEntity = userRequest.toUserEntity()
+    private val userEntity = userRequest.toUserEntity(password = userRequest.password)
     private val userId = userEntity.userId
-
-    @Test
-    fun `createUser() called with successful response`() {
-        // given
-        val expectedResponse = userEntity
-
-        // when
-        every { userRepository.save(userEntity) } returns expectedResponse
-        val actualResponse = userService.createUser(userRequest)
-
-        // then
-        verify(exactly = 1) {
-            userRepository.existsByFirstNameAndLastNameAndEmail(
-                userRequest.firstName,
-                userRequest.lastName,
-                userRequest.email
-            )
-        }
-        verify(exactly = 1) { userRepository.save(userEntity) }
-        assertEquals(expectedResponse, actualResponse)
-
-        confirmVerified()
-    }
 
     @Test
     fun `getUser() is called with successful response`() {
