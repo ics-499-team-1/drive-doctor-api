@@ -203,13 +203,13 @@ class UpcomingMaintenanceService(
         )
         maintenanceList.add(
             UpcomingMaintenance(
-                "Blinker Fluid Check", "Default", null,
+                "Blinker Fluid Check", "Default", vehicle.odometer - 2000,
                 dateMaker(14), mileageReminder = false, timeReminder = true
             ).toUpcomingMaintenanceEntity(vehicle)
         )
         maintenanceList.add(
             UpcomingMaintenance(
-                "Blinker Fluid Check", "Default", null,
+                "Blinker Fluid Check", "Default", vehicle.odometer + 4000,
                 dateMaker(28), mileageReminder = false, timeReminder = true
             ).toUpcomingMaintenanceEntity(vehicle)
         )
