@@ -72,10 +72,8 @@ class UpcomingMaintenanceService(
     }
 
     /**
-     * Calls the db and get an UpcomingMaintenanceEntity with the corresponding id. It takes the name, notes,
-     * pictures, and vehicle fields from this entity and uses it to build a CompletedMaintenanceEntity, combining those
-     * fields with the remaining required fields from the completeMaintenance object.
-     * It then saves the CompletedMaintenanceEntity in the db and deletes the record of the UpcomingMaintenanceEntity.
+     * Builds a completedMaintenance object.
+     * It saves the CompletedMaintenanceEntity in the db and deletes the record of the UpcomingMaintenanceEntity.
      * @param maintenanceId The id of the upcoming maintenance to be converted
      * @param completedMaintenance The post body to update the item with
      */
@@ -121,7 +119,7 @@ class UpcomingMaintenanceService(
 
     /**
      * Attempts to make a call to the CARMD API using values from the vehicle Entity.
-     * If it succeeds, it parses the JSON into  a list of UpcomingMaintenanceDomain objects and then
+     * If it succeeds, it parses the JSON into a list of UpcomingMaintenanceDomain objects and then
      * associates them with the vehicle supplied as a list of UpcomingMaintenanceEntity objects.
      * These are then saved in the database.
      * If the call to CARMD fails, it calls defaultMaintenanceGenerator and saves the list of

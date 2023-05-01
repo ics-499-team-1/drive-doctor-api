@@ -22,7 +22,9 @@ class VehicleService(
     fun getVehicles(): List<VehicleEntity> = vehicleRepository.findAll()
 
     /**
-     * Creates a new Vehicle in the database.
+     * Creates a new Vehicle in the database. Upon creation, launches a separate thread to add upcoming maintenance
+     * items via carMDMaintenanceGenerator. This reduces the response time of the vehicle appearing in the UI by
+     * skipping the delay between the Drive Doctor and carMD APIs talking to each other.
      * @param vehicle: a domain of type Vehicle
      * @exception CustomExceptions.LicensePlateAlreadyExistsException Throws if the license plate number is already
      * in the database.
