@@ -3,6 +3,7 @@ package edu.ics499.team1.app.controllers
 import edu.ics499.team1.app.domains.Vehicle
 import edu.ics499.team1.app.services.CustomExceptions
 import edu.ics499.team1.app.services.VehicleService
+import org.springframework.core.task.TaskExecutor
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/v1/vehicles")  // TODO Is this a logical mapping?
-class VehicleController(private val service: VehicleService) {
+class VehicleController(
+    private val service: VehicleService,
+    private val taskExecutor: TaskExecutor
+) {
 
     @ExceptionHandler(NoSuchElementException::class)
     fun handleNotFound(e: NoSuchElementException): ResponseEntity<String> =
@@ -40,7 +44,7 @@ class VehicleController(private val service: VehicleService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addVehicle(@RequestBody vehicle: Vehicle) = service.createVehicle(vehicle)
+    fun addVehicle(@RequestBody vehicle: Vehicle) = service.createVehicle(vehicle, taskExecutor)
 
     @DeleteMapping("/{vehicleId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

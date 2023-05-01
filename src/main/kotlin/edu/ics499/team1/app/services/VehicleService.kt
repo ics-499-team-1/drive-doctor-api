@@ -4,6 +4,7 @@ import edu.ics499.team1.app.domains.Vehicle
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
+import org.springframework.core.task.TaskExecutor
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import java.util.*
@@ -29,7 +30,7 @@ class VehicleService(
      * found in the database.
      * @return A VehicleEntity of the created vehicle.
      */
-    fun createVehicle(vehicle: Vehicle): VehicleEntity {
+    fun createVehicle(vehicle: Vehicle, taskExecutor: TaskExecutor): VehicleEntity {
         if ((vehicle.licensePlateNumber != null && vehicle.vin != "" &&
                     vehicleRepository.existsByLicensePlateNumber(vehicle.licensePlateNumber))
         )
@@ -42,8 +43,11 @@ class VehicleService(
 
         val user = userRepository.getReferenceById(vehicle.userId)
         val newVehicleEntity = vehicleRepository.save(vehicle.toVehicleEntity(user))
-        // call to add maintenance items
-        upcomingMaintenanceService.carMDMaintenanceGenerator(newVehicleEntity)
+
+        // submit a new task to the taskExecutor to run `upcomingMaintenanceService.carMDMaintenanceGenerator()` asynchronously
+        taskExecutor.execute {
+            upcomingMaintenanceService.carMDMaintenanceGenerator(newVehicleEntity)
+        }
         return newVehicleEntity
     }
 
