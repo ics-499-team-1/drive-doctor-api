@@ -4,6 +4,7 @@ import edu.ics499.team1.app.domains.Vehicle
 import edu.ics499.team1.app.entities.VehicleEntity
 import edu.ics499.team1.app.repositories.UserRepository
 import edu.ics499.team1.app.repositories.VehicleRepository
+import kotlinx.coroutines.delay
 import org.springframework.core.task.TaskExecutor
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
@@ -48,6 +49,7 @@ class VehicleService(
 
         // submit a new task to the taskExecutor to run `upcomingMaintenanceService.carMDMaintenanceGenerator()` asynchronously
         taskExecutor.execute {
+            Thread.sleep(1_000)
             upcomingMaintenanceService.carMDMaintenanceGenerator(newVehicleEntity)
         }
         return newVehicleEntity
