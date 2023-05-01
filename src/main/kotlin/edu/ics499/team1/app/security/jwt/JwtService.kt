@@ -41,7 +41,7 @@ class JwtService {
             .setClaims(extractClaims) // set the extra claims
             .setSubject(userDetails.username) // set the subject of the claim
             .setIssuedAt(Date(System.currentTimeMillis())) // set the time of when the jwt token was issued
-            .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 24)) // set the time of when the jwt token will expire
+            .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 8)) // set the time of when the jwt token will expire
             .signWith(
                 getSignInKey(),
                 SignatureAlgorithm.HS256
