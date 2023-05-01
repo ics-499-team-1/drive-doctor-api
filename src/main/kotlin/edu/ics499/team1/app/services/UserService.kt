@@ -1,6 +1,5 @@
 package edu.ics499.team1.app.services
 
-import edu.ics499.team1.app.domains.User
 import edu.ics499.team1.app.entities.TripEntity
 import edu.ics499.team1.app.entities.UserEntity
 import edu.ics499.team1.app.entities.VehicleEntity
@@ -47,11 +46,18 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     /**
-     * Returns a list of the vehicles associated with the given userId
+     * Returns a list of the vehicles associated with the given userId. Sorts on mileage.
      * @param userId An int for the database user_id number
      * @return A List<VehicleEntity> associated with the userId
      */
-    fun getUserVehicles(userId: Int): List<VehicleEntity> = userRepository.findById(userId).get().vehicles
+    fun getUserVehicles(userId: Int): List<VehicleEntity> {
+        val vehicleList = userRepository.findById(userId).get().vehicles
+        for (vehicle in vehicleList) {
+            vehicle.upcomingMaintenance = vehicle.upcomingMaintenance.sortedBy { it.mileageInterval }
+            vehicle.completedMaintenance = vehicle.completedMaintenance.sortedBy { it.mileage }
+        }
+        return vehicleList
+    }
 
     fun getUserTrips(userId: Int): List<TripEntity> {
         val trips = mutableListOf<TripEntity>()
