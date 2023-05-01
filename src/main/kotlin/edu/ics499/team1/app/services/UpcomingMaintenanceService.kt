@@ -1,6 +1,7 @@
 package edu.ics499.team1.app.services
 
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import edu.ics499.team1.app.consumers.CarMDMaintenance
 import edu.ics499.team1.app.consumers.convertCarMDDataToMaintenanceDomain
 import edu.ics499.team1.app.domains.CompletedMaintenance
@@ -156,9 +157,15 @@ class UpcomingMaintenanceService(
                 .bodyToMono(String::class.java)
                 .block()
             val gson = Gson()
-            val carMDMaintenance = gson.fromJson(response, CarMDMaintenance::class.java)
+
+            val carMDMaintenance = try {
+                gson.fromJson(response, CarMDMaintenance::class.java)
+            } catch (ex: JsonSyntaxException) {
+                CarMDMaintenance(null, null)
+            }
+
             // is there data? If not we run the default
-            if (carMDMaintenance.data != null && carMDMaintenance.message.credentials == "valid") {
+            if (!carMDMaintenance.data.isNullOrEmpty() && carMDMaintenance.message!!.credentials == "valid") {
                 for (item in carMDMaintenance.data) {
                     if (item != null)
                         maintenanceList.add(
