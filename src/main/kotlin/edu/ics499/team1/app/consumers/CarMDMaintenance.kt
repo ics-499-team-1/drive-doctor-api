@@ -6,8 +6,8 @@ import edu.ics499.team1.app.domains.UpcomingMaintenance
  * Holds the top level JSON of the CarMD API call to the Maint endpoint.
  */
 data class CarMDMaintenance(
-    val message: CarMDMessage,
-    val data: List<CarMDMaintenanceData>
+    val message: CarMDMessage?,
+    val data: List<CarMDMaintenanceData>?
 )
 
 /**
