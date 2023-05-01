@@ -48,7 +48,6 @@ class VehicleService(
         taskExecutor.execute {
             upcomingMaintenanceService.carMDMaintenanceGenerator(newVehicleEntity)
         }
-        println("I created a vehicle ${newVehicleEntity.vehicleId}")
         return newVehicleEntity
     }
 
