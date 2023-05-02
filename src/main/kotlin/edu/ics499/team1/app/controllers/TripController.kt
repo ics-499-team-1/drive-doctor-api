@@ -5,9 +5,6 @@ import edu.ics499.team1.app.services.TripService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
-// TODO: Exception Handlers
-// TODO: Should getTotalMileage have specific start/end dates?
-
 /**
  * [getTrips] Returns a collection of all trips associated with a specific userID
  * [addTrip] Adds a trip to the specific user's trip collection
